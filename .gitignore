@@ -1,0 +1,76 @@
+# Gitignore - Projeto Math
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Copilot e AI
+.github/copilot-instructions.md
+.copilot/
+*.copilot
+.aider*
+
+# IDEs e Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vs/
+
+# Arquivos de build e conversão
+*.pdf
+*.docx
+*.html
+pdfs-impressao/
+exports/
+build/
+
+# Node modules (se adicionar ferramentas JS)
+node_modules/
+package-lock.json
+
+# Python (se adicionar scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+env/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de sistema
+*.tmp
+*.temp
+.cache/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# OS specific
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Rascunhos e anotações pessoais
+rascunhos/
+notas-pessoais/
+*.draft
+
+# Respostas e gabaritos (se criados acidentalmente)
+*gabarito*
+*respostas*
+*answers*
