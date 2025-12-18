@@ -44,13 +44,13 @@ Por quê? Porque 1 grupo de alguma coisa = essa mesma quantidade!
 
 **Visualize:**
 
-🍎  
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">  
 1 × 1 = **1 maçã**
 
-🍎🍎🍎🍎  
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">  
 1 × 4 = **4 maçãs**
 
-🍎🍎🍎🍎  
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">  
 4 × 1 = **4 maçãs**
 
 ---

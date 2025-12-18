@@ -15,7 +15,7 @@ Quando multiplicamos por 2, estamos **dobrando** o número.
 
 **Exemplo:**
 
-🍎 + 🍎 = 2 maçãs  
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> + <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> = 2 maçãs  
 1 + 1 = 2  
 **O dobro de 1 é 2**
 

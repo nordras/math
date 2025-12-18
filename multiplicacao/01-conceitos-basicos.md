@@ -13,7 +13,7 @@ Quando temos várias coisas organizadas em grupos iguais, podemos contar de um j
 
 **Exemplo com maçãs:**
 
-🍎🍎🍎   🍎🍎🍎   🍎🍎🍎
+<img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.png" width="25" alt="maçã">
 
 Temos **3 grupos** de **3 maçãs** cada.
 
@@ -139,7 +139,7 @@ ____________________
 
 Cecília colheu maçãs e colocou em 3 cestas. Cada cesta ficou com 3 maçãs.
 
-🍎🍎🍎   🍎🍎🍎   🍎🍎🍎
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">
 
 Quantas maçãs Cecília colheu?
 

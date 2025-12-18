@@ -45,6 +45,11 @@ Bem-vinda ao seu material de matemática, Cecília! Este material foi criado esp
 
 **Importante**: Este cronograma é apenas uma sugestão. Ajuste conforme o ritmo de aprendizado.
 
+## Fontes
+- https://storyset.com
+- https://www.education.com/resources/grade-2/worksheets/english-language-arts/
+- https://www.education.com/worksheet/article/2-math-minutes-addition/
+
 ---
 
 *Material criado com ❤️ para Cecília - Dezembro 2025*
