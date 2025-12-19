@@ -13,7 +13,9 @@ Quando temos várias coisas organizadas em grupos iguais, podemos contar de um j
 
 **Exemplo com maçãs:**
 
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">
+<div style="display: inline-block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">&nbsp;&nbsp;&nbsp;<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">&nbsp;&nbsp;&nbsp;<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">
+</div>
 
 Temos **3 grupos** de **3 maçãs** cada.
 
@@ -139,7 +141,9 @@ ____________________
 
 Cecília colheu maçãs e colocou em 3 cestas. Cada cesta ficou com 3 maçãs.
 
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">   <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">
+<div style="display: inline-block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">&nbsp;&nbsp;&nbsp;<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">&nbsp;&nbsp;&nbsp;<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"><img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">
+</div>
 
 Quantas maçãs Cecília colheu?
 

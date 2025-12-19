@@ -13,9 +13,17 @@ Um **array** é uma forma de organizar objetos em **linhas** (horizontal →) e 
 
 **Exemplo com maçãs:**
 
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">  
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">  
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã">
+<div style="line-height: 0;">
+<div style="display: block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">  
+</div>
+<div style="display: block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">  
+</div>
+<div style="display: block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;">
+</div>
+</div>
 
 Podemos contar de dois jeitos:
 - **3 linhas** com 4 maçãs cada = 3 × 4 = **12 maçãs**

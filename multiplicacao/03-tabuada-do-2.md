@@ -15,7 +15,9 @@ Quando multiplicamos por 2, estamos **dobrando** o número.
 
 **Exemplo:**
 
-<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> + <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã"> = 2 maçãs  
+<div style="display: inline-block;">
+<img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> + <img src="../assets/svg/fruits/apple.webp" width="25" alt="maçã" style="display: inline-block;"> = 2 maçãs
+</div>  
 1 + 1 = 2  
 **O dobro de 1 é 2**
 
