@@ -1,0 +1,29 @@
+{
+  "name": "math-exercise-generator",
+  "version": "1.0.0",
+  "description": "Gerador de exercícios de matemática com IA para Cecília",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "generate": "node index.js",
+    "generate:no-ai": "node index.js --no-ai",
+    "generate:with-ai": "node index.js --with-ai"
+  },
+  "keywords": [
+    "math",
+    "education",
+    "exercises",
+    "ai",
+    "gemini"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
