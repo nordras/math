@@ -19,27 +19,13 @@ class GridFormatter {
     const { columns } = this.options;
     let grid = '\n';
 
-    for (let i = 0; i < problems.length; i += columns) {
-      const row = problems.slice(i, i + columns);
+    // Formato de lista vertical numerada
+    problems.forEach((problem, index) => {
+      const num = index + 1;
+      const letter = String.fromCharCode(65 + (index % 10)); // A-J
       
-      // Linha com números e operações
-      const numberLines = row.map(p => {
-        const num1Str = String(p.num1).padStart(4, ' ');
-        return num1Str;
-      });
-      
-      const operationLines = row.map(p => {
-        const num2Str = String(p.num2).padStart(3, ' ');
-        return `${p.operation} ${num2Str}`;
-      });
-      
-      const dividerLines = row.map(() => '____');
-      
-      // Montar as linhas
-      grid += numberLines.join('      ') + '\n';
-      grid += operationLines.join('      ') + '\n';
-      grid += dividerLines.join('      ') + '\n\n';
-    }
+      grid += `**${num}.**  ${problem.num1} ${problem.operation} ${problem.num2} = ______\n\n`;
+    });
 
     return grid;
   }
@@ -134,19 +120,27 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
    * Gera seção de estatísticas sobre os problemas
    */
   generateStatsSection(stats) {
-    return `---
+    let statsText = `---
 
 ## 📈 Sobre Este Exercício
 
 - **Total de Problemas:** ${stats.total}
 - **Problemas de Adição:** ${stats.addition} (${Math.round(stats.addition / stats.total * 100)}%)
-- **Problemas de Subtração:** ${stats.subtraction} (${Math.round(stats.subtraction / stats.total * 100)}%)
+- **Problemas de Subtração:** ${stats.subtraction} (${Math.round(stats.subtraction / stats.total * 100)}%)`;
+
+    if (stats.threeDigits > 0) {
+      statsText += `\n- **Problemas com 3 Algarismos:** ${stats.threeDigits} (${Math.round(stats.threeDigits / stats.total * 100)}%)`;
+    }
+
+    statsText += `
 - **Nível de Dificuldade:** ${this.getDifficultyLabel(stats.difficulty)}
 - **Menor Resposta:** ${stats.minAnswer}
 - **Maior Resposta:** ${stats.maxAnswer}
 - **Resposta Média:** ${stats.avgAnswer}
 
 `;
+    
+    return statsText;
   }
 
   /**
@@ -173,6 +167,7 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
 
     const { columns } = this.options;
     
+    // Formato de lista em colunas para o gabarito
     for (let i = 0; i < problems.length; i += columns) {
       const row = problems.slice(i, i + columns);
       const answers = row.map((p, idx) => {
@@ -247,6 +242,12 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
     problemsWithContext.forEach((item, index) => {
       markdown += `### Problema ${index + 1}\n\n`;
       markdown += `${item.context}\n\n`;
+      
+      // Adicionar a operação matemática
+      if (item.num1 !== undefined && item.num2 !== undefined) {
+        markdown += `\n\`\`\`\n  ${item.num1}\n${item.operation} ${item.num2}\n____\n\`\`\`\n\n`;
+      }
+      
       markdown += `${item.question}\n\n`;
       markdown += `**Resposta:** __________________\n\n`;
       markdown += `---\n\n`;
