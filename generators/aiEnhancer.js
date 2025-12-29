@@ -12,7 +12,7 @@ class AIEnhancer {
     this.enabled = !!apiKey;
     this.templateLibrary = new TemplateLibrary();
     this.options = {
-      model: options.model || 'gemini-pro',
+      model: options.model || 'gemini-flash-latest',
       maxRetries: options.maxRetries || 2,
       temperature: options.temperature || 0.7,
       ...options
@@ -44,13 +44,14 @@ CONTEXTO DO PROBLEMA:
 
 REGRAS ESTRITAS:
 1. Use APENAS português brasileiro informal e acolhedor
-2. Crie UMA única frase curta (máximo 15 palavras) sobre Cecília
+2. Crie UMA única frase curta (máximo 20 palavras) sobre Cecília
 3. Use ações relacionadas a: ${action}
 4. Tom POSITIVO e ALEGRE
 5. Contextos permitidos: brinquedos, frutas, material escolar, animais fofos, natureza
-6. NÃO mencione números ou operações matemáticas
-7. NÃO inclua perguntas ou respostas
-8. NÃO use palavras negativas: triste, perdeu (se evitável), quebrou, machucou
+6. DEVE incluir os números ${problem.num1} e ${problem.num2} na história
+7. NÃO inclua a operação matemática (+, −, =)
+8. NÃO inclua perguntas ou respostas
+9. NÃO use palavras negativas: triste, perdeu (se evitável), quebrou, machucou
 
 TEMAS SUGERIDOS:
 🎨 Brinquedos: carrinhos, bonecas, blocos, bolas, ursinhos
@@ -59,10 +60,12 @@ TEMAS SUGERIDOS:
 🦋 Animais: borboletas, passarinhos, coelhos, gatinhos
 🌸 Natureza: flores, estrelas, árvores
 
-EXEMPLO DE SAÍDA:
-"Cecília tem 3 caixas de lápis de cor com 4 lápis em cada uma"
+EXEMPLOS DE SAÍDA:
+"Cecília tinha ${problem.num1} figurinhas e ganhou mais ${problem.num2} figurinhas da amiga."
+"Cecília tem ${problem.num1} lápis de cor e comprou ${problem.num2} lápis novos."
+"Cecília colheu ${problem.num1} morangos no jardim e deu ${problem.num2} morangos para a vovó."
 
-Agora crie APENAS a frase narrativa (sem números, sem pergunta):`;
+Agora crie APENAS a frase narrativa (com os números ${problem.num1} e ${problem.num2}):`;
   }
 
   /**
