@@ -56,7 +56,6 @@ class GridFormatter {
     const {
       title = '50 Problemas Mistos: Adição e Subtração',
       studentName = 'Cecília',
-      difficulty = 'Médio',
       totalProblems = 50
     } = options;
 
@@ -64,7 +63,6 @@ class GridFormatter {
 
 **Nome:** ${studentName} ________________  **Data:** ____/____/____
 
-**Nível de Dificuldade:** ${difficulty}  
 **Total de Problemas:** ${totalProblems}
 
 ---
@@ -132,13 +130,7 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
       statsText += `\n- **Problemas com 3 Algarismos:** ${stats.threeDigits} (${Math.round(stats.threeDigits / stats.total * 100)}%)`;
     }
 
-    statsText += `
-- **Nível de Dificuldade:** ${this.getDifficultyLabel(stats.difficulty)}
-- **Menor Resposta:** ${stats.minAnswer}
-- **Maior Resposta:** ${stats.maxAnswer}
-- **Resposta Média:** ${stats.avgAnswer}
-
-`;
+    statsText += `\n\n`;
     
     return statsText;
   }
@@ -148,9 +140,9 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
    */
   getDifficultyLabel(difficulty) {
     const labels = {
-      easy: 'Fácil (números até 10)',
-      medium: 'Médio (números até 20)',
-      hard: 'Difícil (números até 50)'
+      easy: 'Fácil',
+      medium: 'Médio',
+      hard: 'Difícil'
     };
     return labels[difficulty] || difficulty;
   }
@@ -194,8 +186,7 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
 
     // Cabeçalho
     markdown += this.generateHeader({
-      totalProblems: problems.length,
-      difficulty: this.getDifficultyLabel(stats.difficulty)
+      totalProblems: problems.length
     });
 
     // Grade de problemas
@@ -232,8 +223,7 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
     // Cabeçalho
     markdown += this.generateHeader({
       title: '📚 Problemas Contextualizados: Adição e Subtração',
-      totalProblems: problemsWithContext.length,
-      difficulty: this.getDifficultyLabel(stats.difficulty)
+      totalProblems: problemsWithContext.length
     });
 
     // Problemas com contexto
