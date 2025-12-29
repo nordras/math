@@ -11,6 +11,7 @@ class MathGenerator {
       additionRatio: options.additionRatio || 0.5,
       difficulty: options.difficulty || 'medium',
       avoidSequenceLength: options.avoidSequenceLength || 4,
+      threeDigitRatio: options.threeDigitRatio || 0.25, // 25% com 3 algarismos
       ...options
     };
 
@@ -43,10 +44,18 @@ class MathGenerator {
   /**
    * Gera um problema de adição
    */
-  generateAddition(difficulty = 'medium') {
+  generateAddition(difficulty = 'medium', useThreeDigits = false) {
     const range = this.difficultyLevels[difficulty];
-    const num1 = this.randomInt(range.min, range.max);
-    const num2 = this.randomInt(range.min, range.max);
+    let num1, num2;
+    
+    if (useThreeDigits) {
+      // Números de 3 algarismos (100-999)
+      num1 = this.randomInt(100, 999);
+      num2 = this.randomInt(100, 999);
+    } else {
+      num1 = this.randomInt(range.min, range.max);
+      num2 = this.randomInt(range.min, range.max);
+    }
 
     return {
       type: 'addition',
@@ -55,6 +64,7 @@ class MathGenerator {
       num2,
       answer: num1 + num2,
       difficulty,
+      threeDigits: useThreeDigits,
       display: `${num1} + ${num2}`
     };
   }
@@ -63,11 +73,20 @@ class MathGenerator {
    * Gera um problema de subtração
    * Garante que o resultado seja sempre positivo (ou zero)
    */
-  generateSubtraction(difficulty = 'medium') {
+  generateSubtraction(difficulty = 'medium', useThreeDigits = false) {
     const range = this.difficultyLevels[difficulty];
-    const num1 = this.randomInt(range.min, range.max);
-    const maxNum2 = range.allowNegative ? range.max : num1;
-    const num2 = this.randomInt(range.min, maxNum2);
+    let num1, num2;
+    
+    if (useThreeDigits) {
+      // Números de 3 algarismos (100-999)
+      num1 = this.randomInt(100, 999);
+      const maxNum2 = num1; // Garantir resultado positivo
+      num2 = this.randomInt(100, maxNum2);
+    } else {
+      num1 = this.randomInt(range.min, range.max);
+      const maxNum2 = range.allowNegative ? range.max : num1;
+      num2 = this.randomInt(range.min, maxNum2);
+    }
 
     return {
       type: 'subtraction',
@@ -76,6 +95,7 @@ class MathGenerator {
       num2,
       answer: num1 - num2,
       difficulty,
+      threeDigits: useThreeDigits,
       display: `${num1} − ${num2}`
     };
   }
@@ -84,21 +104,28 @@ class MathGenerator {
    * Gera um conjunto de problemas mistos
    */
   generateMixedProblems() {
-    const { totalProblems, additionRatio, difficulty } = this.options;
+    const { totalProblems, additionRatio, difficulty, threeDigitRatio } = this.options;
     const problems = [];
 
     // Calcular quantos problemas de cada tipo
     const additionCount = Math.floor(totalProblems * additionRatio);
     const subtractionCount = totalProblems - additionCount;
+    
+    // Calcular quantos problemas terão 3 algarismos
+    const threeDigitTotal = Math.floor(totalProblems * threeDigitRatio);
+    const threeDigitAddition = Math.floor(threeDigitTotal * additionRatio);
+    const threeDigitSubtraction = threeDigitTotal - threeDigitAddition;
 
     // Gerar problemas de adição
     for (let i = 0; i < additionCount; i++) {
-      problems.push(this.generateAddition(difficulty));
+      const useThreeDigits = i < threeDigitAddition;
+      problems.push(this.generateAddition(difficulty, useThreeDigits));
     }
 
     // Gerar problemas de subtração
     for (let i = 0; i < subtractionCount; i++) {
-      problems.push(this.generateSubtraction(difficulty));
+      const useThreeDigits = i < threeDigitSubtraction;
+      problems.push(this.generateSubtraction(difficulty, useThreeDigits));
     }
 
     // Embaralhar
@@ -177,6 +204,7 @@ class MathGenerator {
       total: problems.length,
       addition: 0,
       subtraction: 0,
+      threeDigits: 0,
       difficulty: this.options.difficulty,
       maxAnswer: 0,
       minAnswer: Infinity,
@@ -188,6 +216,7 @@ class MathGenerator {
     problems.forEach(problem => {
       if (problem.type === 'addition') stats.addition++;
       if (problem.type === 'subtraction') stats.subtraction++;
+      if (problem.threeDigits) stats.threeDigits++;
 
       stats.maxAnswer = Math.max(stats.maxAnswer, problem.answer);
       stats.minAnswer = Math.min(stats.minAnswer, problem.answer);
