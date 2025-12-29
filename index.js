@@ -68,7 +68,7 @@ async function main() {
         console.log('   Continuando SEM IA (usando templates)...\n');
         CONFIG.useAI = false;
       } else {
-        const modelName = process.env.GEMINI_MODEL || 'gemini-pro';
+        const modelName = process.env.GEMINI_MODEL || 'gemini-flash-latest';
         aiEnhancer = new AIEnhancer(CONFIG.geminiApiKey, { model: modelName });
         console.log(`✅ IA habilitada (Google Gemini - ${modelName})\n`);
       }
@@ -89,6 +89,9 @@ async function main() {
     console.log(`✅ ${problems.length} problemas gerados`);
     console.log(`   - Adição: ${stats.addition}`);
     console.log(`   - Subtração: ${stats.subtraction}`);
+    if (stats.threeDigits > 0) {
+      console.log(`   - Com 3 algarismos: ${stats.threeDigits} (${Math.round(stats.threeDigits / stats.total * 100)}%)`);
+    }
     console.log(`   - Dificuldade: ${CONFIG.difficulty}\n`);
 
     // 3. Gerar exercício em grade (sem contexto narrativo)
@@ -171,7 +174,10 @@ async function main() {
         contextualProblems.push({
           context,
           question,
-          answer: problem.answer
+          answer: problem.answer,
+          num1: problem.num1,
+          num2: problem.num2,
+          operation: problem.operation
         });
       }
 
