@@ -22,7 +22,14 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
 
 ### Problema 1
 
-Cecília tem 10 itens e ganhou 5 itens.
+Na mochila de Cecília há 194 livros 📚 e ela colocou mais 844 livros 📚.
+
+
+```
+  194
++ 844
+____
+```
 
 Quantos no total?
 
@@ -32,9 +39,16 @@ Quantos no total?
 
 ### Problema 2
 
-Cecília tem 7 itens e ganhou 15 itens.
+Cecília tinha 20 borboletas de papel e usou 9 para decorar o mural da escola.
 
-Quantos no total?
+
+```
+  20
+− 9
+____
+```
+
+Quantos restaram?
 
 **Resposta:** __________________
 
@@ -42,7 +56,14 @@ Quantos no total?
 
 ### Problema 3
 
-Cecília tem 3 itens e deu 1 itens.
+Na mochila havia 4 livros 📚 e Cecília usou 2 livros 📚.
+
+
+```
+  4
+− 2
+____
+```
 
 Quantos restaram?
 
@@ -52,9 +73,16 @@ Quantos restaram?
 
 ### Problema 4
 
-Cecília tem 18 itens e ganhou 13 itens.
+Cecília tinha 623 borboletas de papel e usou 196 borboletas brilhantes para decorar o mural da escola.
 
-Quantos no total?
+
+```
+  623
+− 196
+____
+```
+
+Quantos restaram?
 
 **Resposta:** __________________
 
@@ -62,9 +90,16 @@ Quantos no total?
 
 ### Problema 5
 
-Cecília tem 17 itens e ganhou 15 itens.
+No quarto havia 3 blocos 🧱 e Cecília guardou 3 blocos 🧱.
 
-Quantos no total?
+
+```
+  3
+− 3
+____
+```
+
+Quantos restaram?
 
 **Resposta:** __________________
 
@@ -72,7 +107,14 @@ Quantos no total?
 
 ### Problema 6
 
-Cecília tem 8 itens e ganhou 12 itens.
+Cecília colheu 12 morangos 🍓 e depois colheu mais 14 morangos 🍓.
+
+
+```
+  12
++ 14
+____
+```
 
 Quantos no total?
 
@@ -82,17 +124,14 @@ Quantos no total?
 
 ### Problema 7
 
-Cecília tem 17 itens e deu 4 itens.
+No parque há 18 borboletas 🦋 e chegaram mais 3 borboletas 🦋.
 
-Quantos restaram?
 
-**Resposta:** __________________
-
----
-
-### Problema 8
-
-Cecília tem 11 itens e ganhou 5 itens.
+```
+  18
++ 3
+____
+```
 
 Quantos no total?
 
@@ -100,9 +139,16 @@ Quantos no total?
 
 ---
 
-### Problema 9
+### Problema 8
 
-Cecília tem 6 itens e deu 4 itens.
+Cecília tinha 8 blocos coloridos e usou 6 para construir um castelo alto
+
+
+```
+  8
+− 6
+____
+```
 
 Quantos restaram?
 
@@ -110,11 +156,35 @@ Quantos restaram?
 
 ---
 
+### Problema 9
+
+Cecília organizou 10 bolas ⚽ em uma prateleira e 10 bolas ⚽ em outra.
+
+
+```
+  10
++ 10
+____
+```
+
+Quantos no total?
+
+**Resposta:** __________________
+
+---
+
 ### Problema 10
 
-Cecília tem 19 itens e deu 18 itens.
+Cecília tem 11 canetas 🖊️ e sua amiga emprestou 13 canetas 🖊️.
 
-Quantos restaram?
+
+```
+  11
++ 13
+____
+```
+
+Quantos no total?
 
 **Resposta:** __________________
 
