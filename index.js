@@ -140,27 +140,51 @@ async function main() {
 
       const contextualProblems = [];
       
+      // Separar problemas cacheados e não-cacheados
+      const problemsWithCache = [];
+      const problemsNeedingGeneration = [];
+      
       for (const problem of selectedProblems) {
-        // Verificar cache primeiro
-        let context = await cacheManager.get(problem);
-        
-        if (!context) {
-          // Gerar novo contexto
-          if (aiEnhancer) {
-            context = await aiEnhancer.generateContext(problem);
-            const modelName = process.env.GEMINI_MODEL || 'gemini-flash-latest';
-            console.log(`   ✓ Gerado com IA (${modelName}): ${problem.num1} ${problem.operation} ${problem.num2}`);
-          } else {
-            context = aiEnhancer ? 
-              aiEnhancer.getFallbackContext(problem) : 
-              `Cecília tem ${problem.num1} itens e ${problem.type === 'addition' ? 'ganhou' : 'deu'} ${problem.num2} itens.`;
-            console.log(`   ✓ Template: ${problem.num1} ${problem.operation} ${problem.num2}`);
-          }
-          
-          // Salvar no cache
-          await cacheManager.set(problem, context);
-        } else {
+        const cached = await cacheManager.get(problem);
+        if (cached) {
+          problemsWithCache.push({ problem, context: cached });
           console.log(`   ✓ Cache: ${problem.num1} ${problem.operation} ${problem.num2}`);
+        } else {
+          problemsNeedingGeneration.push(problem);
+        }
+      }
+      
+      // Gerar contextos em lote para problemas não-cacheados
+      let generatedContexts = [];
+      if (problemsNeedingGeneration.length > 0) {
+        if (aiEnhancer) {
+          const modelName = process.env.GEMINI_MODEL || 'gemini-flash-latest';
+          console.log(`   🔄 Gerando ${problemsNeedingGeneration.length} contextos com IA (${modelName})...`);
+          generatedContexts = await aiEnhancer.generateContextsBatch(problemsNeedingGeneration);
+          console.log(`   ✓ ${problemsNeedingGeneration.length} contextos gerados em 1 request`);
+        } else {
+          generatedContexts = problemsNeedingGeneration.map(p => 
+            `Cecília tem ${p.num1} itens e ${p.type === 'addition' ? 'ganhou' : 'deu'} ${p.num2} itens.`
+          );
+          console.log(`   ✓ ${problemsNeedingGeneration.length} templates gerados`);
+        }
+        
+        // Salvar no cache
+        for (let i = 0; i < problemsNeedingGeneration.length; i++) {
+          await cacheManager.set(problemsNeedingGeneration[i], generatedContexts[i]);
+        }
+      }
+      
+      // Combinar resultados mantendo ordem original
+      for (const problem of selectedProblems) {
+        const cached = problemsWithCache.find(p => p.problem === problem);
+        let context;
+        
+        if (cached) {
+          context = cached.context;
+        } else {
+          const index = problemsNeedingGeneration.indexOf(problem);
+          context = generatedContexts[index];
         }
 
         const question = problem.type === 'addition' 

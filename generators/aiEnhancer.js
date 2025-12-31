@@ -78,6 +78,42 @@ Agora crie APENAS a frase narrativa (com os números ${problem.num1} e ${problem
   }
 
   /**
+   * Cria um prompt em lote para múltiplos problemas
+   */
+  createBatchPrompt(problems) {
+    return `Você é um assistente educacional criando problemas de matemática para crianças brasileiras.
+
+CONTEXTO GERAL:
+- Personagem: Cecília (menina brasileira, 7-9 anos)
+- Temas: brinquedos, frutas, material escolar, animais fofos, natureza
+
+REGRAS ESTRITAS:
+1. Use APENAS português brasileiro informal e acolhedor
+2. Crie UMA única frase curta (máximo 20 palavras) para CADA problema
+3. Tom POSITIVO e ALEGRE
+4. DEVE incluir os números específicos na história
+5. NÃO inclua operação matemática (+, −, =)
+6. NÃO inclua perguntas ou respostas
+7. NÃO use palavras negativas: triste, perdeu (se evitável), quebrou, machucou
+8. VARIE os temas entre os problemas (não repita contextos similares)
+
+Crie uma frase narrativa para CADA um dos ${problems.length} problemas abaixo.
+Retorne APENAS as frases, uma por linha, numeradas de 1 a ${problems.length}:
+
+${problems.map((p, i) => {
+  const operation = p.type === 'addition' ? 'adição' : 'subtração';
+  const action = p.type === 'addition' ? 'ganhar/juntar' : 'dar/usar';
+  return `${i + 1}. Operação: ${operation} (${p.num1} ${p.operation} ${p.num2}) - Ação: ${action}`;
+}).join('\n')}
+
+FORMATO DE SAÍDA OBRIGATÓRIO:
+1. [frase para o problema 1]
+2. [frase para o problema 2]
+3. [frase para o problema 3]
+... e assim por diante`;
+  }
+
+  /**
    * Aguarda intervalo mínimo entre requisições para respeitar rate limits
    */
   async waitForRateLimit() {
@@ -194,6 +230,91 @@ Agora crie APENAS a frase narrativa (com os números ${problem.num1} e ${problem
     // Se todas as tentativas falharam, usar template
     console.warn('⚠️  Todas as tentativas falharam, usando template:', lastError?.message);
     return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
+  }
+
+  /**
+   * Gera contextos para múltiplos problemas em uma única requisição
+   */
+  async generateContextsBatch(problems) {
+    if (!this.enabled || this.quotaExceeded) {
+      return problems.map(p => this.templateLibrary.getContext(p.type, p.num1, p.num2));
+    }
+
+    let lastError = null;
+
+    for (let attempt = 0; attempt < this.options.maxRetries; attempt++) {
+      try {
+        await this.waitForRateLimit();
+        
+        const prompt = this.createBatchPrompt(problems);
+        const result = await this.model.generateContent(prompt);
+        const response = await result.response;
+        let text = response.text().trim();
+
+        this.requestCount++;
+
+        // Parse das linhas numeradas
+        const lines = text.split('\n').filter(line => line.trim());
+        const contexts = [];
+
+        for (let i = 0; i < problems.length; i++) {
+          let context = null;
+          
+          // Tentar encontrar linha correspondente
+          const linePattern = new RegExp(`^\\s*${i + 1}[\\.)\\-:]\\s*(.+)$`);
+          const matchingLine = lines.find(line => linePattern.test(line));
+          
+          if (matchingLine) {
+            const match = matchingLine.match(linePattern);
+            context = match[1].trim().replace(/^["']|["']$/g, '');
+          } else if (lines[i]) {
+            // Fallback: usar linha por índice
+            context = lines[i].replace(/^\d+[\.)\-:]\s*/, '').trim().replace(/^["']|["']$/g, '');
+          }
+
+          // Validar contexto
+          if (context && this.validateContext(context)) {
+            contexts.push(context);
+          } else {
+            // Usar template se validação falhar
+            const p = problems[i];
+            contexts.push(this.templateLibrary.getContext(p.type, p.num1, p.num2));
+          }
+        }
+
+        return contexts;
+
+      } catch (error) {
+        lastError = error;
+        const errorMessage = error.message || '';
+        
+        if (errorMessage.includes('429') || errorMessage.includes('Too Many Requests') || errorMessage.includes('Quota exceeded')) {
+          console.warn(`⚠️  Quota/Rate limit excedido (erro 429)`);
+          this.quotaResetTime = this.extractRetryTime(errorMessage);
+          this.quotaExceeded = true;
+          
+          const waitSeconds = Math.ceil((this.quotaResetTime - Date.now()) / 1000);
+          console.warn(`   Próximo reset em: ${waitSeconds}s`);
+          console.warn(`   Usando templates para todas as requisições...`);
+          
+          return problems.map(p => this.templateLibrary.getContext(p.type, p.num1, p.num2));
+        }
+        
+        if (attempt < this.options.maxRetries - 1) {
+          const delay = Math.min(
+            this.options.baseDelay * Math.pow(2, attempt),
+            this.options.maxDelay
+          );
+          console.warn(`⚠️  Tentativa ${attempt + 1}/${this.options.maxRetries} falhou.`);
+          console.warn(`   Aguardando ${delay}ms antes de retry...`);
+          await this.sleep(delay);
+        }
+      }
+    }
+    
+    // Se todas as tentativas falharam, usar templates
+    console.warn('⚠️  Todas as tentativas falharam, usando templates:', lastError?.message);
+    return problems.map(p => this.templateLibrary.getContext(p.type, p.num1, p.num2));
   }
 
   /**
