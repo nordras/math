@@ -21,29 +21,12 @@ Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
 
 ### Problema 1
 
-Cecília tinha 1 lápis brilhante e juntou mais 10 lápis de cor na sua caixinha nova.
+Cecília estava brincando com seus 201 blocos de montar e decidiu usar 108 blocos para fazer uma ponte.
 
 
 ```
-  1
-+ 10
-____
-```
-
-Quantos no total?
-
-**Resposta:** __________________
-
----
-
-### Problema 2
-
-Cecília colheu 13 flores no jardim da vovó e usou 10 flores para montar um buquê lindo.
-
-
-```
-  13
-− 10
+  201
+− 108
 ____
 ```
 
@@ -53,14 +36,31 @@ Quantos restaram?
 
 ---
 
-### Problema 3
+### Problema 2
 
-Cecília colheu 12 morangos 🍓 e depois colheu mais 14 morangos 🍓.
+Cecília estava super feliz porque juntou 20 borboletas azuis e somou mais 11 borboletas amarelas no seu jardim.
 
 
 ```
-  12
-+ 14
+  20
++ 11
+____
+```
+
+Quantos no total?
+
+**Resposta:** __________________
+
+---
+
+### Problema 3
+
+Cecília estava juntando 15 florzinhas vermelhas e somou mais 16 florzinhas amarelas para seu buquê.
+
+
+```
+  15
++ 16
 ____
 ```
 
@@ -72,12 +72,12 @@ Quantos no total?
 
 ### Problema 4
 
-Na mochila de Cecília há 1 livros 📚 e ela colocou mais 11 livros 📚.
+Cecília avistou 765 borboletas voando e depois encontrou mais 966 borboletas lindas no jardim.
 
 
 ```
-  1
-+ 11
+  765
++ 966
 ____
 ```
 
@@ -89,12 +89,12 @@ Quantos no total?
 
 ### Problema 5
 
-Havia 492 coelhos 🐰 no lago e 394 coelhos 🐰 nadaram para longe.
+Cecília juntou 15 maçãs gostosas e deu 12 para a família toda.
 
 
 ```
-  492
-− 394
+  15
+− 12
 ____
 ```
 
@@ -106,12 +106,12 @@ Quantos restaram?
 
 ### Problema 6
 
-Cecília tem 11 cadernos 📓 e sua amiga emprestou 16 cadernos 📓.
+Para o piquenique, Cecília juntou 12 maçãs vermelhas e 20 laranjas docinhas na cesta.
 
 
 ```
-  11
-+ 16
+  12
++ 20
 ____
 ```
 
@@ -123,16 +123,16 @@ Quantos no total?
 
 ### Problema 7
 
-No parque tinha 17 passarinhos 🐦 e 5 passarinhos 🐦 foram embora.
+Cecília juntou 16 borboletas amarelas e depois ganhou mais 9 borboletas azuis para sua coleção.
 
 
 ```
-  17
-− 5
+  16
++ 9
 ____
 ```
 
-Quantos restaram?
+Quantos no total?
 
 **Resposta:** __________________
 
@@ -140,12 +140,12 @@ Quantos restaram?
 
 ### Problema 8
 
-Cecília organizou 6 cadernos 📓 na estante e depois mais 14 cadernos 📓.
+Cecília colheu 593 laranjas 🍊 e depois colheu mais 887 laranjas 🍊.
 
 
 ```
-  6
-+ 14
+  593
++ 887
 ____
 ```
 
@@ -157,12 +157,12 @@ Quantos no total?
 
 ### Problema 9
 
-Cecília tinha 3 ursinhos 🧸 e doou 2 ursinhos 🧸.
+No parque tinha 20 coelhos 🐰 e 12 coelhos 🐰 foram embora.
 
 
 ```
-  3
-− 2
+  20
+− 12
 ____
 ```
 
@@ -174,16 +174,16 @@ Quantos restaram?
 
 ### Problema 10
 
-Cecília tinha 355 carrinhos 🚗 e perdeu 142 carrinhos 🚗.
+Cecília organizou 3 ursinhos 🧸 em uma prateleira e 14 ursinhos 🧸 em outra.
 
 
 ```
-  355
-− 142
+  3
++ 14
 ____
 ```
 
-Quantos restaram?
+Quantos no total?
 
 **Resposta:** __________________
 

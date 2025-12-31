@@ -148,7 +148,8 @@ async function main() {
           // Gerar novo contexto
           if (aiEnhancer) {
             context = await aiEnhancer.generateContext(problem);
-            console.log(`   ✓ Gerado com IA: ${problem.num1} ${problem.operation} ${problem.num2}`);
+            const modelName = process.env.GEMINI_MODEL || 'gemini-flash-latest';
+            console.log(`   ✓ Gerado com IA (${modelName}): ${problem.num1} ${problem.operation} ${problem.num2}`);
           } else {
             context = aiEnhancer ? 
               aiEnhancer.getFallbackContext(problem) : 
