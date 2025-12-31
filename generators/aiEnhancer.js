@@ -13,10 +13,19 @@ class AIEnhancer {
     this.templateLibrary = new TemplateLibrary();
     this.options = {
       model: options.model || 'gemini-flash-latest',
-      maxRetries: options.maxRetries || 2,
+      maxRetries: options.maxRetries || 3,
       temperature: options.temperature || 0.7,
+      baseDelay: options.baseDelay || 1000, // 1 segundo base
+      maxDelay: options.maxDelay || 60000, // 60 segundos máximo
+      requestsPerMinute: options.requestsPerMinute || 10, // Limite conservador
       ...options
     };
+    
+    // Controle de rate limiting
+    this.lastRequestTime = 0;
+    this.requestCount = 0;
+    this.quotaExceeded = false;
+    this.quotaResetTime = null;
 
     if (this.enabled) {
       this.genAI = new GoogleGenerativeAI(apiKey);
@@ -69,34 +78,122 @@ Agora crie APENAS a frase narrativa (com os números ${problem.num1} e ${problem
   }
 
   /**
+   * Aguarda intervalo mínimo entre requisições para respeitar rate limits
+   */
+  async waitForRateLimit() {
+    const now = Date.now();
+    const minInterval = (60 * 1000) / this.options.requestsPerMinute; // Intervalo mínimo entre requisições
+    const timeSinceLastRequest = now - this.lastRequestTime;
+    
+    if (timeSinceLastRequest < minInterval) {
+      const waitTime = minInterval - timeSinceLastRequest;
+      await this.sleep(waitTime);
+    }
+    
+    this.lastRequestTime = Date.now();
+  }
+
+  /**
+   * Extrai tempo de retry da mensagem de erro 429
+   */
+  extractRetryTime(errorMessage) {
+    // Tentar extrair segundos "retry in 57.247271744s" ou "Please retry in 57s"
+    const secondsMatch = errorMessage.match(/retry in (\d+(?:\.\d+)?)\s*s/i);
+    if (secondsMatch) {
+      return Date.now() + (parseFloat(secondsMatch[1]) * 1000);
+    }
+    
+    // Default: 60 segundos
+    return Date.now() + 60000;
+  }
+
+  /**
    * Gera um contexto usando IA
+   */
+  /**
+   * Gera um contexto usando IA com retry e backoff exponencial
    */
   async generateContext(problem) {
     if (!this.enabled) {
       return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
     }
 
-    try {
-      const prompt = this.createPrompt(problem);
-      const result = await this.model.generateContent(prompt);
-      const response = await result.response;
-      let text = response.text().trim();
-
-      // Remover aspas se existirem
-      text = text.replace(/^["']|["']$/g, '');
-
-      // Validar a resposta
-      if (this.validateContext(text)) {
-        return text;
-      } else {
-        console.warn('⚠️  Contexto da IA falhou na validação, usando template');
+    // Se quota excedida, verificar se já passou o tempo de reset
+    if (this.quotaExceeded && this.quotaResetTime) {
+      const now = Date.now();
+      if (now < this.quotaResetTime) {
+        const waitSeconds = Math.ceil((this.quotaResetTime - now) / 1000);
+        console.warn(`⚠️  Quota excedida. Reset em ${waitSeconds}s. Usando template.`);
         return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
+      } else {
+        // Reset da quota
+        this.quotaExceeded = false;
+        this.quotaResetTime = null;
       }
-
-    } catch (error) {
-      console.warn('⚠️  Erro ao chamar IA, usando template:', error.message);
-      return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
     }
+
+    let lastError = null;
+    
+    for (let attempt = 0; attempt < this.options.maxRetries; attempt++) {
+      try {
+        // Rate limiting: aguardar entre requisições
+        await this.waitForRateLimit();
+        
+        const prompt = this.createPrompt(problem);
+        const result = await this.model.generateContent(prompt);
+        const response = await result.response;
+        let text = response.text().trim();
+
+        // Remover aspas se existirem
+        text = text.replace(/^["']|["']$/g, '');
+
+        // Incrementar contador de requisições bem-sucedidas
+        this.requestCount++;
+
+        // Validar a resposta
+        if (this.validateContext(text)) {
+          return text;
+        } else {
+          console.warn('⚠️  Contexto da IA falhou na validação, usando template');
+          return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
+        }
+
+      } catch (error) {
+        lastError = error;
+        const errorMessage = error.message || '';
+        
+        // Verificar se é erro de rate limit (429) ou quota excedida
+        if (errorMessage.includes('429') || errorMessage.includes('Too Many Requests') || errorMessage.includes('Quota exceeded')) {
+          console.warn(`⚠️  Quota/Rate limit excedido (erro 429)`);
+          
+          // Extrair tempo de retry da mensagem de erro
+          this.quotaResetTime = this.extractRetryTime(errorMessage);
+          this.quotaExceeded = true;
+          
+          const waitSeconds = Math.ceil((this.quotaResetTime - Date.now()) / 1000);
+          console.warn(`   Próximo reset em: ${waitSeconds}s`);
+          console.warn(`   Usando templates para requisições subsequentes...`);
+          
+          // Usar template imediatamente
+          return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
+        }
+        
+        // Para outros erros, tentar novamente com backoff exponencial
+        if (attempt < this.options.maxRetries - 1) {
+          const delay = Math.min(
+            this.options.baseDelay * Math.pow(2, attempt),
+            this.options.maxDelay
+          );
+          console.warn(`⚠️  Tentativa ${attempt + 1}/${this.options.maxRetries} falhou.`);
+          console.warn(`   Aguardando ${delay}ms antes de retry...`);
+          await this.sleep(delay);
+        }
+      }
+    }
+    
+    // Se todas as tentativas falharam, usar template
+    console.warn('⚠️  Todas as tentativas falharam, usando template:', lastError?.message);
+    return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
   }
 
   /**
@@ -152,22 +249,30 @@ Agora crie APENAS a frase narrativa (com os números ${problem.num1} e ${problem
   }
 
   /**
-   * Gera múltiplos contextos em lote com rate limiting
+   * Gera múltiplos contextos em lote com rate limiting gerenciado internamente
    */
-  async generateBatch(problems, delayMs = 200) {
+  async generateBatch(problems) {
     const contexts = [];
 
     for (const problem of problems) {
       const context = await this.generateContext(problem);
       contexts.push(context);
-
-      // Respeitar rate limits (máx 15 requests/minuto)
-      if (this.enabled) {
-        await this.sleep(delayMs);
-      }
+      // Rate limiting agora é gerenciado internamente pelo waitForRateLimit
     }
 
     return contexts;
+  }
+
+  /**
+   * Retorna estatísticas de uso da API
+   */
+  getUsageStats() {
+    return {
+      requestCount: this.requestCount,
+      quotaExceeded: this.quotaExceeded,
+      quotaResetTime: this.quotaResetTime,
+      requestsPerMinute: this.options.requestsPerMinute
+    };
   }
 
   /**

@@ -158,11 +158,6 @@ async function main() {
           
           // Salvar no cache
           await cacheManager.set(problem, context);
-          
-          // Delay para respeitar rate limits
-          if (aiEnhancer && aiEnhancer.isEnabled()) {
-            await sleep(200);
-          }
         } else {
           console.log(`   ✓ Cache: ${problem.num1} ${problem.operation} ${problem.num2}`);
         }
@@ -223,7 +218,22 @@ async function main() {
     console.log(`   - Adição: ${cacheStats.byType?.addition || 0}`);
     console.log(`   - Subtração: ${cacheStats.byType?.subtraction || 0}\n`);
 
-    // 9. Resumo final
+    // 9. Exibir estatísticas da API (se IA habilitada)
+    if (aiEnhancer && aiEnhancer.isEnabled()) {
+      const apiStats = aiEnhancer.getUsageStats();
+      console.log('🤖 Estatísticas da API Gemini:');
+      console.log(`   - Requisições realizadas: ${apiStats.requestCount}`);
+      console.log(`   - Limite por minuto: ${apiStats.requestsPerMinute}`);
+      if (apiStats.quotaExceeded) {
+        const resetTime = new Date(apiStats.quotaResetTime).toLocaleTimeString('pt-BR');
+        console.log(`   - ⚠️  Quota excedida. Reset em: ${resetTime}`);
+      } else {
+        console.log(`   - Status: ✅ Normal`);
+      }
+      console.log();
+    }
+
+    // 10. Resumo final
     console.log('═══════════════════════════════════════');
     console.log('✅ GERAÇÃO CONCLUÍDA COM SUCESSO!\n');
     console.log('📁 Arquivos gerados:');

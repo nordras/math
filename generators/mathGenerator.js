@@ -30,7 +30,9 @@ class MathGenerator {
   }
 
   /**
-   * Embaralha um array usando Fisher-Yates
+   * Embaralha um array usando Fisher-Yates 
+   * https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+   * https://youtu.be/4zx5bM2OcvA
    */
   shuffle(array) {
     const shuffled = [...array];
