@@ -69,7 +69,7 @@ class GridFormatter {
 
 ## 📋 Instruções
 
-Resolva todos os problemas abaixo. Tome seu tempo e confira suas respostas!
+Resolva todos os problemas abaixo, arme as contas. Tome seu tempo e confira suas respostas!
 
 - ✏️  Escreva a resposta em cada linha abaixo do problema
 - 🧮 Use papel de rascunho se precisar
