@@ -2,7 +2,7 @@
 
 /**
  * Gerador de Exercícios de Matemática com IA
- * Gera 50 problemas mistos de adição e subtração
+ * Gera problemas mistos de adição e subtração (quantidade configurável)
  */
 
 require('dotenv').config();
@@ -36,6 +36,18 @@ if (args.includes('--easy')) {
 }
 if (args.includes('--hard')) {
   CONFIG.difficulty = 'hard';
+}
+
+// Verificar parâmetro de quantidade
+const countIndex = args.indexOf('--count');
+if (countIndex !== -1 && args[countIndex + 1]) {
+  const count = parseInt(args[countIndex + 1]);
+  if (!isNaN(count) && count > 0) {
+    CONFIG.totalProblems = count;
+  } else {
+    console.error('❌ Erro: --count requer um número válido maior que 0');
+    process.exit(1);
+  }
 }
 
 /**
@@ -95,7 +107,7 @@ async function main() {
     console.log(`   - Dificuldade: ${CONFIG.difficulty}\n`);
 
     // 3. Gerar exercício em grade (sem contexto narrativo)
-    console.log('📄 Gerando folha de exercícios (grade)...');
+    console.log('${CONFIG.totalProblems} Gerando folha de exercícios (grade)...');
     const gridExercise = gridFormatter.generateComplete(problems, stats, {
       includeStats: true,
       includeAnswerKey: false
@@ -119,7 +131,7 @@ async function main() {
     });
     const answerKeyPath = path.join(
       CONFIG.outputDir,
-      `exercicio-50-problemas-${CONFIG.difficulty}-gabarito.md`
+      `exercicio-${CONFIG.totalProblems}-problemas-${CONFIG.difficulty}-gabarito.md`
     );
     await fs.writeFile(answerKeyPath, gridWithAnswers, 'utf-8');
     console.log(`✅ Gabarito salvo: ${answerKeyPath}\n`);
