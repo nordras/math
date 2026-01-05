@@ -3,8 +3,8 @@
  * Encapsula a lógica de negócio do AIEnhancer
  */
 
-const AIEnhancer = require('../generators/aiEnhancer');
-const CacheManager = require('../utils/cache');
+import AIEnhancer from '../generators/aiEnhancer.js';
+import CacheManager from '../utils/cache.js';
 
 export class AIEnhancerService {
   /**

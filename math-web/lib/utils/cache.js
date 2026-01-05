@@ -3,8 +3,8 @@
  * Evita chamadas repetidas e melhora performance
  */
 
-const fs = require('fs').promises;
-const path = require('path');
+import { promises as fs } from 'fs';
+import path from 'path';
 
 class CacheManager {
   constructor(cacheDir = './cache') {
@@ -264,4 +264,4 @@ class CacheManager {
   }
 }
 
-module.exports = CacheManager;
+export default CacheManager;

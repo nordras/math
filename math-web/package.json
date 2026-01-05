@@ -13,6 +13,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "daisyui": "^5.5.14",
     "dotenv": "^17.2.3",
     "nanoid": "^5.1.6",

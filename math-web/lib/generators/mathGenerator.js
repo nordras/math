@@ -231,4 +231,4 @@ class MathGenerator {
   }
 }
 
-module.exports = MathGenerator;
+export default MathGenerator;

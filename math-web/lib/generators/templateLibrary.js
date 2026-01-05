@@ -110,4 +110,4 @@ class TemplateLibrary {
   }
 }
 
-module.exports = TemplateLibrary;
+export default TemplateLibrary;
