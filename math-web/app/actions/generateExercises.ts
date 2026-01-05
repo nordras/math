@@ -6,6 +6,7 @@ import { MathGeneratorService } from '@/lib/services/MathGeneratorService';
 import { AIEnhancerService } from '@/lib/services/AIEnhancerService';
 import { HTMLFormatterService } from '@/lib/services/HTMLFormatterService';
 import { getExerciseCache } from '@/lib/cache/exerciseCache';
+import type { GenerateProblemsResult } from '@/lib/types/math';
 
 // Schema de validação
 const GenerateExercisesSchema = z.object({
@@ -15,6 +16,13 @@ const GenerateExercisesSchema = z.object({
   includeAnswerKey: z.boolean().default(false),
   studentName: z.string().default('Cecília'),
   format: z.enum(['grid', 'contextual', 'both']).default('grid'),
+  digitConfigs: z.array(z.object({
+    digits: z.number().int().min(1).max(5),
+    questions: z.number().int().min(0).max(100),
+    operation: z.enum(['addition', 'subtraction', 'multiplication', 'division', 'mixed']),
+    divisorMin: z.number().int().min(1).max(100).optional(),
+    divisorMax: z.number().int().min(1).max(100).optional(),
+  })).optional(),
 });
 
 export type GenerateExercisesInput = z.infer<typeof GenerateExercisesSchema>;
@@ -38,8 +46,11 @@ export async function generateExercises(
     const validatedInput = GenerateExercisesSchema.parse(input);
 
     // Validar opções e gerar problemas
-    const options = MathGeneratorService.validateOptions(validatedInput);
-    const { problems, stats } = MathGeneratorService.generateProblems(options);
+    const options = MathGeneratorService.validateOptions({
+      ...validatedInput,
+      digitConfigs: validatedInput.digitConfigs,
+    });
+    const { problems, stats } = MathGeneratorService.generateProblems(options) as GenerateProblemsResult;
 
     const cache = getExerciseCache();
     const result: GenerateExercisesResult = { success: true };
