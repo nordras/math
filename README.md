@@ -2,14 +2,10 @@
 
 Bem-vinda ao seu material de matemática, Cecília! Este material foi criado especialmente para você aprender de forma divertida e progressiva.
 
-## 🎯 Como Usar Este Material
+<img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
 
-### Para Cecília
-- Leia cada lição com calma
-- Faça os exercícios na ordem
-- Se tiver dúvida, peça ajuda a um adulto
-- Não precisa fazer tudo de uma vez!
-- Cada lição foi desenhada para 20-30 minutos de estudo
+
+## 🎯 Como Usar Este Material
 
 ## 📖 Multiplicação
 
