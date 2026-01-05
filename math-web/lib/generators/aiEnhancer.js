@@ -186,11 +186,9 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
         // Incrementar contador de requisições bem-sucedidas
         this.requestCount++;
 
-        // Validar a resposta
         if (this.validateContext(text)) {
           return text;
         } else {
-          console.warn('⚠️  Contexto da IA falhou na validação, usando template');
           return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
         }
 
@@ -200,17 +198,8 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
         
         // Verificar se é erro de rate limit (429) ou quota excedida
         if (errorMessage.includes('429') || errorMessage.includes('Too Many Requests') || errorMessage.includes('Quota exceeded')) {
-          console.warn(`⚠️  Quota/Rate limit excedido (erro 429)`);
-          
-          // Extrair tempo de retry da mensagem de erro
           this.quotaResetTime = this.extractRetryTime(errorMessage);
           this.quotaExceeded = true;
-          
-          const waitSeconds = Math.ceil((this.quotaResetTime - Date.now()) / 1000);
-          console.warn(`   Próximo reset em: ${waitSeconds}s`);
-          console.warn(`   Usando templates para requisições subsequentes...`);
-          
-          // Usar template imediatamente
           return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
         }
         
@@ -220,15 +209,11 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
             this.options.baseDelay * Math.pow(2, attempt),
             this.options.maxDelay
           );
-          console.warn(`⚠️  Tentativa ${attempt + 1}/${this.options.maxRetries} falhou.`);
-          console.warn(`   Aguardando ${delay}ms antes de retry...`);
           await this.sleep(delay);
         }
       }
     }
     
-    // Se todas as tentativas falharam, usar template
-    console.warn('⚠️  Todas as tentativas falharam, usando template:', lastError?.message);
     return this.templateLibrary.getContext(problem.type, problem.num1, problem.num2);
   }
 
@@ -289,14 +274,8 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
         const errorMessage = error.message || '';
         
         if (errorMessage.includes('429') || errorMessage.includes('Too Many Requests') || errorMessage.includes('Quota exceeded')) {
-          console.warn(`⚠️  Quota/Rate limit excedido (erro 429)`);
           this.quotaResetTime = this.extractRetryTime(errorMessage);
           this.quotaExceeded = true;
-          
-          const waitSeconds = Math.ceil((this.quotaResetTime - Date.now()) / 1000);
-          console.warn(`   Próximo reset em: ${waitSeconds}s`);
-          console.warn(`   Usando templates para todas as requisições...`);
-          
           return problems.map(p => this.templateLibrary.getContext(p.type, p.num1, p.num2));
         }
         
@@ -305,15 +284,11 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
             this.options.baseDelay * Math.pow(2, attempt),
             this.options.maxDelay
           );
-          console.warn(`⚠️  Tentativa ${attempt + 1}/${this.options.maxRetries} falhou.`);
-          console.warn(`   Aguardando ${delay}ms antes de retry...`);
           await this.sleep(delay);
         }
       }
     }
     
-    // Se todas as tentativas falharam, usar templates
-    console.warn('⚠️  Todas as tentativas falharam, usando templates:', lastError?.message);
     return problems.map(p => this.templateLibrary.getContext(p.type, p.num1, p.num2));
   }
 
