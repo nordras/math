@@ -15,12 +15,12 @@ export class HTMLFormatterService {
     const { includeAnswerKey = false, studentName = 'Cecília' } = options;
 
     const title = includeAnswerKey
-      ? `Gabarito - ${stats.total} Exercícios de Matemática`
-      : `${stats.total} Exercícios de Matemática para ${studentName}`;
+      ? `Gabarito - ${stats.totalProblems || stats.total || problems.length} Exercícios de Matemática`
+      : `${stats.totalProblems || stats.total || problems.length} Exercícios de Matemática para ${studentName}`;
 
     const problemsHtml = problems
       .map((problem, index) => {
-        const display = `${problem.num1} ${problem.operation} ${problem.num2}`;
+        const display = problem.operation;
         const answer = includeAnswerKey ? ` = <strong>${problem.answer}</strong>` : ' = _____';
         
         return `<div class="problem-item">
@@ -182,9 +182,11 @@ export class HTMLFormatterService {
   <div class="header">
     <h1>${title}</h1>
     <div class="stats">
-      <span class="stats-badge">Total: ${stats.total}</span>
-      <span class="stats-badge">Adição: ${stats.addition}</span>
-      <span class="stats-badge">Subtração: ${stats.subtraction}</span>
+      <span class="stats-badge">Total: ${stats.totalProblems || problems.length}</span>
+      <span class="stats-badge">Adição: ${stats.additions || 0}</span>
+      <span class="stats-badge">Subtração: ${stats.subtractions || 0}</span>
+      ${stats.multiplications ? `<span class="stats-badge">Multiplicação: ${stats.multiplications}</span>` : ''}
+      ${stats.divisions ? `<span class="stats-badge">Divisão: ${stats.divisions}</span>` : ''}
       <span class="stats-badge">Dificuldade: ${this.getDifficultyLabel(stats.difficulty)}</span>
     </div>
     ${!includeAnswerKey ? `<div style="margin-top: 15px; font-size: 14px;">Nome: ___________________________ Data: ___/___/___</div>` : ''}
@@ -193,6 +195,29 @@ export class HTMLFormatterService {
   <div class="problems-grid">
     ${problemsHtml}
   </div>
+
+  ${!includeAnswerKey ? `
+  <div class="score-section" style="margin-top: 40px; padding: 20px; border: 2px solid #ff6b9d; border-radius: 12px; text-align: center;">
+    <h2 style="color: #ff6b9d; margin-bottom: 15px; font-size: 22px;">📊 Meu Resultado</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+      <div style="background: #f0f0f0; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Total de Questões</div>
+        <div style="font-size: 32px; font-weight: bold; color: #c084fc;">${stats.totalProblems || problems.length}</div>
+      </div>
+      <div style="background: #f0fdf4; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Acertos</div>
+        <div style="font-size: 32px; font-weight: bold; color: #36d399;">____</div>
+      </div>
+      <div style="background: #fff7ed; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Minha Nota</div>
+        <div style="font-size: 32px; font-weight: bold; color: #fb923c;">____</div>
+      </div>
+    </div>
+    <div style="margin-top: 20px; color: #666; font-size: 14px;">
+      🌟 Parabéns pelo esforço! Continue praticando!
+    </div>
+  </div>
+  ` : ''}
 
   <div class="footer">
     <p>Material gerado com ❤️ para ${studentName} • ${new Date().toLocaleDateString('pt-BR')}</p>
@@ -420,6 +445,29 @@ export class HTMLFormatterService {
   </div>
 
   ${problemsHtml}
+
+  ${!includeAnswerKey ? `
+  <div class="score-section" style="margin-top: 40px; padding: 20px; border: 2px solid #c084fc; border-radius: 12px; text-align: center;">
+    <h2 style="color: #c084fc; margin-bottom: 15px; font-size: 22px;">📊 Meu Resultado</h2>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+      <div style="background: #f0f0f0; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Total de Questões</div>
+        <div style="font-size: 32px; font-weight: bold; color: #c084fc;">${contextualProblems.length}</div>
+      </div>
+      <div style="background: #f0fdf4; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Acertos</div>
+        <div style="font-size: 32px; font-weight: bold; color: #36d399;">____</div>
+      </div>
+      <div style="background: #fff7ed; padding: 15px 30px; border-radius: 8px;">
+        <div style="font-size: 14px; color: #666;">Minha Nota</div>
+        <div style="font-size: 32px; font-weight: bold; color: #fb923c;">____</div>
+      </div>
+    </div>
+    <div style="margin-top: 20px; color: #666; font-size: 14px;">
+      🌟 Parabéns pelo esforço! Continue praticando!
+    </div>
+  </div>
+  ` : ''}
 
   <div class="footer">
     <p>Material gerado com ❤️ para ${studentName} • ${new Date().toLocaleDateString('pt-BR')}</p>
