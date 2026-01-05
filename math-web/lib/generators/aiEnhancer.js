@@ -3,8 +3,8 @@
  * Gera contextos narrativos diversos para problemas matemáticos
  */
 
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const TemplateLibrary = require('./templateLibrary');
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import TemplateLibrary from './templateLibrary.js';
 
 class AIEnhancer {
   constructor(apiKey, options = {}) {
@@ -393,4 +393,4 @@ FORMATO DE SAÍDA OBRIGATÓRIO:
   }
 }
 
-module.exports = AIEnhancer;
+export default AIEnhancer;
