@@ -1,6 +1,6 @@
-# 📚 Aprendendo Matemática com Cecília
+# 📚 Aprendendo Matemática
 
-Bem-vinda ao seu material de matemática, Cecília! Este material foi criado especialmente para você aprender de forma divertida e progressiva.
+Bem-vindo(a) ao material de matemática! Este material foi criado para aprender de forma divertida e progressiva.
 
 <img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
 
@@ -48,4 +48,4 @@ Bem-vinda ao seu material de matemática, Cecília! Este material foi criado esp
 
 ---
 
-*Material criado com ❤️ para Cecília - Dezembro 2025*
+*Material criado com ❤️ - Dezembro 2025*
