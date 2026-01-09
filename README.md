@@ -1,9 +1,74 @@
-# 📚 Aprendendo Matemática
+# 📚 Gerador de Exercícios de Matemática com IA
 
-Bem-vindo(a) ao material de matemática! Este material foi criado para aprender de forma divertida e progressiva.
+Sistema inteligente para gerar exercícios de matemática personalizados com contextos narrativos criados por IA.
 
 <img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
 
+## 🚀 Início Rápido
+
+```bash
+# Instalar dependências
+npm install
+
+# Configurar variáveis de ambiente
+cp .env.example .env.local
+# Edite .env.local e adicione sua GEMINI_API_KEY
+
+# Rodar em desenvolvimento
+npm run dev
+
+# Compilar para produção
+npm run build
+npm start
+```
+
+Acesse: http://localhost:3000
+
+## ✨ Funcionalidades
+
+- 🎯 **Geração Inteligente**: Exercícios de adição, subtração, multiplicação e divisão
+- 🤖 **IA Contextual**: Google Gemini cria problemas narrativos únicos
+- 👦 **Nomes Dinâmicos**: Pool de 18 nomes multilíngues (PT/EN)
+- 📊 **Formatos Múltiplos**: Grade compacta ou problemas contextualizados
+- 📝 **Configurável**: Controle de dígitos, operações e dificuldade
+- 💾 **Cache Inteligente**: Sistema de cache para performance
+- ✅ **Gabarito Opcional**: Versões com e sem respostas
+
+## 📁 Estrutura do Projeto
+
+```
+math/
+├── app/                      # Next.js App Router (páginas e rotas)
+├── components/               # Componentes React
+│   └── GeneratorForm.tsx     # Formulário principal
+├── lib/
+│   ├── constants/            
+│   │   └── namePool.ts/js    # Pool de nomes multilíngues (18 nomes)
+│   ├── generators/           
+│   │   ├── mathGenerator.js   # Gerador de problemas matemáticos
+│   │   ├── aiEnhancer.js      # Integração com Gemini API
+│   │   └── templateLibrary.js # Templates de fallback
+│   ├── services/             
+│   │   ├── MathGeneratorService.ts  # Serviço de geração
+│   │   ├── AIEnhancerService.js     # Serviço de IA
+│   │   └── HTMLFormatterService.js  # Formatação HTML
+│   ├── cache/                
+│   │   └── exerciseCache.js   # Cache em memória
+│   └── utils/                
+│       └── cache.js           # Cache de contextos IA
+├── public/                   # Assets estáticos
+├── __tests__/                # Testes Jest
+├── assets/                   # SVGs e recursos
+└── prototype-math/           # ⚠️ DEPRECATED - Não usar
+    └── DEPRECATED.md         # Aviso de depreciação
+```
+
+## 🎨 Pool de Nomes
+
+Sistema de nomes abstratos multilíngues para máxima variabilidade:
+
+**Femininos**: Luna, Maya, Nina, Mia, Jade, Lara, Sofia, Ana, Emma  
+**Masculinos**: Leo, Noah, Davi, Kai, Lucas, Theo, Samuel, Enzo, Miguel
 
 ## 🎯 Como Usar Este Material
 
@@ -40,6 +105,39 @@ Bem-vindo(a) ao material de matemática! Este material foi criado para aprender 
 - **Semanas 9-10**: Lições 9-10 (revisão e desafios)
 
 **Importante**: Este cronograma é apenas uma sugestão. Ajuste conforme o ritmo de aprendizado.
+
+## 🛠️ Tecnologias
+
+- **Next.js 16** (App Router + Turbopack)
+- **TypeScript** + **JavaScript**
+- **Google Gemini API** (generative-ai)
+- **Tailwind CSS** + **DaisyUI**
+- **Jest** para testes
+
+## 📝 Configuração
+
+Crie `.env.local` com:
+
+```env
+GEMINI_API_KEY=sua_chave_aqui
+```
+
+## 🧪 Testes
+
+```bash
+npm test              # Rodar todos os testes
+npm run test:watch    # Modo watch
+```
+
+## 📦 Scripts Disponíveis
+
+```bash
+npm run dev           # Desenvolvimento
+npm run build         # Build de produção
+npm start             # Servir produção
+npm test              # Testes
+npm run lint          # Linter
+```
 
 ## Fontes
 - https://storyset.com

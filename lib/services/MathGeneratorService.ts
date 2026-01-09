@@ -1,6 +1,6 @@
 /**
- * Serviço para geração de problemas matemáticos
- * Encapsula a lógica de negócio do MathGenerator
+ * Service for generating math problems
+ * Encapsulates MathGenerator business logic
  */
 
 import type { DigitConfig, MathProblem } from '../types/math';
@@ -39,12 +39,12 @@ export class MathGeneratorService {
       digitConfigs = null,
     } = options;
 
-    // Se digitConfigs foi fornecido, gerar problemas baseado nele
+    // If digitConfigs was provided, generate problems based on it
     if (digitConfigs && Array.isArray(digitConfigs) && digitConfigs.length > 0) {
       return this.generateFromDigitConfigs(digitConfigs);
     }
 
-    // Fallback para o modo antigo
+    // Fallback to old mode
     const generator = new MathGenerator({
       totalProblems,
       difficulty,
@@ -68,7 +68,7 @@ export class MathGeneratorService {
       
       if (questions <= 0) continue;
       
-      // Determinar range baseado nos algarismos
+      // Determine range based on digits
       const min = Math.pow(10, digits - 1);
       const max = Math.pow(10, digits) - 1;
       
@@ -142,7 +142,7 @@ export class MathGeneratorService {
       }
     }
     
-    // Calcular estatísticas
+    // Calculate statistics
     const stats = {
       totalProblems: allProblems.length,
       additions: allProblems.filter(p => p.type === 'addition').length,
