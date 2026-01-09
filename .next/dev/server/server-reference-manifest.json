@@ -1,0 +1,21 @@
+{
+  "node": {
+    "40772723c14579758b17be2e8fe43eb50d0cb9bfd1": {
+      "workers": {
+        "app/page": {
+          "moduleId": "[project]/.next-internal/server/app/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/generateExercises.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "generateExercises",
+          "filename": "app/actions/generateExercises.ts"
+        }
+      },
+      "layer": {
+        "app/page": "action-browser"
+      },
+      "filename": "app/actions/generateExercises.ts",
+      "exportedName": "generateExercises"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "956rbDp46ZJy2JdZCFZBH8x0B4Jp9PVZPCWy5rzFCLM="
+}
