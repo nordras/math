@@ -2,7 +2,7 @@
 
 # 📚 Math Exercise Generator
 
-An educational tool for creating personalized math exercises with AI-generated contexts.
+An educational tool for creating personalized math exercises with and without AI-generated contexts.
 
 **🌐 Live Demo:** [https://math-rust-tau.vercel.app/](https://math-rust-tau.vercel.app/)
 
