@@ -1,0 +1,456 @@
+<mxfile host="app.diagrams.net" modified="2026-01-09T00:00:00.000Z" agent="DrawIO" version="24.0.0" etag="arquitetura-sistema" type="device">
+  <diagram id="arquitetura-geral" name="Arquitetura Geral">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Frontend Layer -->
+        <mxCell id="frontend-title" value="Frontend - Next.js App Router" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1f5ff;strokeColor=#0088cc;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="380" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="page-tsx" value="app/page.tsx&lt;br&gt;Landing Page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="frontend-title">
+          <mxGeometry x="20" y="40" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="generator-form" value="GeneratorForm.tsx&lt;br&gt;Formulário Config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="frontend-title">
+          <mxGeometry x="20" y="120" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="generate-exercises" value="generateExercises.ts&lt;br&gt;Server Action" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;" vertex="1" parent="frontend-title">
+          <mxGeometry x="210" y="40" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="exercise-page" value="exercise/[id]/page.tsx&lt;br&gt;Visualização" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="frontend-title">
+          <mxGeometry x="210" y="120" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Services Layer -->
+        <mxCell id="services-title" value="Camada de Serviços" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f0f9ff;strokeColor=#0088cc;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="40" y="280" width="380" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="math-service" value="MathGeneratorService&lt;br&gt;Geração de Problemas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="services-title">
+          <mxGeometry x="20" y="40" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-service" value="AIEnhancerService&lt;br&gt;Contextualização IA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="services-title">
+          <mxGeometry x="200" y="40" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="html-service" value="HTMLFormatterService&lt;br&gt;Formatação HTML" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="services-title">
+          <mxGeometry x="20" y="120" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cache-service" value="ExerciseCache&lt;br&gt;Sistema de Cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="services-title">
+          <mxGeometry x="200" y="120" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cache-note" value="Cache em memória&lt;br&gt;TTL: 24h" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#666666;" vertex="1" parent="services-title">
+          <mxGeometry x="200" y="190" width="160" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- Generators Layer -->
+        <mxCell id="generators-title" value="Geradores e Utilitários" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="480" y="40" width="280" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="math-generator" value="mathGenerator.js&lt;br&gt;Lógica Matemática" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="40" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ai-enhancer" value="aiEnhancer.js&lt;br&gt;Integração Gemini API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="120" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="template-library" value="templateLibrary.js&lt;br&gt;Templates Fallback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="200" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="name-pool" value="namePool.ts&lt;br&gt;18 Nomes Multilíngues&lt;br&gt;(PT/EN)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="280" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="nanoid" value="nanoid&lt;br&gt;Geração de IDs únicos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="360" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gemini-api" value="🤖 Google Gemini API&lt;br&gt;GEMINI_API_KEY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#cc0000;fontStyle=1;" vertex="1" parent="generators-title">
+          <mxGeometry x="20" y="440" width="240" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Data Flow Arrows -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="page-tsx" target="generator-form">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="generator-form" target="generate-exercises">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="generate-exercises" target="math-service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="generate-exercises" target="ai-service">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#82b366;dashed=1;" edge="1" parent="1" source="math-service" target="math-generator">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#9673a6;dashed=1;" edge="1" parent="1" source="ai-service" target="ai-enhancer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arrow7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="1" source="ai-enhancer" target="template-library">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="220" as="sourcePoint" />
+            <mxPoint x="640" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#d6b656;dashed=1;" edge="1" parent="1" source="math-generator" target="name-pool">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="140" as="sourcePoint" />
+            <mxPoint x="640" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#cc0000;dashed=1;" edge="1" parent="1" source="ai-enhancer" target="gemini-api">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="220" as="sourcePoint" />
+            <mxPoint x="640" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="cache-service" target="exercise-page">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Labels -->
+        <mxCell id="label1" value="Submete Config" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#0088cc;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="170" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label2" value="Gera Problemas" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="310" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label3" value="Cache HTML" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#0088cc;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="235" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="label4" value="API Call" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#cc0000;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="390" width="80" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend-title" value="Legenda" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#666666;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="40" width="300" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" value="Frontend (Next.js + React)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="legend-title">
+          <mxGeometry x="10" y="30" width="280" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2" value="Server Actions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;fontSize=11;" vertex="1" parent="legend-title">
+          <mxGeometry x="10" y="60" width="280" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3" value="Services (Lógica de Negócio)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="legend-title">
+          <mxGeometry x="10" y="90" width="280" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend4" value="Geradores e Utilitários" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="legend-title">
+          <mxGeometry x="10" y="120" width="280" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend5" value="APIs Externas / Config" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6e6;strokeColor=#cc0000;fontSize=11;" vertex="1" parent="legend-title">
+          <mxGeometry x="10" y="150" width="280" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- Tech Stack -->
+        <mxCell id="tech-title" value="Stack Tecnológica" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#666666;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="280" width="300" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="tech-content" value="&lt;b&gt;Frontend:&lt;/b&gt;&lt;br&gt;• Next.js 16 (App Router)&lt;br&gt;• React 19 (Server Components)&lt;br&gt;• TypeScript&lt;br&gt;• TailwindCSS + DaisyUI&lt;br&gt;&lt;br&gt;&lt;b&gt;Backend:&lt;/b&gt;&lt;br&gt;• Node.js&lt;br&gt;• Server Actions (Next.js)&lt;br&gt;• Zod (Validação)&lt;br&gt;&lt;br&gt;&lt;b&gt;IA:&lt;/b&gt;&lt;br&gt;• Google Gemini API&lt;br&gt;&lt;br&gt;&lt;b&gt;Dev Tools:&lt;/b&gt;&lt;br&gt;• Biome (Linter)&lt;br&gt;• Jest (Testes)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="tech-title">
+          <mxGeometry x="10" y="30" width="280" height="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  
+  <diagram id="fluxo-sequencia" name="Fluxo de Geração">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Sequence Diagram -->
+        <mxCell id="seq-title" value="Fluxo de Geração de Exercícios" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="400" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Actors -->
+        <mxCell id="user" value="👤&lt;br&gt;Usuário" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="form" value="📝&lt;br&gt;Form" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="160" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="action" value="⚙️&lt;br&gt;Action" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="280" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="math" value="🔢&lt;br&gt;Math" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="400" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ai" value="🤖&lt;br&gt;AI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="520" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cache" value="💾&lt;br&gt;Cache" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="640" y="70" width="80" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Lifelines -->
+        <mxCell id="line1" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="130" as="sourcePoint" />
+            <mxPoint x="80" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line2" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="130" as="sourcePoint" />
+            <mxPoint x="200" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line3" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="130" as="sourcePoint" />
+            <mxPoint x="320" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line4" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="130" as="sourcePoint" />
+            <mxPoint x="440" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line5" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="560" y="130" as="sourcePoint" />
+            <mxPoint x="560" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="line6" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=2;strokeColor=#999999;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="680" y="130" as="sourcePoint" />
+            <mxPoint x="680" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Messages -->
+        <mxCell id="msg1" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="160" as="sourcePoint" />
+            <mxPoint x="200" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg1-label" value="Configura exercícios" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg2" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="190" as="sourcePoint" />
+            <mxPoint x="320" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg2-label" value="generateExercises(input)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="170" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg3" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="220" as="sourcePoint" />
+            <mxPoint x="440" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg3-label" value="generateProblems()" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="200" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg4" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="250" as="sourcePoint" />
+            <mxPoint x="320" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg4-label" value="{problems, stats}" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="230" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg5" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="290" as="sourcePoint" />
+            <mxPoint x="560" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg5-label" value="generateContextual() [useAI]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="270" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg6" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#cc0000;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="560" y="320" as="sourcePoint" />
+            <mxPoint x="560" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg6-label" value="Chama Gemini API" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#cc0000;" vertex="1" parent="1">
+          <mxGeometry x="570" y="330" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg7" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#9673a6;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="560" y="390" as="sourcePoint" />
+            <mxPoint x="320" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg7-label" value="contextualProblems" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="370" width="140" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg8" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="430" as="sourcePoint" />
+            <mxPoint x="680" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg8-label" value="cache.set(id, html)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="420" y="410" width="140" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg9" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="470" as="sourcePoint" />
+            <mxPoint x="200" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg9-label" value="{success, exerciseId}" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="450" width="120" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg10" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="510" as="sourcePoint" />
+            <mxPoint x="680" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg10-label" value="Navega para /exercise/[id]" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="490" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="msg11" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#0088cc;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="680" y="550" as="sourcePoint" />
+            <mxPoint x="80" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="msg11-label" value="Exibe HTML renderizado" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="280" y="530" width="180" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- Notes -->
+        <mxCell id="note1" value="✅ Validação com Zod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#d6b656;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="760" y="175" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" value="💾 Cache TTL: 24h" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#d6b656;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="760" y="415" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="note3" value="🎲 Nome aleatório do pool&lt;br&gt;se não fornecido" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#d6b656;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="760" y="265" width="140" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  
+  <diagram id="fluxo-digitconfigs" name="Fluxo DigitConfigs">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <mxCell id="flow-title" value="Fluxo de Configuração de Dígitos" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="400" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Input -->
+        <mxCell id="input" value="📋 Input do Usuário&lt;br&gt;&lt;br&gt;digitConfigs: [&lt;br&gt;  {digits: 2, questions: 10, ...},&lt;br&gt;  {digits: 3, questions: 12, ...}&lt;br&gt;]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1f5ff;strokeColor=#0088cc;align=left;verticalAlign=top;fontFamily=monospace;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="260" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Decision -->
+        <mxCell id="decision" value="digitConfigs&lt;br&gt;existe?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff4e6;strokeColor=#d79b00;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="220" width="160" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Path A - With Configs -->
+        <mxCell id="path-a" value="✅ Modo Configuração&lt;br&gt;&lt;br&gt;generateFromDigitConfigs()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4edda;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="370" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Path B - Legacy -->
+        <mxCell id="path-b" value="⚠️ Modo Legado&lt;br&gt;&lt;br&gt;generateMixedProblems()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="370" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Process Configs -->
+        <mxCell id="process" value="🔄 Para cada config:&lt;br&gt;&lt;br&gt;• digits (1-5)&lt;br&gt;• questions&lt;br&gt;• operation&lt;br&gt;• divisorMin/Max" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="80" y="490" width="200" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Generate Problems -->
+        <mxCell id="generate" value="🎲 Gera Problemas&lt;br&gt;&lt;br&gt;MathProblem[]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1ecf1;strokeColor=#0088cc;" vertex="1" parent="1">
+          <mxGeometry x="130" y="650" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Stats -->
+        <mxCell id="stats" value="📊 Estatísticas&lt;br&gt;&lt;br&gt;• totalProblems&lt;br&gt;• por operação" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d1ecf1;strokeColor=#0088cc;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="380" y="650" width="160" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows -->
+        <mxCell id="arrow-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="input" target="decision">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;" edge="1" parent="1" source="decision" target="path-a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-yes" value="Sim" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="330" width="40" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="1" source="decision" target="path-b">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="label-no" value="Não" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="250" width="40" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#82b366;" edge="1" parent="1" source="path-a" target="process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="process" target="generate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="arrow-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="1" source="path-b" target="generate">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="440" y="690" />
+              <mxPoint x="330" y="690" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="arrow-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#0088cc;" edge="1" parent="1" source="generate" target="stats">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Example -->
+        <mxCell id="example-title" value="Exemplo de Configuração" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#666666;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="620" y="80" width="400" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="example-code" value="const digitConfigs = [&lt;br&gt;  {&lt;br&gt;    digits: 2,           // 10-99&lt;br&gt;    questions: 10,       // 10 questões&lt;br&gt;    operation: 'addition'&lt;br&gt;  },&lt;br&gt;  {&lt;br&gt;    digits: 3,           // 100-999&lt;br&gt;    questions: 12,       // 12 questões&lt;br&gt;    operation: 'mixed'   // Misto&lt;br&gt;  },&lt;br&gt;  {&lt;br&gt;    digits: 2,&lt;br&gt;    questions: 8,&lt;br&gt;    operation: 'division',&lt;br&gt;    divisorMin: 2,       // Divisor mín&lt;br&gt;    divisorMax: 12       // Divisor máx&lt;br&gt;  }&lt;br&gt;];&lt;br&gt;&lt;br&gt;// Total: 30 questões" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=monospace;" vertex="1" parent="example-title">
+          <mxGeometry x="10" y="30" width="380" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- Operations -->
+        <mxCell id="ops-title" value="Operações Suportadas" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#666666;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="620" y="430" width="400" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ops-list" value="• addition: Soma (+)&lt;br&gt;• subtraction: Subtração (-)&lt;br&gt;• multiplication: Multiplicação (×)&lt;br&gt;• division: Divisão (÷)&lt;br&gt;• mixed: Misto (todas)&lt;br&gt;&lt;br&gt;Para divisão, pode definir:&lt;br&gt;  - divisorMin: Divisor mínimo&lt;br&gt;  - divisorMax: Divisor máximo" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=11;" vertex="1" parent="ops-title">
+          <mxGeometry x="10" y="30" width="380" height="140" as="geometry" />
+        </mxCell>
+        
+        <!-- Difficulty Note -->
+        <mxCell id="diff-note" value="📌 Nota: O número de dígitos define automaticamente a dificuldade:&lt;br&gt;• 1 dígito = easy&lt;br&gt;• 2 dígitos = medium&lt;br&gt;• 3+ dígitos = hard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3cd;strokeColor=#d6b656;fontSize=11;fontStyle=2;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="620" y="640" width="400" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
