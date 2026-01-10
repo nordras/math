@@ -29,7 +29,7 @@ export class MathGeneratorService {
       digitConfigs = null,
     } = options;
 
-    // If digitConfigs was provided, generate problems based on it
+    // If digit Configs and generate problems based on it
     if (digitConfigs && Array.isArray(digitConfigs) && digitConfigs.length > 0) {
       return this.generateFromDigitConfigs(digitConfigs);
     }
