@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { MathGeneratorService } from '@/lib/services/MathGeneratorService';
 import { AIEnhancerService } from '@/lib/services/AIEnhancerService';
 import { HTMLFormatterService } from '@/lib/services/HTMLFormatterService';
-import { getExerciseCache } from '@/lib/cache/exerciseCache';
+import { getExerciseCache } from '@/lib/cache/exerciseCache.js';
 import { getRandomName } from '@/lib/constants/namePool';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
