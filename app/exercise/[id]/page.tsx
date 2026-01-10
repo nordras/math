@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getExerciseCache } from '@/lib/cache/exerciseCache.js';
+import { getExerciseCache } from '@/lib/cache/exerciseCache';
 
 interface PageProps {
   params: Promise<{
