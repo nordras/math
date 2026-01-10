@@ -1,28 +1,22 @@
-import type { Metadata } from "next";
-import { Comic_Neue } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Comic_Neue } from 'next/font/google';
+import './globals.css';
 
 const comicNeue = Comic_Neue({
   weight: ['300', '400', '700'],
-  subsets: ["latin"],
-  variable: "--font-comic",
+  subsets: ['latin'],
+  variable: '--font-comic',
 });
 
 export const metadata: Metadata = {
-  title: "Gerador de Exercícios de Matemática com IA",
-  description: "Gerador personalizado de exercícios de matemática com IA e nomes aleatórios",
+  title: 'Gerador de Exercícios de Matemática',
+  description: 'Crie exercícios de matemática personalizados para estudantes',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" data-theme="vibrant">
-      <body className={`${comicNeue.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${comicNeue.variable} antialiased`}>{children}</body>
     </html>
   );
 }
