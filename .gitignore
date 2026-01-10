@@ -5,6 +5,9 @@
 Thumbs.db
 desktop.ini
 
+# nextjs
+.next/
+
 # Copilot e AI
 .github/copilot-instructions.md
 .copilot/
