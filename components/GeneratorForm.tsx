@@ -44,19 +44,25 @@ export default function GeneratorForm() {
         return;
       }
 
-      // Abrir exercícios em novas abas
+      // Abrir exercícios em novas abas exibindo HTML diretamente
       if (format === 'both') {
-        if (result.gridExerciseId) {
-          window.open(`/exercise/${result.gridExerciseId}`, '_blank');
+        if (result.gridHtml) {
+          const gridWindow = window.open('', '_blank');
+          gridWindow?.document.write(result.gridHtml);
+          gridWindow?.document.close();
         }
-        if (result.contextualExerciseId) {
+        if (result.contextualHtml) {
           // Delay para não bloquear popups
           setTimeout(() => {
-            window.open(`/exercise/${result.contextualExerciseId}`, '_blank');
+            const contextWindow = window.open('', '_blank');
+            contextWindow?.document.write(result.contextualHtml!);
+            contextWindow?.document.close();
           }, 100);
         }
-      } else if (result.exerciseId) {
-        window.open(`/exercise/${result.exerciseId}`, '_blank');
+      } else if (result.html) {
+        const exerciseWindow = window.open('', '_blank');
+        exerciseWindow?.document.write(result.html);
+        exerciseWindow?.document.close();
       }
 
       setIsLoading(false);

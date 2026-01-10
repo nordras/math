@@ -29,13 +29,6 @@ jest.mock('@/lib/services/HTMLFormatterService', () => ({
   },
 }));
 
-jest.mock('@/lib/cache/exerciseCache', () => ({
-  getExerciseCache: jest.fn(() => ({
-    set: jest.fn(),
-    get: jest.fn(),
-  })),
-}));
-
 jest.mock('nanoid', () => ({
   nanoid: jest.fn(() => 'test-id-123'),
 }));

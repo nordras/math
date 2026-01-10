@@ -27,12 +27,10 @@ Access: http://localhost:3000
 ## ✨ Features
 
 - 🎯 **Smart Generation**: Addition, subtraction, multiplication, and division exercises
-
 - 🤖 **Contextual AI**: Google Gemini creates unique narrative problems
 - 👦 **Dynamic Names**: Pool of 18 multilingual names (PT/EN)
 - 📊 **Multiple Formats**: Compact note or contextualized problems
 - 📝 **Configurable**: Control of digits, operations, and difficulty
-- 💾 **Smart Cache**: Caching system for performance
 - ✅ **Optional Template**: Versions with and without answers
 
 ## 📁 Project Structure
@@ -53,10 +51,7 @@ mathematics/
 │ │ ├── MathGeneratorService.ts # Generation service
 │ │ ├── AIEnhancerService.js # AI service
 │ │ └── HTMLFormatterService.js # HTML Formatting
-│ ├──cache/
-│ │ └── exercicioCache.js # In-memory cache
-│ └── utilisos/
-│ └── cache.js # AI context cache
+│ └── utils/ # Utility functions
 ├── public/ # Static assets
 ├── __tests__/ # Playful tests
 ├── ativos/ # SVGs and resources

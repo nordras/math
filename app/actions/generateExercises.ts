@@ -1,11 +1,9 @@
 'use server';
 
 import { z } from 'zod';
-import { nanoid } from 'nanoid';
 import { MathGeneratorService } from '@/lib/services/MathGeneratorService';
 import { AIEnhancerService } from '@/lib/services/AIEnhancerService';
 import { HTMLFormatterService } from '@/lib/services/HTMLFormatterService';
-import { getExerciseCache } from '@/lib/cache/exerciseCache';
 import { getRandomName } from '@/lib/constants/namePool';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
@@ -30,9 +28,9 @@ export type GenerateExercisesInput = z.infer<typeof GenerateExercisesSchema>;
 
 export interface GenerateExercisesResult {
   success: boolean;
-  exerciseId?: string;
-  gridExerciseId?: string;
-  contextualExerciseId?: string;
+  html?: string;
+  gridHtml?: string;
+  contextualHtml?: string;
   error?: string;
 }
 
@@ -56,27 +54,18 @@ export async function generateExercises(
     });
     const { problems, stats } = MathGeneratorService.generateProblems(options) as GenerateProblemsResult;
 
-    const cache = getExerciseCache();
     const result: GenerateExercisesResult = { success: true };
 
-    // Gerar exercício em grade
+    //Generate HTML grid format
     if (validatedInput.format === 'grid' || validatedInput.format === 'both') {
       const gridHtml = HTMLFormatterService.formatGrid(problems, stats, {
         includeAnswerKey: validatedInput.includeAnswerKey,
         studentName,
       });
 
-      const gridId = nanoid(10);
-      cache.set(gridId, {
-        type: 'grid',
-        html: gridHtml,
-        stats,
-        options: validatedInput,
-      });
-
-      result.gridExerciseId = gridId;
+      result.gridHtml = gridHtml;
       if (validatedInput.format === 'grid') {
-        result.exerciseId = gridId;
+        result.html = gridHtml;
       }
     }
 
@@ -99,17 +88,9 @@ export async function generateExercises(
             }
           );
 
-          const contextualId = nanoid(10);
-          cache.set(contextualId, {
-            type: 'contextual',
-            html: contextualHtml,
-            stats,
-            options: validatedInput,
-          });
-
-          result.contextualExerciseId = contextualId;
+          result.contextualHtml = contextualHtml;
           if (validatedInput.format === 'contextual') {
-            result.exerciseId = contextualId;
+            result.html = contextualHtml;
           }
         } catch (aiError: any) {
           console.error('Error generating contexts with AI:', aiError);
@@ -142,17 +123,9 @@ export async function generateExercises(
           }
         );
 
-        const contextualId = nanoid(10);
-        cache.set(contextualId, {
-          type: 'contextual',
-          html: contextualHtml,
-          stats,
-          options: validatedInput,
-        });
-
-        result.contextualExerciseId = contextualId;
+        result.contextualHtml = contextualHtml;
         if (validatedInput.format === 'contextual') {
-          result.exerciseId = contextualId;
+          result.html = contextualHtml;
         }
       }
     }
