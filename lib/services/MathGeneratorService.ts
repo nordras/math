@@ -3,20 +3,10 @@
  * Encapsulates MathGenerator business logic
  */
 
-import type { DigitConfig, MathProblem } from '../types/math';
+import type { DigitConfig, MathProblem, MathStats } from '../types/math';
 import MathGenerator from '../generators/mathGenerator.js';
 
 type Operation = 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
-
-interface MathStats {
-  totalProblems: number;
-  additions: number;
-  subtractions: number;
-  multiplications: number;
-  divisions: number;
-  difficulty: string;
-  digitConfigs?: DigitConfig[];
-}
 
 interface GenerateProblemsOptions {
   totalProblems?: number;
@@ -52,7 +42,17 @@ export class MathGeneratorService {
     });
 
     const problems = generator.generateMixedProblems();
-    const stats = generator.getStatistics(problems);
+    const oldStats = generator.getStatistics(problems);
+
+    // Convert old stats format to new MathStats format
+    const stats: MathStats = {
+      totalProblems: oldStats.total || problems.length,
+      additions: oldStats.addition || 0,
+      subtractions: oldStats.subtraction || 0,
+      multiplications: 0,
+      divisions: 0,
+      difficulty: oldStats.difficulty,
+    };
 
     return {
       problems,

@@ -6,7 +6,13 @@ import { generateExercises, type GenerateExercisesInput } from '@/app/actions/ge
 export default function GeneratorForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [digitConfigs, setDigitConfigs] = useState([
+  const [digitConfigs, setDigitConfigs] = useState<Array<{
+    digits: number;
+    questions: number;
+    operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
+    divisorMin?: number;
+    divisorMax?: number;
+  }>>([
     { digits: 2, questions: 10, operation: 'addition' as const },
     { digits: 3, questions: 12, operation: 'mixed' as const },
   ]);
@@ -214,7 +220,7 @@ export default function GeneratorForm() {
             <button
               type="button"
               onClick={() => {
-                setDigitConfigs([...digitConfigs, { digits: 2, questions: 10, operation: 'addition' }]);
+                setDigitConfigs([...digitConfigs, { digits: 2, questions: 10, operation: 'addition' as const }]);
               }}
               className="btn btn-outline btn-primary w-full"
             >
