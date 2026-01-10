@@ -1,9 +1,9 @@
 'use server';
 
 import { z } from 'zod';
-import { MathGeneratorService } from '@/lib/services/MathGeneratorService';
-import { AIEnhancerService } from '@/lib/services/AIEnhancerService';
-import { HTMLFormatterService } from '@/lib/services/HTMLFormatterService';
+import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
+import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
+import { formatGrid, formatContextual } from '@/lib/services/HTMLFormatterService';
 import { getRandomName } from '@/lib/constants/namePool';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
@@ -15,13 +15,17 @@ const GenerateExercisesSchema = z.object({
   includeAnswerKey: z.boolean().default(false),
   studentName: z.string().optional(),
   format: z.enum(['grid', 'contextual', 'both']).default('grid'),
-  digitConfigs: z.array(z.object({
-    digits: z.number().int().min(1).max(5),
-    questions: z.number().int().min(0).max(100),
-    operation: z.enum(['addition', 'subtraction', 'multiplication', 'division', 'mixed']),
-    divisorMin: z.number().int().min(1).max(100).optional(),
-    divisorMax: z.number().int().min(1).max(100).optional(),
-  })).optional(),
+  digitConfigs: z
+    .array(
+      z.object({
+        digits: z.number().int().min(1).max(5),
+        questions: z.number().int().min(0).max(100),
+        operation: z.enum(['addition', 'subtraction', 'multiplication', 'division', 'mixed']),
+        divisorMin: z.number().int().min(1).max(100).optional(),
+        divisorMax: z.number().int().min(1).max(100).optional(),
+      })
+    )
+    .optional(),
 });
 
 export type GenerateExercisesInput = z.infer<typeof GenerateExercisesSchema>;
@@ -48,17 +52,17 @@ export async function generateExercises(
     const studentName = validatedInput.studentName || getRandomName();
 
     // Validate options and generate problems
-    const options = MathGeneratorService.validateOptions({
+    const options = validateOptions({
       ...validatedInput,
       digitConfigs: validatedInput.digitConfigs,
     });
-    const { problems, stats } = MathGeneratorService.generateProblems(options) as GenerateProblemsResult;
+    const { problems, stats } = generateProblems(options) as GenerateProblemsResult;
 
     const result: GenerateExercisesResult = { success: true };
 
     //Generate HTML grid format
     if (validatedInput.format === 'grid' || validatedInput.format === 'both') {
-      const gridHtml = HTMLFormatterService.formatGrid(problems, stats, {
+      const gridHtml = formatGrid(problems, stats, {
         includeAnswerKey: validatedInput.includeAnswerKey,
         studentName,
       });
@@ -70,23 +74,15 @@ export async function generateExercises(
     }
 
     // Generate contextualized problems (with AI if enabled)
-    if (
-      validatedInput.format === 'contextual' ||
-      validatedInput.format === 'both'
-    ) {
+    if (validatedInput.format === 'contextual' || validatedInput.format === 'both') {
       if (validatedInput.useAI) {
         try {
-          const contextualProblems =
-            await AIEnhancerService.generateContextualProblems(problems, 10);
+          const contextualProblems = await generateContextualProblems(problems, 10);
 
-          const contextualHtml = HTMLFormatterService.formatContextual(
-            contextualProblems,
-            stats,
-            {
-              includeAnswerKey: validatedInput.includeAnswerKey,
-              studentName,
-            }
-          );
+          const contextualHtml = formatContextual(contextualProblems, stats, {
+            includeAnswerKey: validatedInput.includeAnswerKey,
+            studentName,
+          });
 
           result.contextualHtml = contextualHtml;
           if (validatedInput.format === 'contextual') {
@@ -96,32 +92,24 @@ export async function generateExercises(
           console.error('Error generating contexts with AI:', aiError);
           return {
             success: false,
-            error: `Error generating contexts with AI: ${aiError.message}`,
+            error: `Erro ao gerar contextos com IA: ${aiError.message}`,
           };
         }
       } else {
         // Use simple templates without AI
-        const simpleContextual = AIEnhancerService.selectProblems(
-          problems,
-          10
-        ).map((p) => ({
+        const simpleContextual = problems.slice(0, 10).map((p) => ({
           context: `${studentName} tem ${p.num1} itens e ${p.type === 'addition' ? 'ganhou' : 'deu'} ${p.num2} itens.`,
-          question:
-            p.type === 'addition' ? 'Quantos no total?' : 'Quantos restaram?',
+          question: p.type === 'addition' ? 'Quantos no total?' : 'Quantos restaram?',
           answer: p.answer,
           num1: p.num1,
           num2: p.num2,
           operation: p.operation,
         }));
 
-        const contextualHtml = HTMLFormatterService.formatContextual(
-          simpleContextual,
-          stats,
-          {
-            includeAnswerKey: validatedInput.includeAnswerKey,
-            studentName,
-          }
-        );
+        const contextualHtml = formatContextual(simpleContextual, stats, {
+          includeAnswerKey: validatedInput.includeAnswerKey,
+          studentName,
+        });
 
         result.contextualHtml = contextualHtml;
         if (validatedInput.format === 'contextual') {
@@ -135,7 +123,7 @@ export async function generateExercises(
     console.error('Error generating exercises:', error);
     return {
       success: false,
-      error: error.message || 'Unknown error generating exercises',
+      error: error.message || 'Erro desconhecido ao gerar exercícios',
     };
   }
 }
