@@ -19,7 +19,7 @@ export const NAME_POOL: NameInfo[] = [
   { name: 'Sofia', gender: 'feminine' },
   { name: 'Ana', gender: 'feminine' },
   { name: 'Emma', gender: 'feminine' },
-  
+
   // Masculine names
   { name: 'Leo', gender: 'masculine' },
   { name: 'Noah', gender: 'masculine' },
@@ -39,16 +39,14 @@ export const NAME_POOL: NameInfo[] = [
  * @returns Selected name
  */
 export function getRandomName(gender?: 'feminine' | 'masculine', seed?: number): string {
-  const filteredPool = gender 
-    ? NAME_POOL.filter(n => n.gender === gender)
-    : NAME_POOL;
-  
+  const filteredPool = gender ? NAME_POOL.filter((n) => n.gender === gender) : NAME_POOL;
+
   if (seed !== undefined) {
     // Deterministic randomization using seed
     const index = seed % filteredPool.length;
     return filteredPool[index].name;
   }
-  
+
   // True randomization
   const randomIndex = Math.floor(Math.random() * filteredPool.length);
   return filteredPool[randomIndex].name;
@@ -61,12 +59,10 @@ export function getRandomName(gender?: 'feminine' | 'masculine', seed?: number):
  * @returns Array of unique names
  */
 export function getRandomNames(count: number, gender?: 'feminine' | 'masculine'): string[] {
-  const filteredPool = gender 
-    ? NAME_POOL.filter(n => n.gender === gender)
-    : NAME_POOL;
-  
+  const filteredPool = gender ? NAME_POOL.filter((n) => n.gender === gender) : NAME_POOL;
+
   const shuffled = [...filteredPool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(count, shuffled.length)).map(n => n.name);
+  return shuffled.slice(0, Math.min(count, shuffled.length)).map((n) => n.name);
 }
 
 /**
@@ -77,15 +73,12 @@ export function getRandomNames(count: number, gender?: 'feminine' | 'masculine')
  * @returns Consistent name for the provided ID
  */
 export function getConsistentName(id: string | number, gender?: 'feminine' | 'masculine'): string {
-  const filteredPool = gender 
-    ? NAME_POOL.filter(n => n.gender === gender)
-    : NAME_POOL;
-  
+  const filteredPool = gender ? NAME_POOL.filter((n) => n.gender === gender) : NAME_POOL;
+
   // Generate simple hash from ID
-  const hash = typeof id === 'string' 
-    ? id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-    : id;
-  
+  const hash =
+    typeof id === 'string' ? id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) : id;
+
   const index = hash % filteredPool.length;
   return filteredPool[index].name;
 }
@@ -95,7 +88,7 @@ export function getConsistentName(id: string | number, gender?: 'feminine' | 'ma
  * Useful for AI prompts
  */
 export function getAllNamesString(): string {
-  return NAME_POOL.map(n => n.name).join(', ');
+  return NAME_POOL.map((n) => n.name).join(', ');
 }
 
 /**
@@ -105,5 +98,5 @@ export function getAllNamesString(): string {
  */
 export function containsAnyName(text: string): boolean {
   const lowerText = text.toLowerCase();
-  return NAME_POOL.some(n => lowerText.includes(n.name.toLowerCase()));
+  return NAME_POOL.some((n) => lowerText.includes(n.name.toLowerCase()));
 }
