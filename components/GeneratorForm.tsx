@@ -1,18 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { generateExercises, type GenerateExercisesInput } from '@/app/actions/generateExercises';
+import {
+  generateExercises,
+  type GenerateExercisesInput,
+} from '@/app/actions/generateExercises';
 
 export default function GeneratorForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [digitConfigs, setDigitConfigs] = useState<Array<{
-    digits: number;
-    questions: number;
-    operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
-    divisorMin?: number;
-    divisorMax?: number;
-  }>>([
+  const [digitConfigs, setDigitConfigs] = useState<
+    Array<{
+      digits: number;
+      questions: number;
+      operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
+      divisorMin?: number;
+      divisorMax?: number;
+    }>
+  >([
     { digits: 2, questions: 10, operation: 'addition' as const },
     { digits: 3, questions: 12, operation: 'mixed' as const },
   ]);
@@ -75,9 +80,7 @@ export default function GeneratorForm() {
   return (
     <div className="card bg-base-100 shadow-2xl">
       <div className="card-body">
-        <h2 className="card-title text-2xl text-primary mb-4">
-          ✨ Gerador de Exercícios de Matemática
-        </h2>
+        <h2 className="card-title text-2xl text-primary mb-4">✨ Gerador de Exercícios de Matemática</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="alert alert-info">
@@ -94,16 +97,12 @@ export default function GeneratorForm() {
                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
-            <span className="font-semibold">
-              Total de Perguntas: {totalProblems}
-            </span>
+            <span className="font-semibold">Total de Perguntas: {totalProblems}</span>
           </div>
 
           <div className="space-y-4">
             <label className="label">
-              <span className="label-text font-semibold text-lg">
-                🔢 Configuração por Algarismos
-              </span>
+              <span className="label-text font-semibold text-lg">🔢 Configuração por Algarismos</span>
             </label>
 
             {digitConfigs.map((config, index) => (
@@ -237,7 +236,10 @@ export default function GeneratorForm() {
             <button
               type="button"
               onClick={() => {
-                setDigitConfigs([...digitConfigs, { digits: 2, questions: 10, operation: 'addition' as const }]);
+                setDigitConfigs([
+                  ...digitConfigs,
+                  { digits: 2, questions: 10, operation: 'addition' as const },
+                ]);
               }}
               className="btn btn-outline btn-primary w-full"
             >
@@ -247,15 +249,11 @@ export default function GeneratorForm() {
 
           <div className="form-control">
             <label className="label">
-              <span className="label-text font-semibold">
-                📋 Formato
-              </span>
+              <span className="label-text font-semibold">📋 Formato</span>
             </label>
             <select
               value={format}
-              onChange={(e) =>
-                setFormat(e.target.value as 'grid' | 'contextual' | 'both')
-              }
+              onChange={(e) => setFormat(e.target.value as 'grid' | 'contextual' | 'both')}
               className="select select-bordered select-secondary w-full"
             >
               <option value="grid">📊 Grade (lista de problemas)</option>
@@ -274,12 +272,8 @@ export default function GeneratorForm() {
                   className="toggle toggle-accent"
                 />
                 <div>
-                  <span className="label-text font-semibold">
-                    🤖 Usar IA (Google Gemini)
-                  </span>
-                  <p className="text-xs text-base-content/60 mt-1">
-                    Gera histórias mais criativas e variadas
-                  </p>
+                  <span className="label-text font-semibold">🤖 Usar IA (Google Gemini)</span>
+                  <p className="text-xs text-base-content/60 mt-1">Gera histórias mais criativas e variadas</p>
                 </div>
               </label>
             </div>
@@ -316,9 +310,7 @@ export default function GeneratorForm() {
                   Gerando...
                 </>
               ) : (
-                <>
-                  ✨ Gerar Exercícios
-                </>
+                <>✨ Gerar Exercícios</>
               )}
             </button>
           </div>
@@ -329,11 +321,11 @@ export default function GeneratorForm() {
         <div className="text-sm text-base-content/60">
           <p className="font-semibold mb-2">ℹ️ Como funciona:</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Configure quantas perguntas quer para cada quantidade de algarismos</li>
-            <li>Exemplo: 2 algarismos = 10 perguntas, 3 algarismos = 12 perguntas</li>
-            <li>Selecione o formato (grade simples ou com histórias)</li>
-            <li>Clique em "Gerar" e uma nova aba será aberta</li>
-            <li>Você pode imprimir ou salvar como PDF direto do navegador</li>
+            <li>Configure quantos algarismos e questões deseja por operação</li>
+            <li>Escolha entre formato grade (lista de problemas) ou contextualizado (histórias)</li>
+            <li>Opcionalmente, use IA para gerar histórias mais criativas</li>
+            <li>Clique em "Gerar Exercícios" para criar o documento HTML</li>
+            <li>Os exercícios serão abertos em uma nova aba do navegador prontos para impressão</li>
           </ul>
         </div>
       </div>
