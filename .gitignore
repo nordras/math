@@ -22,6 +22,8 @@ desktop.ini
 *~
 .vs/
 .env
+.env.local
+.env.*.local
 
 # Arquivos de build e conversão
 *.pdf
