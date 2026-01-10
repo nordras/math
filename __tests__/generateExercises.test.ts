@@ -9,9 +9,7 @@ jest.mock('@/lib/services/MathGeneratorService', () => ({
   MathGeneratorService: {
     validateOptions: jest.fn((options) => options),
     generateProblems: jest.fn(() => ({
-      problems: [
-        { num1: 12, num2: 34, type: 'addition', operation: '12 + 34', answer: 46 },
-      ],
+      problems: [{ num1: 12, num2: 34, type: 'addition', operation: '12 + 34', answer: 46 }],
       stats: {
         totalProblems: 1,
         additions: 1,
@@ -54,9 +52,7 @@ describe('generateExercises Schema Validation', () => {
 
   test('deve rejeitar digitConfigs com digits inválido', () => {
     const invalidInput = {
-      digitConfigs: [
-        { digits: 0, questions: 10, operation: 'addition' as const },
-      ],
+      digitConfigs: [{ digits: 0, questions: 10, operation: 'addition' as const }],
     };
 
     // Digits deve ser >= 1
@@ -65,9 +61,7 @@ describe('generateExercises Schema Validation', () => {
 
   test('deve rejeitar digitConfigs com questions negativo', () => {
     const invalidInput = {
-      digitConfigs: [
-        { digits: 2, questions: -5, operation: 'addition' as const },
-      ],
+      digitConfigs: [{ digits: 2, questions: -5, operation: 'addition' as const }],
     };
 
     // Questions não pode ser negativo
@@ -77,11 +71,9 @@ describe('generateExercises Schema Validation', () => {
   test('deve aceitar todas as operações válidas', () => {
     const validOperations = ['addition', 'subtraction', 'multiplication', 'division', 'mixed'];
 
-    validOperations.forEach(operation => {
+    validOperations.forEach((operation) => {
       const input = {
-        digitConfigs: [
-          { digits: 2, questions: 10, operation },
-        ],
+        digitConfigs: [{ digits: 2, questions: 10, operation }],
       };
 
       expect(validOperations).toContain(input.digitConfigs[0].operation);

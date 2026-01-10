@@ -22,13 +22,17 @@ describe('MathGeneratorService', () => {
 
     test('deve limitar totalProblems entre 1 e 200', () => {
       expect(MathGeneratorService.validateOptions({ totalProblems: -10 }).totalProblems).toBe(1);
-      expect(MathGeneratorService.validateOptions({ totalProblems: 0 }).totalProblems).toBeGreaterThanOrEqual(1);
+      expect(
+        MathGeneratorService.validateOptions({ totalProblems: 0 }).totalProblems
+      ).toBeGreaterThanOrEqual(1);
       expect(MathGeneratorService.validateOptions({ totalProblems: 300 }).totalProblems).toBe(200);
       expect(MathGeneratorService.validateOptions({ totalProblems: 100 }).totalProblems).toBe(100);
     });
 
     test('deve usar dificuldade padrão para valores inválidos', () => {
-      expect(MathGeneratorService.validateOptions({ difficulty: 'invalid' }).difficulty).toBe('medium');
+      expect(MathGeneratorService.validateOptions({ difficulty: 'invalid' }).difficulty).toBe(
+        'medium'
+      );
       expect(MathGeneratorService.validateOptions({}).difficulty).toBe('medium');
     });
 
@@ -92,9 +96,7 @@ describe('MathGeneratorService', () => {
 
     test('deve usar operação padrão para valores inválidos', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 10, operation: 'invalid' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 10, operation: 'invalid' }],
       };
 
       const validated = MathGeneratorService.validateOptions(options);
@@ -122,14 +124,12 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar números com quantidade correta de algarismos', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 10, operation: 'addition' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 10, operation: 'addition' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      result.problems.forEach(problem => {
+      result.problems.forEach((problem) => {
         expect(problem.num1).toBeGreaterThanOrEqual(10);
         expect(problem.num1).toBeLessThanOrEqual(99);
         expect(problem.num2).toBeGreaterThanOrEqual(10);
@@ -139,14 +139,12 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar adições corretamente', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 5, operation: 'addition' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 5, operation: 'addition' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      result.problems.forEach(problem => {
+      result.problems.forEach((problem) => {
         expect(problem.type).toBe('addition');
         expect(problem.answer).toBe(problem.num1 + problem.num2);
         expect(problem.operation).toContain('+');
@@ -155,14 +153,12 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar subtrações sem resultados negativos', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 10, operation: 'subtraction' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 10, operation: 'subtraction' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      result.problems.forEach(problem => {
+      result.problems.forEach((problem) => {
         expect(problem.type).toBe('subtraction');
         expect(problem.answer).toBeGreaterThanOrEqual(0);
         expect(problem.answer).toBe(problem.num1 - problem.num2);
@@ -173,14 +169,12 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar multiplicações corretamente', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 5, operation: 'multiplication' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 5, operation: 'multiplication' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      result.problems.forEach(problem => {
+      result.problems.forEach((problem) => {
         expect(problem.type).toBe('multiplication');
         expect(problem.answer).toBe(problem.num1 * problem.num2);
         expect(problem.operation).toContain('×');
@@ -189,14 +183,12 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar divisões exatas', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 10, operation: 'division' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 10, operation: 'division' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      result.problems.forEach(problem => {
+      result.problems.forEach((problem) => {
         expect(problem.type).toBe('division');
         expect(problem.num1 / problem.num2).toBe(problem.answer);
         expect(Number.isInteger(problem.answer)).toBe(true);
@@ -206,15 +198,13 @@ describe('MathGeneratorService', () => {
 
     test('deve gerar operações mistas', () => {
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 40, operation: 'mixed' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 40, operation: 'mixed' }],
       };
 
       const result = MathGeneratorService.generateProblems(options);
 
-      const types = new Set(result.problems.map(p => p.type));
-      
+      const types = new Set(result.problems.map((p) => p.type));
+
       // Com 40 problemas aleatórios, devemos ter pelo menos 2 tipos diferentes
       expect(types.size).toBeGreaterThanOrEqual(2);
       expect(result.problems).toHaveLength(40);
@@ -274,23 +264,21 @@ describe('MathGeneratorService', () => {
   describe('generateFromDigitConfigs', () => {
     test('deve ser chamado quando digitConfigs é fornecido', () => {
       const spy = jest.spyOn(MathGeneratorService, 'generateFromDigitConfigs');
-      
+
       const options = {
-        digitConfigs: [
-          { digits: 2, questions: 5, operation: 'addition' },
-        ],
+        digitConfigs: [{ digits: 2, questions: 5, operation: 'addition' }],
       };
 
       MathGeneratorService.generateProblems(options);
 
       expect(spy).toHaveBeenCalledWith(options.digitConfigs);
-      
+
       spy.mockRestore();
     });
 
     test('não deve ser chamado quando digitConfigs não é fornecido', () => {
       const spy = jest.spyOn(MathGeneratorService, 'generateFromDigitConfigs');
-      
+
       const options = {
         totalProblems: 10,
         difficulty: 'easy',
@@ -299,7 +287,7 @@ describe('MathGeneratorService', () => {
       MathGeneratorService.generateProblems(options);
 
       expect(spy).not.toHaveBeenCalled();
-      
+
       spy.mockRestore();
     });
   });
