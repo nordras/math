@@ -6,6 +6,8 @@ Uma ferramenta educacional para criar exercícios de matemática personalizados 
 
 **🌐 Demo Online:** [https://math-rust-tau.vercel.app/](https://math-rust-tau.vercel.app/)
 
+> ⚠️ **Atenção:** A versão hospedada na Vercel **não** inclui funcionalidades de IA. Para usar contextos narrativos gerados por IA, você deve rodar o projeto localmente com sua própria chave da API Gemini.
+
 <img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
 
 ## ✨ Funcionalidades
@@ -19,19 +21,33 @@ Uma ferramenta educacional para criar exercícios de matemática personalizados 
 
 ## 🚀 Início Rápido
 
+### Opção 1: Experimente Online (sem IA)
+
+Visite [https://math-rust-tau.vercel.app/](https://math-rust-tau.vercel.app/) para gerar exercícios básicos sem contextos gerados por IA.
+
+### Opção 2: Rode Localmente (com IA) ⭐
+
+**Para usar contextos narrativos gerados por IA, siga estes passos:**
+
 ```bash
-# Instalar dependências
+# Clone o repositório
+git clone https://github.com/igorferreira007/math.git
+cd math
+
+# Instale as dependências
 npm install
 
-# Configurar ambiente
+# Configure o ambiente com sua chave da API Gemini
 cp .env.example .env.local
-# Adicione sua GEMINI_API_KEY no .env.local
+# Edite .env.local e adicione sua GEMINI_API_KEY
 
-# Executar servidor de desenvolvimento
+# Execute o servidor de desenvolvimento
 npm run dev
 ```
 
 Acesse em [http://localhost:3000](http://localhost:3000)
+
+**Obtenha sua chave gratuita da API Gemini em:** [Google AI Studio](https://makersuite.google.com/app/apikey)
 
 ## 🛠️ Tecnologias
 
