@@ -1,149 +1,144 @@
-# 📚 Gerador de Exercícios de Matemática com IA
+# 📚 AI-Powered Math Exercise Generator
 
-Sistema inteligente para gerar exercícios de matemática personalizados com contextos narrativos criados por IA.
+Intelligent system for generating personalized math exercises with AI-created narrative contexts.
 
 <img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
 
-## 🚀 Início Rápido
+## 🚀 Quick Start
 
 ```bash
-# Instalar dependências
+# Install dependencies
 npm install
 
-# Configurar variáveis de ambiente
+# Configure environment settings
 cp .env.example .env.local
-# Edite .env.local e adicione sua GEMINI_API_KEY
+# Edit .env.local and add your GEMINI_API_KEY
 
-# Rodar em desenvolvimento
+# Run in development mode
 npm run dev
 
-# Compilar para produção
+# Compile for production
 npm run build
 npm start
 ```
 
-Acesse: http://localhost:3000
+Access: http://localhost:3000
 
-## ✨ Funcionalidades
+## ✨ Features
 
-- 🎯 **Geração Inteligente**: Exercícios de adição, subtração, multiplicação e divisão
-- 🤖 **IA Contextual**: Google Gemini cria problemas narrativos únicos
-- 👦 **Nomes Dinâmicos**: Pool de 18 nomes multilíngues (PT/EN)
-- 📊 **Formatos Múltiplos**: Grade compacta ou problemas contextualizados
-- 📝 **Configurável**: Controle de dígitos, operações e dificuldade
-- 💾 **Cache Inteligente**: Sistema de cache para performance
-- ✅ **Gabarito Opcional**: Versões com e sem respostas
+- 🎯 **Smart Generation**: Addition, subtraction, multiplication, and division exercises
 
-## 📁 Estrutura do Projeto
+- 🤖 **Contextual AI**: Google Gemini creates unique narrative problems
+- 👦 **Dynamic Names**: Pool of 18 multilingual names (PT/EN)
+- 📊 **Multiple Formats**: Compact note or contextualized problems
+- 📝 **Configurable**: Control of digits, operations, and difficulty
+- 💾 **Smart Cache**: Caching system for performance
+- ✅ **Optional Template**: Versions with and without answers
+
+## 📁 Project Structure
 
 ```
-math/
-├── app/                      # Next.js App Router (páginas e rotas)
-├── components/               # Componentes React
-│   └── GeneratorForm.tsx     # Formulário principal
-├── lib/
-│   ├── constants/            
-│   │   └── namePool.ts/js    # Pool de nomes multilíngues (18 nomes)
-│   ├── generators/           
-│   │   ├── mathGenerator.js   # Gerador de problemas matemáticos
-│   │   ├── aiEnhancer.js      # Integração com Gemini API
-│   │   └── templateLibrary.js # Templates de fallback
-│   ├── services/             
-│   │   ├── MathGeneratorService.ts  # Serviço de geração
-│   │   ├── AIEnhancerService.js     # Serviço de IA
-│   │   └── HTMLFormatterService.js  # Formatação HTML
-│   ├── cache/                
-│   │   └── exerciseCache.js   # Cache em memória
-│   └── utils/                
-│       └── cache.js           # Cache de contextos IA
-├── public/                   # Assets estáticos
-├── __tests__/                # Testes Jest
-├── assets/                   # SVGs e recursos
-└── prototype-math/           # ⚠️ DEPRECATED - Não usar
-    └── DEPRECATED.md         # Aviso de depreciação
+mathematics/
+├── app/ # Next.js App Router (pages and routes)
+├── components/ # React Components
+│ └── GeneratorForm.tsx # Main form
+├──lib/
+│ ├── constants/
+│ │ └── namePool.ts/js # Multilingual name pool (18 names)
+│ ├── generators/
+│ │ ├── mathGenerator.js # Math problem generator
+│ │ ├── aiEnhancer.js # Gemini API integration
+│ │ └── templateLibrary.js # Fallback templates
+│ ├── services/
+│ │ ├── MathGeneratorService.ts # Generation service
+│ │ ├── AIEnhancerService.js # AI service
+│ │ └── HTMLFormatterService.js # HTML Formatting
+│ ├──cache/
+│ │ └── exercicioCache.js # In-memory cache
+│ └── utilisos/
+│ └── cache.js # AI context cache
+├── public/ # Static assets
+├── __tests__/ # Playful tests
+├── ativos/ # SVGs and resources
+└── próto-math/ # ⚠️ DEPRECATED - Do not use
+└── DEPRECATED.md # Deprecation warning
 ```
 
-## 🎨 Pool de Nomes
+## 🎨 Name Pool
 
-Sistema de nomes abstratos multilíngues para máxima variabilidade:
+System of Abstract multilingual names for maximum variability:
 
-**Femininos**: Luna, Maya, Nina, Mia, Jade, Lara, Sofia, Ana, Emma  
-**Masculinos**: Leo, Noah, Davi, Kai, Lucas, Theo, Samuel, Enzo, Miguel
+**Women**: Luna, Maya, Nina, Mia, Jade, Lara, Sofia, Ana, Emma
+**Men**: Leo, Noah, Davi, Kai, Lucas, Theo, Samuel, Enzo, Miguel
 
-## 🎯 Como Usar Este Material
+## 🎯 How to Use This Material
 
-## 📖 Multiplicação
+## 📖 Multiplication
 
-### Ordem Sugerida de Estudo
+### Suggested Study Order
 
-1. **[Conceitos Básicos](multiplicacao/01-conceitos-basicos.md)** - O que é multiplicação? Grupos e adição repetida
-2. **[Tabuada do 0 e do 1](multiplicacao/02-tabuada-0-e-1.md)** - Os casos especiais
-3. **[Tabuada do 2](multiplicacao/03-tabuada-do-2.md)** - Aprendendo a dobrar
-4. **[Tabuada do 5 e do 10](multiplicacao/04-tabuada-5-e-10.md)** - Descobrindo padrões
-5. **[Arrays e Propriedade Comutativa](multiplicacao/05-arrays-e-propriedade-comutativa.md)** - Linhas e colunas
-6. **[Tabuada do 3 e do 4](multiplicacao/06-tabuada-3-e-4.md)** - Praticando mais
-7. **[Tabuada do 6 e do 9](multiplicacao/07-tabuada-6-e-9.md)** - Truques interessantes
-8. **[Tabuada do 7 e do 8](multiplicacao/08-tabuada-7-e-8.md)** - Os desafios finais
-9. **[Revisão e Prática Mista](multiplicacao/09-revisao-e-pratica-mista.md)** - Juntando tudo
-10. **[Desafios e Aplicações](multiplicacao/10-desafios-e-aplicacoes.md)** - Problemas criativos
+1. **[Basic Concepts](multiplication/01-basic-concepts.md)** - What is multiplication? Groups and repeated addition
+2. **[Multiplication Table of 0 and 1](multiplication/02-multiplication-table-0-and-1.md)** - Special cases
+3. **[Multiplication Table of 2](multiplication/03-multiplication-table-of-2.md)** - Learning to double
+4. **[Multiplication Table of 5 and 10](multiplication/04-multiplication-table-5-and-10.md)** - Discovering patterns
+5. **[Arrays and Commutative Property](multiplication/05-arrays-and-commutative-property.md)** - Rows and columns
+6. **[Multiplication Table of 3 and 4](multiplication/06-multiplication-table-3-and-4.md)** - Practicing more
+7. **[Multiplication Table of 6 and 1] 9](multiplication/07-multiplication-table-6-and-9.md)** - Interesting Tricks
+8. **[Multiplication Table of 7 and 8](multiplication/08-multiplication-table-7-and-8.md)** - The Final Challenges
+9. **[Mixed Review and Practice](multiplication/09-review-and-mixed-practice.md)** - Putting it all together
+10. **[Challenges and Applications](multiplication/10-challenges-and-applications.md)** - Creative Problems
 
-## 🎨 Dicas de Estudo
+## 🎨 Study Tips
 
-- ✏️ Use papel e lápis para desenhar os problemas
-- 🧮 Conte nos dedos quando precisar
-- 🎲 Use objetos reais (brinquedos, frutas) para formar grupos
-- 📝 Refaça exercícios difíceis outro dia
-- 🌟 Comemore cada conquista!
+- ✏️ Use paper and pencil to draw the problems
+- 🧮 Count on your fingers when needed
+- 🎲 Use real objects (toys, fruits) to form groups
+- 📝 Redo difficult exercises another day
+- 🌟 Celebrate each achievement!
 
-## 📅 Sugestão de Cronograma
+## 📅 ​​Suggested Schedule
 
-- **Semanas 1-2**: Lições 1-2 (conceitos e casos especiais)
-- **Semanas 3-4**: Lições 3-4 (tabuadas fáceis: 2, 5, 10)
-- **Semana 5**: Lição 5 (arrays e propriedade comutativa)
-- **Semanas 6-7**: Lições 6-7 (tabuadas intermediárias: 3, 4, 6, 9)
-- **Semana 8**: Lição 8 (tabuadas desafiadoras: 7, 8)
-- **Semanas 9-10**: Lições 9-10 (revisão e desafios)
+- **Weeks 1-2**: Lessons 1-2 (concepts and special cases)
+- **Weeks 3-4**: Lessons 3-4 (simple multiplication tables: 2, 5, 10)
+- **Week 5**: Lesson 5 (matrices and commutative property)
+- **Weeks 6-7**: Lessons 6-7 (exciting multiplication tables: 3, 4, 6, 9)
+- **Week 8**: Lesson 8 (multiplication tables questions: 7, 8)
+- **Weeks 9-10**: Lessons 9-10 (review and challenges)
 
-**Importante**: Este cronograma é apenas uma sugestão. Ajuste conforme o ritmo de aprendizado.
+**Important**: This schedule is just a suggestion. Adjust it according to your learning pace.
 
-## 🛠️ Tecnologias
+## 🛠️ Technologies
 
-- **Next.js 16** (App Router + Turbopack)
+- **Next.js 16** (Application Router + Turbopack)
 - **TypeScript** + **JavaScript**
 - **Google Gemini API** (generative-ai)
 - **Tailwind CSS** + **DaisyUI**
-- **Jest** para testes
 
-## 📝 Configuração
+- **Jest** for testing
 
-Crie `.env.local` com:
+## 📝 Configuration
 
-```env
-GEMINI_API_KEY=sua_chave_aqui
+Create `.env.local` with:
+
+```env.GEMINI_API_KEY=your_key_here
+
 ```
 
-## 🧪 Testes
+## 🧪 Tests
 
-```bash
-npm test              # Rodar todos os testes
-npm run test:watch    # Modo watch
+```bash.npm test # Run all tests.npm run test:watch # Watch mode
 ```
 
-## 📦 Scripts Disponíveis
+## 📦 Available Scripts
 
-```bash
-npm run dev           # Desenvolvimento
-npm run build         # Build de produção
-npm start             # Servir produção
-npm test              # Testes
-npm run lint          # Linter
+```bash.npm run dev # Development
+npm run build # Production build
+npm start # Serve production
+npm test # tests
+npm execute lint#Linter
 ```
 
-## Fontes
+## Sources
 - https://storyset.com
 - https://www.education.com/resources/grade-2/worksheets/english-language-arts/
-- https://www.education.com/worksheet/article/2-math-minutes-addition/
-
----
-
-*Material criado com ❤️ - Dezembro 2025*
+- https://www.education.com/worksheet/article/2-math-minut
