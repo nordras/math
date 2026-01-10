@@ -1257,7 +1257,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2f$cache$2e$js_
 ;
 class AIEnhancerService {
     /**
-   * Gera problemas contextualizados
+   * Generate problems with context
    * @param {Array} problems - Lista de problemas matemáticos
    * @param {number} count - Quantidade de problemas a contextualizar
    * @returns {Promise<Array>} - Problemas contextualizados
