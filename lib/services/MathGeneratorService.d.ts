@@ -1,7 +1,3 @@
-/**
- * Declarações de tipos para MathGeneratorService
- */
-
 export interface DigitConfig {
   digits: number;
   questions: number;

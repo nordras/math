@@ -1,7 +1,3 @@
-/**
- * Constantes do sistema
- */
-
 export const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 export const CLEANUP_INTERVAL_MS = 30 * 60 * 1000; // 30 minutes
 

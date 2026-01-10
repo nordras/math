@@ -1,7 +1,3 @@
-/**
- * Declarações de tipos para HTMLFormatterService
- */
-
 import type { MathProblem, MathStats } from '../types/math';
 import type { ContextualProblem } from './AIEnhancerService';
 

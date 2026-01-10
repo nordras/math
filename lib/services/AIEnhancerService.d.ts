@@ -1,7 +1,3 @@
-/**
- * Declarações de tipos para AIEnhancerService
- */
-
 import type { MathProblem } from '../types/math';
 
 export interface ContextualProblem {
