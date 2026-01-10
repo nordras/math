@@ -2,7 +2,7 @@
 
 # 📚 Gerador de Exercícios de Matemática
 
-Uma ferramenta educacional para criar exercícios de matemática personalizados com contextos gerados por IA.
+Uma ferramenta educacional para criar exercícios de matemática personalizados com ou sem contextos gerados por IA.
 
 **🌐 Demo Online:** [https://math-rust-tau.vercel.app/](https://math-rust-tau.vercel.app/)
 
