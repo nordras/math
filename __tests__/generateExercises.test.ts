@@ -2,7 +2,7 @@
  * Testes de integração para generateExercises action
  */
 
-import { describe, test, expect, beforeEach } from '@jest/globals';
+import { describe, expect, test } from '@jest/globals';
 
 // Mock dos serviços
 jest.mock('@/lib/services/MathGeneratorService', () => ({
