@@ -1,6 +1,6 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { type GenerateExercisesInput, generateExercises } from '@/app/actions/generateExercises';
 
 interface GeneratorFormProps {
@@ -52,12 +52,20 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
       divisorMax?: number;
     }>
   >([
-    { id: crypto.randomUUID(), digits: 2, questions: 10, operation: 'addition' as const },
-    { id: crypto.randomUUID(), digits: 3, questions: 12, operation: 'mixed' as const },
+    { id: '1', digits: 2, questions: 10, operation: 'addition' as const },
+    { id: '2', digits: 3, questions: 12, operation: 'mixed' as const },
   ]);
   const [useAI, setUseAI] = useState(false);
   const [format, setFormat] = useState<'grid' | 'contextual' | 'both'>('grid');
   const totalProblems = digitConfigs.reduce((sum, config) => sum + config.questions, 0);
+
+  // Generate unique IDs on mount to avoid hydration mismatch
+  useEffect(() => {
+    setDigitConfigs(prev => prev.map(config => ({
+      ...config,
+      id: crypto.randomUUID()
+    })));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
