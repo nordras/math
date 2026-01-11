@@ -1,9 +1,45 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { type GenerateExercisesInput, generateExercises } from '@/app/actions/generateExercises';
 
-export default function GeneratorForm() {
+interface GeneratorFormProps {
+  dict?: {
+    title: string;
+    totalQuestions: string;
+    digitConfigTitle: string;
+    digits: string;
+    questions: string;
+    operation: string;
+    operations: {
+      addition: string;
+      subtraction: string;
+      multiplication: string;
+      division: string;
+      mixed: string;
+    };
+    divisorMin: string;
+    divisorMax: string;
+    addConfig: string;
+    format: string;
+    formatOptions: {
+      grid: string;
+      contextual: string;
+      both: string;
+    };
+    useAI: string;
+    useAIDescription: string;
+    generate: string;
+    generating: string;
+    errorGenerate: string;
+    errorUnknown: string;
+    howItWorksTitle: string;
+    howItWorks: string[];
+  };
+}
+
+export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
+  const formatSelectId = useId();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [digitConfigs, setDigitConfigs] = useState<
@@ -42,7 +78,7 @@ export default function GeneratorForm() {
       const result = await generateExercises(input);
 
       if (!result.success) {
-        setError(result.error || 'Erro ao gerar exercícios');
+        setError(result.error || dict?.errorGenerate || 'Erro ao gerar exercícios');
         setIsLoading(false);
         return;
       }
@@ -72,7 +108,7 @@ export default function GeneratorForm() {
 
       setIsLoading(false);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+      setError(err instanceof Error ? err.message : (dict?.errorUnknown || 'Erro desconhecido'));
       setIsLoading(false);
     }
   };
@@ -81,7 +117,7 @@ export default function GeneratorForm() {
     <div className="card bg-base-100 shadow-2xl">
       <div className="card-body">
         <h2 className="card-title text-2xl text-primary mb-4">
-          ✨ Gerador de Exercícios de Matemática
+          {dict?.title || '✨ Gerador de Exercícios de Matemática'}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -101,13 +137,13 @@ export default function GeneratorForm() {
                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               ></path>
             </svg>
-            <span className="font-semibold">Total de Perguntas: {totalProblems}</span>
+            <span className="font-semibold">{dict?.totalQuestions || 'Total de Perguntas'}: {totalProblems}</span>
           </div>
 
           <div className="space-y-4">
             <div className="label">
               <span className="label-text font-semibold text-lg">
-                🔢 Configuração por Algarismos
+                {dict?.digitConfigTitle || '🔢 Configuração por Algarismos'}
               </span>
             </div>
 
@@ -116,10 +152,11 @@ export default function GeneratorForm() {
                 <div className="card-body p-4">
                   <div className="flex items-center gap-4">
                     <div className="form-control flex-1">
-                      <div className="label">
-                        <span className="label-text">Perguntas</span>
-                      </div>
+                      <label htmlFor={`digits-${config.id}`} className="label">
+                        <span className="label-text">{dict?.digits || 'Perguntas'}</span>
+                      </label>
                       <input
+                        id={`digits-${config.id}`}
                         type="number"
                         min="1"
                         max="5"
@@ -130,14 +167,16 @@ export default function GeneratorForm() {
                           setDigitConfigs(newConfigs);
                         }}
                         className="input input-bordered input-primary w-full"
+                        aria-label={dict?.digits || 'Perguntas'}
                       />
                     </div>
 
                     <div className="form-control flex-1">
-                      <div className="label">
-                        <span className="label-text">Perguntas</span>
-                      </div>
+                      <label htmlFor={`questions-${config.id}`} className="label">
+                        <span className="label-text">{dict?.questions || 'Perguntas'}</span>
+                      </label>
                       <input
+                        id={`questions-${config.id}`}
                         type="number"
                         min="0"
                         max="100"
@@ -148,14 +187,16 @@ export default function GeneratorForm() {
                           setDigitConfigs(newConfigs);
                         }}
                         className="input input-bordered input-secondary w-full"
+                        aria-label={dict?.questions || 'Perguntas'}
                       />
                     </div>
 
                     <div className="form-control flex-1">
-                      <div className="label">
-                        <span className="label-text">Operação</span>
-                      </div>
+                      <label htmlFor={`operation-${config.id}`} className="label">
+                        <span className="label-text">{dict?.operation || 'Operação'}</span>
+                      </label>
                       <select
+                        id={`operation-${config.id}`}
                         value={config.operation}
                         onChange={(e) => {
                           const newConfigs = [...digitConfigs];
@@ -168,12 +209,13 @@ export default function GeneratorForm() {
                           setDigitConfigs(newConfigs);
                         }}
                         className="select select-bordered select-accent w-full"
+                        aria-label={dict?.operation || 'Operação'}
                       >
-                        <option value="addition">➕ Adição</option>
-                        <option value="subtraction">➖ Subtração</option>
-                        <option value="multiplication">✖️ Multiplicação</option>
-                        <option value="division">➗ Divisão</option>
-                        <option value="mixed">🎲 Misto</option>
+                        <option value="addition">{dict?.operations.addition || '➕ Adição'}</option>
+                        <option value="subtraction">{dict?.operations.subtraction || '➖ Subtração'}</option>
+                        <option value="multiplication">{dict?.operations.multiplication || '✖️ Multiplicação'}</option>
+                        <option value="division">{dict?.operations.division || '➗ Divisão'}</option>
+                        <option value="mixed">{dict?.operations.mixed || '🎲 Misto'}</option>
                       </select>
                     </div>
 
@@ -206,10 +248,11 @@ export default function GeneratorForm() {
                   {(config.operation === 'division' || config.operation === 'mixed') && (
                     <div className="flex items-center gap-4 mt-3 pl-4 pr-4 pb-2">
                       <div className="form-control flex-1">
-                        <div className="label">
-                          <span className="label-text text-sm">Divisor Mínimo</span>
-                        </div>
+                        <label htmlFor={`divisor-min-${config.id}`} className="label">
+                          <span className="label-text text-sm">{dict?.divisorMin || 'Divisor Mínimo'}</span>
+                        </label>
                         <input
+                          id={`divisor-min-${config.id}`}
                           type="number"
                           min="1"
                           max="100"
@@ -220,14 +263,16 @@ export default function GeneratorForm() {
                             setDigitConfigs(newConfigs);
                           }}
                           className="input input-bordered input-sm w-full"
+                          aria-label={dict?.divisorMin || 'Divisor Mínimo'}
                         />
                       </div>
 
                       <div className="form-control flex-1">
-                        <div className="label">
-                          <span className="label-text text-sm">Divisor Máximo</span>
-                        </div>
+                        <label htmlFor={`divisor-max-${config.id}`} className="label">
+                          <span className="label-text text-sm">{dict?.divisorMax || 'Divisor Máximo'}</span>
+                        </label>
                         <input
+                          id={`divisor-max-${config.id}`}
                           type="number"
                           min="1"
                           max="100"
@@ -238,6 +283,7 @@ export default function GeneratorForm() {
                             setDigitConfigs(newConfigs);
                           }}
                           className="input input-bordered input-sm w-full"
+                          aria-label={dict?.divisorMax || 'Divisor Máximo'}
                         />
                       </div>
                     </div>
@@ -261,22 +307,24 @@ export default function GeneratorForm() {
               }}
               className="btn btn-outline btn-primary w-full"
             >
-              ➕ Adicionar Configuração
+              {dict?.addConfig || '➕ Adicionar Configuração'}
             </button>
           </div>
 
           <div className="form-control">
-            <div className="label">
-              <span className="label-text font-semibold">📋 Formato</span>
-            </div>
+            <label htmlFor={formatSelectId} className="label">
+              <span className="label-text font-semibold">{dict?.format || '📋 Formato'}</span>
+            </label>
             <select
+              id={formatSelectId}
               value={format}
               onChange={(e) => setFormat(e.target.value as 'grid' | 'contextual' | 'both')}
               className="select select-bordered select-secondary w-full"
+              aria-label={dict?.format || 'Formato'}
             >
-              <option value="grid">📊 Grade (lista de problemas)</option>
-              <option value="contextual">📖 Contextualizado (histórias)</option>
-              <option value="both">🎁 Ambos (2 arquivos)</option>
+              <option value="grid">{dict?.formatOptions.grid || '📊 Grade (lista de problemas)'}</option>
+              <option value="contextual">{dict?.formatOptions.contextual || '📖 Contextualizado (histórias)'}</option>
+              <option value="both">{dict?.formatOptions.both || '🎁 Ambos (2 arquivos)'}</option>
             </select>
           </div>
 
@@ -290,9 +338,9 @@ export default function GeneratorForm() {
                   className="toggle toggle-accent"
                 />
                 <div>
-                  <span className="label-text font-semibold">🤖 Usar IA (Google Gemini)</span>
+                  <span className="label-text font-semibold">{dict?.useAI || '🤖 Usar IA (Google Gemini)'}</span>
                   <p className="text-xs text-base-content/60 mt-1">
-                    Gera histórias mais criativas e variadas
+                    {dict?.useAIDescription || 'Gera histórias mais criativas e variadas'}
                   </p>
                 </div>
               </label>
@@ -329,10 +377,10 @@ export default function GeneratorForm() {
               {isLoading ? (
                 <>
                   <span className="loading loading-spinner loading-sm"></span>
-                  Gerando...
+                  {dict?.generating || 'Gerando...'}
                 </>
               ) : (
-                '✨ Gerar Exercícios'
+                dict?.generate || '✨ Gerar Exercícios'
               )}
             </button>
           </div>
@@ -341,13 +389,19 @@ export default function GeneratorForm() {
         <div className="divider"></div>
 
         <div className="text-sm text-base-content/60">
-          <p className="font-semibold mb-2">ℹ️ Como funciona:</p>
+          <p className="font-semibold mb-2">{dict?.howItWorksTitle || 'ℹ️ Como funciona:'}</p>
           <ul className="list-disc list-inside space-y-1">
-            <li>Configure quantos algarismos e questões deseja por operação</li>
-            <li>Escolha entre formato grade (lista de problemas) ou contextualizado (histórias)</li>
-            <li>Opcionalmente, use IA para gerar histórias mais criativas</li>
-            <li>Clique em "Gerar Exercícios" para criar o documento HTML</li>
-            <li>Os exercícios serão abertos em uma nova aba do navegador prontos para impressão</li>
+            {dict?.howItWorks ? (
+              dict.howItWorks.map((item) => <li key={item}>{item}</li>)
+            ) : (
+              <>
+                <li>Configure quantos algarismos e questões deseja por operação</li>
+                <li>Escolha entre formato grade (lista de problemas) ou contextualizado (histórias)</li>
+                <li>Opcionalmente, use IA para gerar histórias mais criativas</li>
+                <li>Clique em "Gerar Exercícios" para criar o documento HTML</li>
+                <li>Os exercícios serão abertos em uma nova aba do navegador prontos para impressão</li>
+              </>
+            )}
           </ul>
         </div>
       </div>
