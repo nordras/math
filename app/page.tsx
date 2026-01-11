@@ -8,7 +8,9 @@ export default function Home() {
           <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-primary via-secondary to-accent mb-4">
             🎓 Gerador de Exercícios de Matemática
           </h1>
-          <p className="text-lg text-base-content/70">Crie exercícios personalizados de forma rápida e fácil</p>
+          <p className="text-lg text-base-content/70">
+            Crie exercícios personalizados de forma rápida e fácil
+          </p>
         </div>
 
         <div className="max-w-2xl mx-auto">
