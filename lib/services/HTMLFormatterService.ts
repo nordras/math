@@ -3,8 +3,8 @@
  * Adapts existing templates for web rendering using pure functions
  */
 
-import type { MathProblem, MathStats, ContextualProblem, DifficultyLevel } from '../types/math';
 import { getRandomName } from '../constants/namePool';
+import type { ContextualProblem, MathProblem, MathStats } from '../types/math';
 
 // Constants
 const DEFAULT_GRID_COLUMNS = 2;
@@ -43,7 +43,7 @@ export function getDifficultyLabel(difficulty: string): string {
     medium: 'Médio',
     hard: 'Difícil',
   };
-  
+
   return difficultyMap[difficulty] || difficultyMap.medium;
 }
 
@@ -55,13 +55,10 @@ export function formatGrid(
   stats: MathStats,
   options: FormatGridOptions = {}
 ): string {
-  const {
-    includeAnswerKey = false,
-    studentName = getRandomName(),
-  } = options;
+  const { includeAnswerKey = false, studentName = getRandomName() } = options;
 
   const totalCount = stats.totalProblems || stats.total || problems.length;
-  
+
   const title = includeAnswerKey
     ? `Gabarito - ${totalCount} Exercícios`
     : `Exercícios de Matemática para ${studentName} - ${totalCount} questões`;
@@ -69,9 +66,7 @@ export function formatGrid(
   const problemsHtml = problems
     .map((problem, index) => {
       const display = problem.operation;
-      const answer = includeAnswerKey 
-        ? ` = <strong>${problem.answer}</strong>` 
-        : ' = _____';
+      const answer = includeAnswerKey ? ` = <strong>${problem.answer}</strong>` : ' = _____';
 
       return `<div class="problem-item">
           <span class="problem-number">${index + 1})</span>
@@ -283,7 +278,7 @@ export function formatGrid(
 
 /**
  * Formats contextualized problems to HTML
- * 
+ *
  * @param contextualProblems - Array of contextualized math problems
  * @param stats - Statistics about the generated problems
  * @param options - Formatting options
@@ -291,13 +286,10 @@ export function formatGrid(
  */
 export function formatContextual(
   contextualProblems: ContextualProblem[],
-  stats: MathStats,
+  _stats: MathStats,
   options: FormatContextualOptions = {}
 ): string {
-  const { 
-    includeAnswerKey = false, 
-    studentName = getRandomName(),
-  } = options;
+  const { includeAnswerKey = false, studentName = getRandomName() } = options;
 
   const title = includeAnswerKey
     ? 'Gabarito - Problemas Contextualizados'
@@ -542,8 +534,3 @@ export function formatContextual(
 </html>
 `;
 }
-
-
-
-
-

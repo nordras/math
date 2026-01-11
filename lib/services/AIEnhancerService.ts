@@ -2,8 +2,9 @@
  * AI Enhancer Service - Geração de contextos narrativos para problemas matemáticos
  * Serviço de alto nível que orquestra a geração de problemas contextualizados
  */
-import type { MathProblem, ContextualProblem } from '../types/math';
+
 import AIEnhancer from '../generators/aiEnhancer.js';
+import type { ContextualProblem, MathProblem } from '../types/math';
 
 /** Constantes de configuração */
 const DEFAULT_CONTEXTUAL_PROBLEMS_COUNT = 10;
@@ -20,9 +21,7 @@ interface AIEnhancerConfig {
  */
 function validateApiKey(apiKey: string | undefined): asserts apiKey is string {
   if (!apiKey || apiKey === 'your_api_key_here') {
-    throw new Error(
-      'API key do Gemini não configurada. Configure GEMINI_API_KEY no arquivo .env'
-    );
+    throw new Error('API key do Gemini não configurada. Configure GEMINI_API_KEY no arquivo .env');
   }
 }
 

@@ -3,15 +3,15 @@
  * Serviço de alto nível usando padrão funcional puro
  */
 
+import MathGenerator from '../generators/mathGenerator.js';
 import type {
   DigitConfig,
+  GenerateProblemsResult,
+  MathGeneratorOptions,
+  MathOperation,
   MathProblem,
   MathStats,
-  MathOperation,
-  MathGeneratorOptions,
-  GenerateProblemsResult,
 } from '../types/math';
-import MathGenerator from '../generators/mathGenerator.js';
 
 /** Constantes de configuração */
 const MIN_PROBLEMS = 1;
@@ -42,8 +42,8 @@ function randomInt(min: number, max: number): number {
  * Calcula range de números baseado na quantidade de dígitos
  */
 function getNumberRange(digits: number): { min: number; max: number } {
-  const min = Math.pow(10, digits - 1);
-  const max = Math.pow(10, digits) - 1;
+  const min = 10 ** (digits - 1);
+  const max = 10 ** digits - 1;
   return { min, max };
 }
 
@@ -210,8 +210,11 @@ function generateFromDigitConfigs(digitConfigs: DigitConfig[]): GenerateProblems
  * Gera problemas usando o modo legado (MathGenerator)
  */
 function generateFromLegacyMode(options: MathGeneratorOptions): GenerateProblemsResult {
-  const { totalProblems = DEFAULT_PROBLEMS, difficulty = DEFAULT_DIFFICULTY, additionRatio = DEFAULT_ADDITION_RATIO } =
-    options;
+  const {
+    totalProblems = DEFAULT_PROBLEMS,
+    difficulty = DEFAULT_DIFFICULTY,
+    additionRatio = DEFAULT_ADDITION_RATIO,
+  } = options;
 
   const generator = new MathGenerator({
     totalProblems,
@@ -240,7 +243,13 @@ function generateFromLegacyMode(options: MathGeneratorOptions): GenerateProblems
  */
 export function validateOptions(options: MathGeneratorOptions): MathGeneratorOptions {
   const validDifficulties = ['easy', 'medium', 'hard'] as const;
-  const validOperations = ['addition', 'subtraction', 'multiplication', 'division', 'mixed'] as const;
+  const validOperations = [
+    'addition',
+    'subtraction',
+    'multiplication',
+    'division',
+    'mixed',
+  ] as const;
 
   const validated: MathGeneratorOptions = {
     totalProblems: clamp(options.totalProblems ?? DEFAULT_PROBLEMS, MIN_PROBLEMS, MAX_PROBLEMS),
@@ -255,8 +264,12 @@ export function validateOptions(options: MathGeneratorOptions): MathGeneratorOpt
       digits: clamp(config.digits ?? 2, MIN_DIGITS, MAX_DIGITS),
       questions: clamp(config.questions ?? 10, 0, MAX_PROBLEMS),
       operation: validOperations.includes(config.operation) ? config.operation : 'addition',
-      divisorMin: config.divisorMin !== undefined ? clamp(config.divisorMin, MIN_DIVISOR, MAX_DIVISOR) : MIN_DIVISOR,
-      divisorMax: config.divisorMax !== undefined ? clamp(config.divisorMax, MIN_DIVISOR, MAX_DIVISOR) : 10,
+      divisorMin:
+        config.divisorMin !== undefined
+          ? clamp(config.divisorMin, MIN_DIVISOR, MAX_DIVISOR)
+          : MIN_DIVISOR,
+      divisorMax:
+        config.divisorMax !== undefined ? clamp(config.divisorMax, MIN_DIVISOR, MAX_DIVISOR) : 10,
     }));
   }
 

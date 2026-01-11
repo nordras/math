@@ -95,4 +95,3 @@ export interface ContextualProblem {
   /** Símbolo da operação */
   operation: string;
 }
-
