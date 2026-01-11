@@ -1,5 +1,5 @@
-import GeneratorForm from '@/components/GeneratorForm';
 import { useTranslations } from 'next-intl';
+import GeneratorForm from '@/components/GeneratorForm';
 
 export default function Home() {
   const t = useTranslations('Page');
