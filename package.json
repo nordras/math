@@ -13,10 +13,12 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.7.5",
     "@google/generative-ai": "^0.24.1",
     "daisyui": "^5.5.14",
     "dotenv": "^17.2.3",
     "nanoid": "^5.1.6",
+    "negotiator": "^1.0.0",
     "next": "^16.1.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
@@ -28,6 +30,7 @@
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/jest": "^29.5.11",
+    "@types/negotiator": "^0.6.4",
     "@types/node": "^20",
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",

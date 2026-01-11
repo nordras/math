@@ -55,13 +55,13 @@ export function formatGrid(
   stats: MathStats,
   options: FormatGridOptions = {}
 ): string {
-  const { includeAnswerKey = false, studentName = getRandomName() } = options;
+  const { includeAnswerKey = false } = options;
 
   const totalCount = stats.totalProblems || stats.total || problems.length;
 
   const title = includeAnswerKey
     ? `Gabarito - ${totalCount} Exercícios`
-    : `Exercícios de Matemática para ${studentName} - ${totalCount} questões`;
+    : `Exercícios de Matemática - ${totalCount} questões`;
 
   const problemsHtml = problems
     .map((problem, index) => {
