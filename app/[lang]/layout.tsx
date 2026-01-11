@@ -23,11 +23,11 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  
+
   if (!hasLocale(lang)) {
     notFound();
   }
-  
+
   const dict = await getDictionary(lang);
 
   return {
