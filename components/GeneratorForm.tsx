@@ -1,16 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  generateExercises,
-  type GenerateExercisesInput,
-} from '@/app/actions/generateExercises';
+import { type GenerateExercisesInput, generateExercises } from '@/app/actions/generateExercises';
 
 export default function GeneratorForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [digitConfigs, setDigitConfigs] = useState<
     Array<{
+      id: string;
       digits: number;
       questions: number;
       operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
@@ -18,8 +16,8 @@ export default function GeneratorForm() {
       divisorMax?: number;
     }>
   >([
-    { digits: 2, questions: 10, operation: 'addition' as const },
-    { digits: 3, questions: 12, operation: 'mixed' as const },
+    { id: crypto.randomUUID(), digits: 2, questions: 10, operation: 'addition' as const },
+    { id: crypto.randomUUID(), digits: 3, questions: 12, operation: 'mixed' as const },
   ]);
   const [useAI, setUseAI] = useState(false);
   const [format, setFormat] = useState<'grid' | 'contextual' | 'both'>('grid');
@@ -60,8 +58,10 @@ export default function GeneratorForm() {
           // Delay para não bloquear popups
           setTimeout(() => {
             const contextWindow = window.open('', '_blank');
-            contextWindow?.document.write(result.contextualHtml!);
-            contextWindow?.document.close();
+            if (contextWindow && result.contextualHtml) {
+              contextWindow.document.write(result.contextualHtml);
+              contextWindow.document.close();
+            }
           }, 100);
         }
       } else if (result.html) {
@@ -71,8 +71,8 @@ export default function GeneratorForm() {
       }
 
       setIsLoading(false);
-    } catch (err: any) {
-      setError(err.message || 'Erro desconhecido');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Erro desconhecido');
       setIsLoading(false);
     }
   };
@@ -80,7 +80,9 @@ export default function GeneratorForm() {
   return (
     <div className="card bg-base-100 shadow-2xl">
       <div className="card-body">
-        <h2 className="card-title text-2xl text-primary mb-4">✨ Gerador de Exercícios de Matemática</h2>
+        <h2 className="card-title text-2xl text-primary mb-4">
+          ✨ Gerador de Exercícios de Matemática
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="alert alert-info">
@@ -89,6 +91,8 @@ export default function GeneratorForm() {
               fill="none"
               viewBox="0 0 24 24"
               className="stroke-current shrink-0 w-6 h-6"
+              role="img"
+              aria-label="Informação"
             >
               <path
                 strokeLinecap="round"
@@ -101,18 +105,20 @@ export default function GeneratorForm() {
           </div>
 
           <div className="space-y-4">
-            <label className="label">
-              <span className="label-text font-semibold text-lg">🔢 Configuração por Algarismos</span>
-            </label>
+            <div className="label">
+              <span className="label-text font-semibold text-lg">
+                🔢 Configuração por Algarismos
+              </span>
+            </div>
 
             {digitConfigs.map((config, index) => (
-              <div key={index} className="card bg-base-200 shadow-md">
+              <div key={config.id} className="card bg-base-200 shadow-md">
                 <div className="card-body p-4">
                   <div className="flex items-center gap-4">
                     <div className="form-control flex-1">
-                      <label className="label">
-                        <span className="label-text">Algarismos</span>
-                      </label>
+                      <div className="label">
+                        <span className="label-text">Perguntas</span>
+                      </div>
                       <input
                         type="number"
                         min="1"
@@ -128,9 +134,9 @@ export default function GeneratorForm() {
                     </div>
 
                     <div className="form-control flex-1">
-                      <label className="label">
+                      <div className="label">
                         <span className="label-text">Perguntas</span>
-                      </label>
+                      </div>
                       <input
                         type="number"
                         min="0"
@@ -146,14 +152,19 @@ export default function GeneratorForm() {
                     </div>
 
                     <div className="form-control flex-1">
-                      <label className="label">
+                      <div className="label">
                         <span className="label-text">Operação</span>
-                      </label>
+                      </div>
                       <select
                         value={config.operation}
                         onChange={(e) => {
                           const newConfigs = [...digitConfigs];
-                          newConfigs[index].operation = e.target.value as any;
+                          newConfigs[index].operation = e.target.value as
+                            | 'addition'
+                            | 'subtraction'
+                            | 'multiplication'
+                            | 'division'
+                            | 'mixed';
                           setDigitConfigs(newConfigs);
                         }}
                         className="select select-bordered select-accent w-full"
@@ -180,6 +191,8 @@ export default function GeneratorForm() {
                         className="h-5 w-5"
                         viewBox="0 0 20 20"
                         fill="white"
+                        role="img"
+                        aria-label="Remover configuração"
                       >
                         <path
                           fillRule="evenodd"
@@ -193,9 +206,9 @@ export default function GeneratorForm() {
                   {(config.operation === 'division' || config.operation === 'mixed') && (
                     <div className="flex items-center gap-4 mt-3 pl-4 pr-4 pb-2">
                       <div className="form-control flex-1">
-                        <label className="label">
+                        <div className="label">
                           <span className="label-text text-sm">Divisor Mínimo</span>
-                        </label>
+                        </div>
                         <input
                           type="number"
                           min="1"
@@ -211,9 +224,9 @@ export default function GeneratorForm() {
                       </div>
 
                       <div className="form-control flex-1">
-                        <label className="label">
+                        <div className="label">
                           <span className="label-text text-sm">Divisor Máximo</span>
-                        </label>
+                        </div>
                         <input
                           type="number"
                           min="1"
@@ -238,7 +251,12 @@ export default function GeneratorForm() {
               onClick={() => {
                 setDigitConfigs([
                   ...digitConfigs,
-                  { digits: 2, questions: 10, operation: 'addition' as const },
+                  {
+                    id: crypto.randomUUID(),
+                    digits: 2,
+                    questions: 10,
+                    operation: 'addition' as const,
+                  },
                 ]);
               }}
               className="btn btn-outline btn-primary w-full"
@@ -248,9 +266,9 @@ export default function GeneratorForm() {
           </div>
 
           <div className="form-control">
-            <label className="label">
+            <div className="label">
               <span className="label-text font-semibold">📋 Formato</span>
-            </label>
+            </div>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value as 'grid' | 'contextual' | 'both')}
@@ -273,7 +291,9 @@ export default function GeneratorForm() {
                 />
                 <div>
                   <span className="label-text font-semibold">🤖 Usar IA (Google Gemini)</span>
-                  <p className="text-xs text-base-content/60 mt-1">Gera histórias mais criativas e variadas</p>
+                  <p className="text-xs text-base-content/60 mt-1">
+                    Gera histórias mais criativas e variadas
+                  </p>
                 </div>
               </label>
             </div>
@@ -286,6 +306,8 @@ export default function GeneratorForm() {
                 className="stroke-current shrink-0 h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
+                role="img"
+                aria-label="Erro"
               >
                 <path
                   strokeLinecap="round"
@@ -310,7 +332,7 @@ export default function GeneratorForm() {
                   Gerando...
                 </>
               ) : (
-                <>✨ Gerar Exercícios</>
+                '✨ Gerar Exercícios'
               )}
             </button>
           </div>
