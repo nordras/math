@@ -1,11 +1,10 @@
 'use server';
 
 import { z } from 'zod';
-import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
-import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
-import { formatGrid, formatContextual } from '@/lib/services/HTMLFormatterService';
 import { getRandomName } from '@/lib/constants/namePool';
-import { getTranslations } from '@/lib/utils/serverTranslations';
+import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
+import { formatContextual, formatGrid } from '@/lib/services/HTMLFormatterService';
+import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
 // Validation schema
@@ -43,13 +42,9 @@ export interface GenerateExercisesResult {
  * Server Action to generate math exercises
  */
 export async function generateExercises(
-  input: GenerateExercisesInput,
-  locale: string = 'pt'
+  input: GenerateExercisesInput
 ): Promise<GenerateExercisesResult> {
   try {
-    // Load translations for the locale
-    const messages = await getTranslations(locale);
-
     // Validate input
     const validatedInput = GenerateExercisesSchema.parse(input);
 
@@ -70,8 +65,6 @@ export async function generateExercises(
       const gridHtml = formatGrid(problems, stats, {
         includeAnswerKey: validatedInput.includeAnswerKey,
         studentName,
-        locale,
-        messages,
       });
 
       result.gridHtml = gridHtml;
@@ -87,8 +80,6 @@ export async function generateExercises(
           const contextualProblems = await generateContextualProblems(problems, 10);
 
           const contextualHtml = formatContextual(contextualProblems, stats, {
-            locale,
-            messages,
             includeAnswerKey: validatedInput.includeAnswerKey,
             studentName,
           });
@@ -97,11 +88,11 @@ export async function generateExercises(
           if (validatedInput.format === 'contextual') {
             result.html = contextualHtml;
           }
-        } catch (aiError: any) {
+        } catch (aiError: unknown) {
           console.error('Error generating contexts with AI:', aiError);
           return {
             success: false,
-            error: `Error generating contexts with AI: ${aiError.message}`,
+            error: `Error generating contexts with AI: ${aiError instanceof Error ? aiError.message : String(aiError)}`,
           };
         }
       } else {
@@ -118,8 +109,6 @@ export async function generateExercises(
         const contextualHtml = formatContextual(simpleContextual, stats, {
           includeAnswerKey: validatedInput.includeAnswerKey,
           studentName,
-          locale,
-          messages,
         });
 
         result.contextualHtml = contextualHtml;
@@ -130,11 +119,11 @@ export async function generateExercises(
     }
 
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error generating exercises:', error);
     return {
       success: false,
-      error: error.message || 'Unknown error generating exercises',
+      error: error instanceof Error ? error.message : 'Unknown error generating exercises',
     };
   }
 }

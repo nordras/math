@@ -1,10 +1,10 @@
 'use server';
 
 import { z } from 'zod';
-import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
-import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
-import { formatGrid, formatContextual } from '@/lib/services/HTMLFormatterService';
 import { getRandomName } from '@/lib/constants/namePool';
+import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
+import { formatContextual, formatGrid } from '@/lib/services/HTMLFormatterService';
+import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
 // Validation schema
@@ -88,11 +88,11 @@ export async function generateExercises(
           if (validatedInput.format === 'contextual') {
             result.html = contextualHtml;
           }
-        } catch (aiError: any) {
+        } catch (aiError: unknown) {
           console.error('Error generating contexts with AI:', aiError);
           return {
             success: false,
-            error: `Erro ao gerar contextos com IA: ${aiError.message}`,
+            error: `Erro ao gerar contextos com IA: ${aiError instanceof Error ? aiError.message : String(aiError)}`,
           };
         }
       } else {
@@ -119,11 +119,11 @@ export async function generateExercises(
     }
 
     return result;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error generating exercises:', error);
     return {
       success: false,
-      error: error.message || 'Erro desconhecido ao gerar exercícios',
+      error: error instanceof Error ? error.message : 'Erro desconhecido ao gerar exercícios',
     };
   }
 }
