@@ -1,0 +1,49 @@
+{
+  "home": {
+    "title": "🎓 Math Exercise Generator",
+    "subtitle": "Create personalized exercises quickly and easily"
+  },
+  "form": {
+    "title": "✨ Math Exercise Generator",
+    "totalQuestions": "Total Questions",
+    "digitConfigTitle": "🔢 Configuration by Digits",
+    "digits": "Questions",
+    "questions": "Questions",
+    "operation": "Operation",
+    "operationPlaceholder": "Select operation",
+    "operations": {
+      "addition": "➕ Addition",
+      "subtraction": "➖ Subtraction",
+      "multiplication": "✖️ Multiplication",
+      "division": "➗ Division",
+      "mixed": "🎲 Mixed"
+    },
+    "divisorMin": "Minimum Divisor",
+    "divisorMax": "Maximum Divisor",
+    "addConfig": "➕ Add Configuration",
+    "format": "📋 Format",
+    "formatOptions": {
+      "grid": "📊 Grid (problem list)",
+      "contextual": "📖 Contextualized (stories)",
+      "both": "🎁 Both (2 files)"
+    },
+    "useAI": "🤖 Use AI (Google Gemini)",
+    "useAIDescription": "Generates more creative and varied stories",
+    "generate": "✨ Generate Exercises",
+    "generating": "Generating...",
+    "errorGenerate": "Error generating exercises",
+    "errorUnknown": "Unknown error",
+    "howItWorksTitle": "ℹ️ How it works:",
+    "howItWorks": [
+      "Configure how many digits and questions you want per operation",
+      "Choose between grid format (problem list) or contextualized (stories)",
+      "Optionally, use AI to generate more creative stories",
+      "Click \"Generate Exercises\" to create the HTML document",
+      "Exercises will open in a new browser tab ready for printing"
+    ]
+  },
+  "metadata": {
+    "title": "Math Exercise Generator",
+    "description": "Create personalized math exercises for students"
+  }
+}

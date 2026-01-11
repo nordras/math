@@ -1,0 +1,49 @@
+{
+  "home": {
+    "title": "🎓 Generador de Ejercicios de Matemáticas",
+    "subtitle": "Crea ejercicios personalizados de forma rápida y fácil"
+  },
+  "form": {
+    "title": "✨ Generador de Ejercicios de Matemáticas",
+    "totalQuestions": "Total de Preguntas",
+    "digitConfigTitle": "🔢 Configuración por Dígitos",
+    "digits": "Preguntas",
+    "questions": "Preguntas",
+    "operation": "Operación",
+    "operationPlaceholder": "Seleccione operación",
+    "operations": {
+      "addition": "➕ Adición",
+      "subtraction": "➖ Sustracción",
+      "multiplication": "✖️ Multiplicación",
+      "division": "➗ División",
+      "mixed": "🎲 Mixto"
+    },
+    "divisorMin": "Divisor Mínimo",
+    "divisorMax": "Divisor Máximo",
+    "addConfig": "➕ Agregar Configuración",
+    "format": "📋 Formato",
+    "formatOptions": {
+      "grid": "📊 Cuadrícula (lista de problemas)",
+      "contextual": "📖 Contextualizado (historias)",
+      "both": "🎁 Ambos (2 archivos)"
+    },
+    "useAI": "🤖 Usar IA (Google Gemini)",
+    "useAIDescription": "Genera historias más creativas y variadas",
+    "generate": "✨ Generar Ejercicios",
+    "generating": "Generando...",
+    "errorGenerate": "Error al generar ejercicios",
+    "errorUnknown": "Error desconocido",
+    "howItWorksTitle": "ℹ️ Cómo funciona:",
+    "howItWorks": [
+      "Configure cuántos dígitos y preguntas desea por operación",
+      "Elija entre formato cuadrícula (lista de problemas) o contextualizado (historias)",
+      "Opcionalmente, use IA para generar historias más creativas",
+      "Haga clic en \"Generar Ejercicios\" para crear el documento HTML",
+      "Los ejercicios se abrirán en una nueva pestaña del navegador listos para imprimir"
+    ]
+  },
+  "metadata": {
+    "title": "Generador de Ejercicios de Matemáticas",
+    "description": "Crea ejercicios de matemáticas personalizados para estudiantes"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "home": {
+    "title": "🎓 Gerador de Exercícios de Matemática",
+    "subtitle": "Crie exercícios personalizados de forma rápida e fácil"
+  },
+  "form": {
+    "title": "✨ Gerador de Exercícios de Matemática",
+    "totalQuestions": "Total de Perguntas",
+    "digitConfigTitle": "🔢 Configuração por Algarismos",
+    "digits": "Perguntas",
+    "questions": "Perguntas",
+    "operation": "Operação",
+    "operationPlaceholder": "Selecione a operação",
+    "operations": {
+      "addition": "➕ Adição",
+      "subtraction": "➖ Subtração",
+      "multiplication": "✖️ Multiplicação",
+      "division": "➗ Divisão",
+      "mixed": "🎲 Misto"
+    },
+    "divisorMin": "Divisor Mínimo",
+    "divisorMax": "Divisor Máximo",
+    "addConfig": "➕ Adicionar Configuração",
+    "format": "📋 Formato",
+    "formatOptions": {
+      "grid": "📊 Grade (lista de problemas)",
+      "contextual": "📖 Contextualizado (histórias)",
+      "both": "🎁 Ambos (2 arquivos)"
+    },
+    "useAI": "🤖 Usar IA (Google Gemini)",
+    "useAIDescription": "Gera histórias mais criativas e variadas",
+    "generate": "✨ Gerar Exercícios",
+    "generating": "Gerando...",
+    "errorGenerate": "Erro ao gerar exercícios",
+    "errorUnknown": "Erro desconhecido",
+    "howItWorksTitle": "ℹ️ Como funciona:",
+    "howItWorks": [
+      "Configure quantos algarismos e questões deseja por operação",
+      "Escolha entre formato grade (lista de problemas) ou contextualizado (histórias)",
+      "Opcionalmente, use IA para gerar histórias mais criativas",
+      "Clique em \"Gerar Exercícios\" para criar o documento HTML",
+      "Os exercícios serão abertos em uma nova aba do navegador prontos para impressão"
+    ]
+  },
+  "metadata": {
+    "title": "Gerador de Exercícios de Matemática",
+    "description": "Crie exercícios de matemática personalizados para estudantes"
+  }
+}
