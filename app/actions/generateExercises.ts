@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { getRandomName } from '@/lib/constants/namePool';
 import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
-import { formatContextual, formatGrid } from '@/lib/services/HTMLFormatterService';
+import { renderContextualTemplate, renderGridTemplate } from '@/lib/services/PrintFormatterService';
 import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
 import type { GenerateProblemsResult } from '@/lib/types/math';
 
@@ -62,9 +62,8 @@ export async function generateExercises(
 
     //Generate HTML grid format
     if (validatedInput.format === 'grid' || validatedInput.format === 'both') {
-      const gridHtml = formatGrid(problems, stats, {
+      const gridHtml = renderGridTemplate(problems, stats, {
         includeAnswerKey: validatedInput.includeAnswerKey,
-        studentName,
       });
 
       result.gridHtml = gridHtml;
@@ -79,7 +78,7 @@ export async function generateExercises(
         try {
           const contextualProblems = await generateContextualProblems(problems, 10);
 
-          const contextualHtml = formatContextual(contextualProblems, stats, {
+          const contextualHtml = renderContextualTemplate(contextualProblems, {
             includeAnswerKey: validatedInput.includeAnswerKey,
             studentName,
           });
@@ -106,7 +105,7 @@ export async function generateExercises(
           operation: p.operation,
         }));
 
-        const contextualHtml = formatContextual(simpleContextual, stats, {
+        const contextualHtml = renderContextualTemplate(simpleContextual, {
           includeAnswerKey: validatedInput.includeAnswerKey,
           studentName,
         });

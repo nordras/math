@@ -1,4 +1,9 @@
 /**
+ * @deprecated This service is deprecated. Use PrintFormatterService instead:
+ * - Import { renderGridTemplate, renderContextualTemplate } from '@/lib/services/PrintFormatterService'
+ * - CSS has been extracted to /public/styles/exercise-print.css
+ * - Uses template strings with external CSS for better maintainability
+ * 
  * Service for formatting exercises to HTML
  * Adapts existing templates for web rendering using pure functions
  */

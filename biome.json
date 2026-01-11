@@ -26,7 +26,8 @@
       "style": {
         "noNonNullAssertion": "warn",
         "useConst": "error",
-        "useTemplate": "warn"
+        "useTemplate": "warn",
+        "noHeadElement": "off"
       },
       "correctness": {
         "noUnusedVariables": "error",
@@ -35,6 +36,9 @@
       "complexity": {
         "noForEach": "off",
         "useLiteralKeys": "warn"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off"
       },
       "performance": {
         "noDelete": "warn"

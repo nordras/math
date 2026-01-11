@@ -20,11 +20,9 @@ jest.mock('@/lib/services/MathGeneratorService', () => ({
   },
 }));
 
-jest.mock('@/lib/services/HTMLFormatterService', () => ({
-  HTMLFormatterService: {
-    formatGrid: jest.fn(() => '<html>Grid</html>'),
-    formatContextual: jest.fn(() => '<html>Contextual</html>'),
-  },
+jest.mock('@/lib/services/PrintTemplateService', () => ({
+  renderGridTemplate: jest.fn(() => '<html>Grid</html>'),
+  renderContextualTemplate: jest.fn(() => '<html>Contextual</html>'),
 }));
 
 jest.mock('nanoid', () => ({
