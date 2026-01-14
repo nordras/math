@@ -8,7 +8,7 @@ An educational tool for creating personalized math exercises with and without AI
 
 > ⚠️ **Note:** The hosted version on Vercel does **not** include AI-powered features. To use AI-generated narrative contexts, you must run the project locally with your own Gemini API key.
 
-<img width="727" height="1108" alt="image" src="https://github.com/user-attachments/assets/449b6c03-1ed2-48c7-9234-5b7e91c1930f" />
+<img width="1059" height="1684" alt="image" src="https://github.com/user-attachments/assets/b580a6fd-015b-4bee-adc9-c5e5f15c21d3" />
 
 ## ✨ Features
 
