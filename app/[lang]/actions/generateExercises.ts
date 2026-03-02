@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { getRandomName } from '@/lib/constants/namePool';
-import { generateContextualProblems } from '@/lib/services/AIEnhancerService';
+import { generateContextualProblems, getQuestionForOperation } from '@/lib/services/AIEnhancerService';
 import { renderContextualTemplate, renderGridTemplate } from '@/lib/services/PrintFormatterService';
 import { generateProblems, validateOptions } from '@/lib/services/MathGeneratorService';
 import type { GenerateProblemsResult } from '@/lib/types/math';
@@ -98,7 +98,7 @@ export async function generateExercises(
         // Use simple templates without AI (hardcoded for now - should be improved)
         const simpleContextual = problems.slice(0, 10).map((p) => ({
           context: `${studentName} tem ${p.num1} itens e ${p.type === 'addition' ? 'ganhou' : 'deu'} ${p.num2} itens.`,
-          question: p.type === 'addition' ? 'Quantos no total?' : 'Quantos restaram?',
+          question: getQuestionForOperation(p.type),
           answer: p.answer,
           num1: p.num1,
           num2: p.num2,
