@@ -84,8 +84,10 @@ export interface GenerateProblemsResult {
 export interface ContextualProblem {
   /** Contexto narrativo do problema */
   context: string;
-  /** Pergunta a ser respondida */
+  /** Pergunta a ser respondida (do pool de variações) */
   question: string;
+  /** Pergunta gerada pela IA (opcional, usada quando IA está habilitada) */
+  generatedQuestion?: string;
   /** Resposta correta */
   answer: number;
   /** Primeiro número (para referência) */
