@@ -9,6 +9,38 @@ import type { ContextualProblem, MathProblem } from '../types/math';
 /** Constantes de configuração */
 const DEFAULT_CONTEXTUAL_PROBLEMS_COUNT = 10;
 
+/** Pool de variações de perguntas para problemas contextualizados */
+const QUESTION_VARIATIONS = {
+  addition: [
+    'Quantos no total?',
+    'Quantos ele(a) tem agora?',
+    'Quantos ficaram ao todo?',
+    'Qual é o total?',
+    'Quantos são juntos?',
+  ],
+  subtraction: [
+    'Quantos restaram?',
+    'Quantos sobraram?',
+    'Quantos ainda tem?',
+    'Quantos ficaram?',
+    'Quanto sobrou?',
+  ],
+  multiplication: [
+    'Quantos ao todo?',
+    'Quantos são no total?',
+    'Qual o total?',
+    'Quantos são juntos?',
+    'Quantos tem tudo?',
+  ],
+  division: [
+    'Quantos para cada um?',
+    'Quanto cada um recebe?',
+    'Quantos em cada grupo?',
+    'Quanto cada um ganha?',
+    'Como dividir igualmente?',
+  ],
+} as const;
+
 /** Configurações do AI Enhancer */
 interface AIEnhancerConfig {
   apiKey: string;
@@ -56,42 +88,41 @@ export function selectProblems(problems: MathProblem[], count: number): MathProb
 
 /**
  * Determina a pergunta apropriada baseada no tipo de operação
+ * Seleciona aleatoriamente de um pool de variações para maior diversidade
  * @param operationType - Tipo de operação matemática
  * @returns Texto da pergunta
  */
 export function getQuestionForOperation(operationType: MathProblem['type']): string {
-  switch (operationType) {
-    case 'addition':
-      return 'Quantos no total?';
-    case 'subtraction':
-      return 'Quantos restaram?';
-    case 'multiplication':
-      return 'Quantos ao todo?';
-    case 'division':
-      return 'Quantos para cada um?';
-    default:
-      return 'Qual é o resultado?';
-  }
+  const questions = QUESTION_VARIATIONS[operationType] || ['Qual é o resultado?'];
+  return questions[Math.floor(Math.random() * questions.length)];
 }
 
 /**
  * Transforma problemas básicos em problemas contextualizados
  * @param problems - Problemas básicos
  * @param contexts - Contextos narrativos gerados pela IA
+ * @param aiQuestions - Perguntas geradas pela IA (opcional, se null usa pool de perguntas)
  * @returns Problemas com contexto narrativo
  */
 export function buildContextualProblems(
   problems: MathProblem[],
-  contexts: string[]
+  contexts: string[],
+  aiQuestions: (string | null)[] | null = null
 ): ContextualProblem[] {
-  return problems.map((problem, index) => ({
-    context: contexts[index],
-    question: getQuestionForOperation(problem.type),
-    answer: problem.answer,
-    num1: problem.num1,
-    num2: problem.num2,
-    operation: problem.operation,
-  }));
+  return problems.map((problem, index) => {
+    const poolQuestion = getQuestionForOperation(problem.type);
+    const aiQuestion = aiQuestions?.[index];
+    
+    return {
+      context: contexts[index],
+      question: poolQuestion, // Sempre presente (do pool)
+      generatedQuestion: aiQuestion || undefined, // Pergunta da IA quando disponível
+      answer: problem.answer,
+      num1: problem.num1,
+      num2: problem.num2,
+      operation: problem.operation,
+    };
+  });
 }
 
 /**
@@ -105,7 +136,7 @@ export function buildContextualProblems(
  * ```typescript
  * const basicProblems = [{ num1: 5, num2: 3, type: 'addition', operation: '+', answer: 8 }];
  * const contextual = await generateContextualProblems(basicProblems, 1);
- * // Result: [{ context: "Maria tinha 5 maçãs e ganhou 3...", question: "Quantos no total?", ... }]
+ * // Result: [{ context: "Maria tinha 5 maçãs e ganhou 3...", question: "Quantos no total?", generatedQuestion: "Quantas maçãs Maria tem agora?", ... }]
  * ```
  */
 export async function generateContextualProblems(
@@ -121,11 +152,11 @@ export async function generateContextualProblems(
   // Selecionar problemas uniformemente distribuídos
   const selectedProblems = selectProblems(problems, count);
 
-  // Gerar contextos para todos os problemas selecionados em batch
-  const generatedContexts = await aiEnhancer.generateContextsBatch(selectedProblems);
+  // Gerar contextos e perguntas para todos os problemas selecionados em batch
+  const { contexts, questions } = await aiEnhancer.generateContextsBatch(selectedProblems);
 
-  // Combinar problemas com contextos
-  return buildContextualProblems(selectedProblems, generatedContexts);
+  // Combinar problemas com contextos e perguntas (da IA ou do pool)
+  return buildContextualProblems(selectedProblems, contexts, questions);
 }
 
 /**
