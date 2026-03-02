@@ -120,6 +120,9 @@ export function renderContextualTemplate(
 
   const problemsHtml = contextualProblems
     .map((problem, index) => {
+      // Priorizar pergunta gerada pela IA se disponível, senão usar do pool
+      const displayQuestion = problem.generatedQuestion || problem.question;
+      
       const answerHtml = includeAnswerKey
         ? `<div class="answer">
             <strong>Resposta:</strong> ${problem.answer}
@@ -132,7 +135,7 @@ export function renderContextualTemplate(
           <span class="problem-number">Problema ${index + 1}</span>
         </div>
         <div class="problem-context">${problem.context}</div>
-        <div class="problem-question">${problem.question}</div>
+        <div class="problem-question">${displayQuestion}</div>
         ${answerHtml}
       </div>`;
     })
