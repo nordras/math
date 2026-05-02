@@ -4,19 +4,19 @@
  */
 
 import AIEnhancer from '../generators/aiEnhancer.js';
-import type { ContextualProblem, MathProblem } from '../types/math';
+import type { AIProviderConfig, ContextualProblem, MathProblem } from '../types/math';
 
-/** Constantes de configuração */
 const DEFAULT_CONTEXTUAL_PROBLEMS_COUNT = 10;
 
-/** Pool de variações de perguntas para problemas contextualizados */
 const QUESTION_VARIATIONS = {
   addition: [
     'Quantos no total?',
-    'Quantos ele(a) tem agora?',
+    'Quantos tem agora?',
     'Quantos ficaram ao todo?',
     'Qual é o total?',
     'Quantos são juntos?',
+    'Qual é a soma?',
+    'Quantos ao todo?',
   ],
   subtraction: [
     'Quantos restaram?',
@@ -24,42 +24,40 @@ const QUESTION_VARIATIONS = {
     'Quantos ainda tem?',
     'Quantos ficaram?',
     'Quanto sobrou?',
+    'Qual é a diferença?',
+    'Com quantos ficou?',
   ],
   multiplication: [
     'Quantos ao todo?',
     'Quantos são no total?',
     'Qual o total?',
-    'Quantos são juntos?',
-    'Quantos tem tudo?',
+    'Quantos tem no total?',
+    'Qual é o produto?',
+    'Quantos em todos os grupos?',
+    'Quantos são ao todo?',
   ],
   division: [
     'Quantos para cada um?',
     'Quanto cada um recebe?',
     'Quantos em cada grupo?',
-    'Quanto cada um ganha?',
-    'Como dividir igualmente?',
+    'Quanto fica para cada um?',
+    'Quantos sobram para cada um?',
+    'Qual é o quociente?',
+    'Quanto cabe em cada parte?',
   ],
 } as const;
 
-/** Configurações do AI Enhancer */
 interface AIEnhancerConfig {
   apiKey: string;
   model?: string;
 }
 
-/**
- * Valida se a chave de API do Gemini está configurada
- * @throws {Error} Se a API key estiver ausente ou for placeholder
- */
 function validateApiKey(apiKey: string | undefined): asserts apiKey is string {
   if (!apiKey || apiKey === 'your_api_key_here') {
     throw new Error('API key do Gemini não configurada. Configure GEMINI_API_KEY no arquivo .env');
   }
 }
 
-/**
- * Cria instância do AI Enhancer com configuração
- */
 function createAIEnhancer(config: AIEnhancerConfig): AIEnhancer {
   return new AIEnhancer(config.apiKey, {
     model: config.model || 'gemini-2.0-flash-exp',
@@ -67,10 +65,19 @@ function createAIEnhancer(config: AIEnhancerConfig): AIEnhancer {
 }
 
 /**
+ * Validates an AI-generated question before using it
+ */
+function validateAIQuestion(text: string | null | undefined): boolean {
+  if (!text || typeof text !== 'string') return false;
+  const trimmed = text.trim();
+  if (trimmed.length < 5 || trimmed.length > 120) return false;
+  if (!trimmed.endsWith('?')) return false;
+  if (/\d+\s*[+\-×÷]\s*\d+/.test(trimmed)) return false;
+  return true;
+}
+
+/**
  * Seleciona problemas uniformemente distribuídos da lista completa
- * @param problems - Lista completa de problemas
- * @param count - Quantidade de problemas a selecionar
- * @returns Lista de problemas selecionados uniformemente
  */
 export function selectProblems(problems: MathProblem[], count: number): MathProblem[] {
   if (count <= 0) return [];
@@ -87,10 +94,7 @@ export function selectProblems(problems: MathProblem[], count: number): MathProb
 }
 
 /**
- * Determina a pergunta apropriada baseada no tipo de operação
- * Seleciona aleatoriamente de um pool de variações para maior diversidade
- * @param operationType - Tipo de operação matemática
- * @returns Texto da pergunta
+ * Retorna uma pergunta do pool baseada no tipo de operação
  */
 export function getQuestionForOperation(operationType: MathProblem['type']): string {
   const questions = QUESTION_VARIATIONS[operationType] || ['Qual é o resultado?'];
@@ -99,10 +103,6 @@ export function getQuestionForOperation(operationType: MathProblem['type']): str
 
 /**
  * Transforma problemas básicos em problemas contextualizados
- * @param problems - Problemas básicos
- * @param contexts - Contextos narrativos gerados pela IA
- * @param aiQuestions - Perguntas geradas pela IA (opcional, se null usa pool de perguntas)
- * @returns Problemas com contexto narrativo
  */
 export function buildContextualProblems(
   problems: MathProblem[],
@@ -111,12 +111,13 @@ export function buildContextualProblems(
 ): ContextualProblem[] {
   return problems.map((problem, index) => {
     const poolQuestion = getQuestionForOperation(problem.type);
-    const aiQuestion = aiQuestions?.[index];
-    
+    const rawAiQuestion = aiQuestions?.[index] ?? null;
+    const generatedQuestion = validateAIQuestion(rawAiQuestion) ? rawAiQuestion! : undefined;
+
     return {
       context: contexts[index],
-      question: poolQuestion, // Sempre presente (do pool)
-      generatedQuestion: aiQuestion || undefined, // Pergunta da IA quando disponível
+      question: poolQuestion,
+      generatedQuestion,
       answer: problem.answer,
       num1: problem.num1,
       num2: problem.num2,
@@ -127,43 +128,35 @@ export function buildContextualProblems(
 
 /**
  * Gera problemas matemáticos com contextos narrativos usando IA
- * @param problems - Lista de problemas matemáticos básicos
- * @param count - Quantidade de problemas a contextualizar (padrão: 10)
- * @returns Promessa com lista de problemas contextualizados
- * @throws {Error} Se a API key não estiver configurada
- *
- * @example
- * ```typescript
- * const basicProblems = [{ num1: 5, num2: 3, type: 'addition', operation: '+', answer: 8 }];
- * const contextual = await generateContextualProblems(basicProblems, 1);
- * // Result: [{ context: "Maria tinha 5 maçãs e ganhou 3...", question: "Quantos no total?", generatedQuestion: "Quantas maçãs Maria tem agora?", ... }]
- * ```
  */
 export async function generateContextualProblems(
   problems: MathProblem[],
-  count: number = DEFAULT_CONTEXTUAL_PROBLEMS_COUNT
+  count: number = DEFAULT_CONTEXTUAL_PROBLEMS_COUNT,
+  providerConfig?: AIProviderConfig
 ): Promise<ContextualProblem[]> {
+  const selectedProblems = selectProblems(problems, count);
+
+  // New path: explicit provider config supplied (including 'none' → templates)
+  if (providerConfig) {
+    const { generateContextsBatchWithProvider } = await import('./AIProviderService');
+    const { contexts, questions } = await generateContextsBatchWithProvider(
+      selectedProblems,
+      providerConfig
+    );
+    return buildContextualProblems(selectedProblems, contexts, questions);
+  }
+
+  // Legacy: read Gemini API key from environment
   const apiKey = process.env.GEMINI_API_KEY;
   validateApiKey(apiKey);
 
   const model = process.env.GEMINI_MODEL;
   const aiEnhancer = createAIEnhancer({ apiKey, model });
 
-  // Selecionar problemas uniformemente distribuídos
-  const selectedProblems = selectProblems(problems, count);
-
-  // Gerar contextos e perguntas para todos os problemas selecionados em batch
   const { contexts, questions } = await aiEnhancer.generateContextsBatch(selectedProblems);
-
-  // Combinar problemas com contextos e perguntas (da IA ou do pool)
   return buildContextualProblems(selectedProblems, contexts, questions);
 }
 
-/**
- * Obtém estatísticas de uso da API
- * @param apiKey - Chave de API do Gemini
- * @returns Estatísticas de uso da API
- */
 export function getApiUsageStats(apiKey: string) {
   const aiEnhancer = createAIEnhancer({ apiKey });
   return aiEnhancer.getUsageStats();
