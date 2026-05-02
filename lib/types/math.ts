@@ -2,6 +2,20 @@
  * Tipos compartilhados para geração de exercícios matemáticos
  */
 
+/** Provedores de IA suportados */
+export type AIProvider = 'gemini' | 'openai' | 'deepseek' | 'ollama' | 'none';
+
+/** Configuração do provedor de IA escolhido pelo usuário */
+export interface AIProviderConfig {
+  provider: AIProvider;
+  /** Chave de API (Gemini / OpenAI / DeepSeek) */
+  apiKey?: string;
+  /** Nome do modelo Ollama (padrão: 'llama3.2') */
+  ollamaModel?: string;
+  /** URL base do servidor Ollama (padrão: 'http://localhost:11434/v1') */
+  ollamaBaseUrl?: string;
+}
+
 /** Operações matemáticas suportadas */
 export type MathOperation = 'addition' | 'subtraction' | 'multiplication' | 'division';
 
