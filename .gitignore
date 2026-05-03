@@ -25,6 +25,12 @@ desktop.ini
 .env.local
 .env.*.local
 
+# TypeScript build info
+tsconfig.tsbuildinfo
+
+# Claude Code local settings
+.claude/
+
 # Arquivos de build e conversão
 *.pdf
 *.docx
