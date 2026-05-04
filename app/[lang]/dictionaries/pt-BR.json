@@ -20,6 +20,8 @@
     },
     "divisorMin": "Divisor Mínimo",
     "divisorMax": "Divisor Máximo",
+    "multiplierMin": "Multiplicador Mínimo",
+    "multiplierMax": "Multiplicador Máximo",
     "addConfig": "➕ Adicionar Configuração",
     "format": "📋 Formato",
     "formatOptions": {
@@ -27,19 +29,39 @@
       "contextual": "📖 Contextualizado (histórias)",
       "both": "🎁 Ambos (2 arquivos)"
     },
-    "useAI": "🤖 Usar IA (Google Gemini)",
-    "useAIDescription": "Gera histórias mais criativas e variadas",
+    "presets": {
+      "title": "📚 Exercícios Recomendados",
+      "customConfig": "— Configuração personalizada —",
+      "50varied": "50 exercícios variados"
+    },
+    "aiProvider": {
+      "title": "🤖 Provedor de IA",
+      "none": "Sem IA (templates)",
+      "gemini": "Gemini (Google)",
+      "openai": "GPT-4o (OpenAI)",
+      "deepseek": "DeepSeek",
+      "ollama": "Ollama (local)"
+    },
+    "apiKey": {
+      "label": "🔑 Chave de API",
+      "help": "A chave é usada apenas nesta geração e não é armazenada.",
+      "show": "Exibir chave",
+      "hide": "Ocultar chave"
+    },
+    "ollamaModel": {
+      "label": "🦙 Modelo Ollama",
+      "help": "Requer ollama serve rodando em localhost:11434"
+    },
     "generate": "✨ Gerar Exercícios",
     "generating": "Gerando...",
     "errorGenerate": "Erro ao gerar exercícios",
     "errorUnknown": "Erro desconhecido",
     "howItWorksTitle": "ℹ️ Como funciona:",
     "howItWorks": [
-      "Configure quantos algarismos e questões deseja por operação",
-      "Escolha entre formato grade (lista de problemas) ou contextualizado (histórias)",
-      "Opcionalmente, use IA para gerar histórias mais criativas",
-      "Clique em \"Gerar Exercícios\" para criar o documento HTML",
-      "Os exercícios serão abertos em uma nova aba do navegador prontos para impressão"
+      "Selecione um preset ou configure manualmente os algarismos e operações",
+      "Escolha o formato: grade (contas), contextualizado (histórias) ou ambos",
+      "Para histórias, escolha um provedor de IA ou use os templates embutidos",
+      "Clique em Gerar para abrir os exercícios em nova aba prontos para impressão"
     ]
   },
   "metadata": {
