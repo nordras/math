@@ -20,6 +20,8 @@
     },
     "divisorMin": "Minimum Divisor",
     "divisorMax": "Maximum Divisor",
+    "multiplierMin": "Minimum Multiplier",
+    "multiplierMax": "Maximum Multiplier",
     "addConfig": "➕ Add Configuration",
     "format": "📋 Format",
     "formatOptions": {
@@ -27,19 +29,39 @@
       "contextual": "📖 Contextualized (stories)",
       "both": "🎁 Both (2 files)"
     },
-    "useAI": "🤖 Use AI (Google Gemini)",
-    "useAIDescription": "Generates more creative and varied stories",
+    "presets": {
+      "title": "📚 Recommended Exercises",
+      "customConfig": "— Custom configuration —",
+      "50varied": "50 varied exercises"
+    },
+    "aiProvider": {
+      "title": "🤖 AI Provider",
+      "none": "No AI (templates)",
+      "gemini": "Gemini (Google)",
+      "openai": "GPT-4o (OpenAI)",
+      "deepseek": "DeepSeek",
+      "ollama": "Ollama (local)"
+    },
+    "apiKey": {
+      "label": "🔑 API Key",
+      "help": "The key is only used for this generation and is not stored.",
+      "show": "Show key",
+      "hide": "Hide key"
+    },
+    "ollamaModel": {
+      "label": "🦙 Ollama Model",
+      "help": "Requires ollama serve running on localhost:11434"
+    },
     "generate": "✨ Generate Exercises",
     "generating": "Generating...",
     "errorGenerate": "Error generating exercises",
     "errorUnknown": "Unknown error",
     "howItWorksTitle": "ℹ️ How it works:",
     "howItWorks": [
-      "Configure how many digits and questions you want per operation",
-      "Choose between grid format (problem list) or contextualized (stories)",
-      "Optionally, use AI to generate more creative stories",
-      "Click \"Generate Exercises\" to create the HTML document",
-      "Exercises will open in a new browser tab ready for printing"
+      "Select a preset or manually configure digits and operations",
+      "Choose the format: grid (calculations), contextualized (stories) or both",
+      "For stories, choose an AI provider or use the built-in templates",
+      "Click Generate to open exercises in a new tab ready for printing"
     ]
   },
   "metadata": {
