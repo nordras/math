@@ -11,14 +11,15 @@ type DigitConfig = {
   operation: 'addition' | 'subtraction' | 'multiplication' | 'division' | 'mixed';
   divisorMin?: number;
   divisorMax?: number;
+  multiplierMin?: number;
+  multiplierMax?: number;
 };
 
-// Preset configurations for recommended exercises
 const PRESETS: Record<string, Omit<DigitConfig, 'id'>[]> = {
   '50-variados': [
     { digits: 3, questions: 0,  operation: 'addition' },
-    { digits: 3, questions: 5,  operation: 'division',       divisorMin: 2,  divisorMax: 2 },
-    { digits: 3, questions: 5,  operation: 'division',       divisorMin: 3,  divisorMax: 3 },
+    { digits: 3, questions: 5,  operation: 'division',       divisorMin: 2,  divisorMax: 2  },
+    { digits: 3, questions: 5,  operation: 'division',       divisorMin: 3,  divisorMax: 3  },
     { digits: 3, questions: 5,  operation: 'subtraction' },
     { digits: 3, questions: 5,  operation: 'multiplication' },
     { digits: 3, questions: 5,  operation: 'subtraction' },
@@ -30,39 +31,35 @@ function makeConfigs(defs: Omit<DigitConfig, 'id'>[]): DigitConfig[] {
   return defs.map((d) => ({ ...d, id: crypto.randomUUID() }));
 }
 
+interface FormDict {
+  title?: string;
+  totalQuestions?: string;
+  digitConfigTitle?: string;
+  digits?: string;
+  questions?: string;
+  operation?: string;
+  operations?: { addition: string; subtraction: string; multiplication: string; division: string; mixed: string };
+  divisorMin?: string;
+  divisorMax?: string;
+  multiplierMin?: string;
+  multiplierMax?: string;
+  addConfig?: string;
+  format?: string;
+  formatOptions?: { grid: string; contextual: string; both: string };
+  presets?: { title: string; customConfig: string; '50varied': string };
+  aiProvider?: { title: string; none: string; gemini: string; openai: string; deepseek: string; ollama: string };
+  apiKey?: { label: string; help: string; show: string; hide: string };
+  ollamaModel?: { label: string; help: string };
+  generate?: string;
+  generating?: string;
+  errorGenerate?: string;
+  errorUnknown?: string;
+  howItWorksTitle?: string;
+  howItWorks?: string[];
+}
+
 interface GeneratorFormProps {
-  dict?: {
-    title: string;
-    totalQuestions: string;
-    digitConfigTitle: string;
-    digits: string;
-    questions: string;
-    operation: string;
-    operations: {
-      addition: string;
-      subtraction: string;
-      multiplication: string;
-      division: string;
-      mixed: string;
-    };
-    divisorMin: string;
-    divisorMax: string;
-    addConfig: string;
-    format: string;
-    formatOptions: {
-      grid: string;
-      contextual: string;
-      both: string;
-    };
-    useAI: string;
-    useAIDescription: string;
-    generate: string;
-    generating: string;
-    errorGenerate: string;
-    errorUnknown: string;
-    howItWorksTitle: string;
-    howItWorks: string[];
-  };
+  dict?: FormDict;
 }
 
 export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
@@ -90,16 +87,13 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
   const isOllama = aiProvider === 'ollama';
   const showAISection = format === 'contextual' || format === 'both';
 
-  // Replace server-side IDs with client UUIDs after hydration
   useEffect(() => {
     setDigitConfigs((prev) => prev.map((c) => ({ ...c, id: crypto.randomUUID() })));
   }, []);
 
   const applyPreset = (key: string) => {
     setSelectedPreset(key);
-    if (key && PRESETS[key]) {
-      setDigitConfigs(makeConfigs(PRESETS[key]));
-    }
+    if (key && PRESETS[key]) setDigitConfigs(makeConfigs(PRESETS[key]));
   };
 
   const updateConfig = (index: number, patch: Partial<DigitConfig>) => {
@@ -173,7 +167,9 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
           {/* ── Preset Selector ── */}
           <div className="form-control">
             <label htmlFor={presetSelectId} className="label">
-              <span className="label-text font-semibold">📚 Exercícios Recomendados</span>
+              <span className="label-text font-semibold">
+                {dict?.presets?.title || '📚 Exercícios Recomendados'}
+              </span>
             </label>
             <select
               id={presetSelectId}
@@ -181,8 +177,8 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
               onChange={(e) => applyPreset(e.target.value)}
               className="select select-bordered select-primary w-full"
             >
-              <option value="">— Configuração personalizada —</option>
-              <option value="50-variados">50 exercícios variados</option>
+              <option value="">{dict?.presets?.customConfig || '— Configuração personalizada —'}</option>
+              <option value="50-variados">{dict?.presets?.['50varied'] || '50 exercícios variados'}</option>
             </select>
           </div>
 
@@ -196,12 +192,8 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
               role="img"
               aria-label="Informação"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span className="font-semibold">
               {dict?.totalQuestions || 'Total de Perguntas'}: {totalProblems}
@@ -226,9 +218,7 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                       </label>
                       <input
                         id={`digits-${config.id}`}
-                        type="number"
-                        min="1"
-                        max="5"
+                        type="number" min="1" max="5"
                         value={config.digits}
                         onChange={(e) => updateConfig(index, { digits: Number(e.target.value) })}
                         className="input input-bordered input-primary w-full"
@@ -241,9 +231,7 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                       </label>
                       <input
                         id={`questions-${config.id}`}
-                        type="number"
-                        min="0"
-                        max="100"
+                        type="number" min="0" max="100"
                         value={config.questions}
                         onChange={(e) => updateConfig(index, { questions: Number(e.target.value) })}
                         className="input input-bordered input-secondary w-full"
@@ -257,11 +245,7 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                       <select
                         id={`operation-${config.id}`}
                         value={config.operation}
-                        onChange={(e) =>
-                          updateConfig(index, {
-                            operation: e.target.value as DigitConfig['operation'],
-                          })
-                        }
+                        onChange={(e) => updateConfig(index, { operation: e.target.value as DigitConfig['operation'] })}
                         className="select select-bordered select-accent w-full"
                       >
                         <option value="addition">{dict?.operations?.addition || '➕ Adição'}</option>
@@ -279,21 +263,15 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                       disabled={digitConfigs.length === 1}
                       aria-label="Remover configuração"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="white"
-                      >
-                        <path
-                          fillRule="evenodd"
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                        <path fillRule="evenodd"
                           d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
+                          clipRule="evenodd" />
                       </svg>
                     </button>
                   </div>
 
+                  {/* Divisor range — divisão ou misto */}
                   {(config.operation === 'division' || config.operation === 'mixed') && (
                     <div className="flex items-center gap-4 mt-3 pl-4 pr-4 pb-2">
                       <div className="form-control flex-1">
@@ -302,9 +280,7 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                         </label>
                         <input
                           id={`divisor-min-${config.id}`}
-                          type="number"
-                          min="1"
-                          max="100"
+                          type="number" min="1" max="100"
                           value={config.divisorMin ?? 1}
                           onChange={(e) => updateConfig(index, { divisorMin: Number(e.target.value) })}
                           className="input input-bordered input-sm w-full"
@@ -316,11 +292,39 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                         </label>
                         <input
                           id={`divisor-max-${config.id}`}
-                          type="number"
-                          min="1"
-                          max="100"
+                          type="number" min="1" max="100"
                           value={config.divisorMax ?? 10}
                           onChange={(e) => updateConfig(index, { divisorMax: Number(e.target.value) })}
+                          className="input input-bordered input-sm w-full"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Multiplier range — multiplicação ou misto */}
+                  {(config.operation === 'multiplication' || config.operation === 'mixed') && (
+                    <div className="flex items-center gap-4 mt-3 pl-4 pr-4 pb-2">
+                      <div className="form-control flex-1">
+                        <label htmlFor={`multiplier-min-${config.id}`} className="label">
+                          <span className="label-text text-sm">{dict?.multiplierMin || 'Multiplicador Mínimo'}</span>
+                        </label>
+                        <input
+                          id={`multiplier-min-${config.id}`}
+                          type="number" min="1" max="100"
+                          value={config.multiplierMin ?? 1}
+                          onChange={(e) => updateConfig(index, { multiplierMin: Number(e.target.value) })}
+                          className="input input-bordered input-sm w-full"
+                        />
+                      </div>
+                      <div className="form-control flex-1">
+                        <label htmlFor={`multiplier-max-${config.id}`} className="label">
+                          <span className="label-text text-sm">{dict?.multiplierMax || 'Multiplicador Máximo'}</span>
+                        </label>
+                        <input
+                          id={`multiplier-max-${config.id}`}
+                          type="number" min="1" max="100"
+                          value={config.multiplierMax ?? 10}
+                          onChange={(e) => updateConfig(index, { multiplierMax: Number(e.target.value) })}
                           className="input input-bordered input-sm w-full"
                         />
                       </div>
@@ -367,7 +371,9 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
               <div className="card-body p-4 space-y-3">
                 <div className="form-control">
                   <label htmlFor={providerSelectId} className="label">
-                    <span className="label-text font-semibold">🤖 Provedor de IA</span>
+                    <span className="label-text font-semibold">
+                      {dict?.aiProvider?.title || '🤖 Provedor de IA'}
+                    </span>
                   </label>
                   <select
                     id={providerSelectId}
@@ -379,31 +385,27 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                     }}
                     className="select select-bordered select-accent w-full"
                   >
-                    <option value="none">Sem IA (templates)</option>
-                    <option value="gemini">Gemini (Google)</option>
-                    <option value="openai">GPT-4o (OpenAI)</option>
-                    <option value="deepseek">DeepSeek</option>
-                    <option value="ollama">Ollama (local)</option>
+                    <option value="none">{dict?.aiProvider?.none || 'Sem IA (templates)'}</option>
+                    <option value="gemini">{dict?.aiProvider?.gemini || 'Gemini (Google)'}</option>
+                    <option value="openai">{dict?.aiProvider?.openai || 'GPT-4o (OpenAI)'}</option>
+                    <option value="deepseek">{dict?.aiProvider?.deepseek || 'DeepSeek'}</option>
+                    <option value="ollama">{dict?.aiProvider?.ollama || 'Ollama (local)'}</option>
                   </select>
                 </div>
 
                 {needsKey && (
                   <div className="form-control">
                     <label className="label">
-                      <span className="label-text text-sm">🔑 Chave de API</span>
+                      <span className="label-text text-sm">
+                        {dict?.apiKey?.label || '🔑 Chave de API'}
+                      </span>
                     </label>
                     <div className="flex gap-2">
                       <input
                         type={showKey ? 'text' : 'password'}
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
-                        placeholder={
-                          aiProvider === 'gemini'
-                            ? 'AIza...'
-                            : aiProvider === 'openai'
-                            ? 'sk-...'
-                            : 'sk-...'
-                        }
+                        placeholder={aiProvider === 'gemini' ? 'AIza...' : 'sk-...'}
                         className="input input-bordered input-sm flex-1"
                         autoComplete="off"
                       />
@@ -411,13 +413,16 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                         type="button"
                         onClick={() => setShowKey(!showKey)}
                         className="btn btn-sm btn-ghost"
-                        aria-label={showKey ? 'Ocultar chave' : 'Exibir chave'}
+                        aria-label={showKey
+                          ? (dict?.apiKey?.hide || 'Ocultar chave')
+                          : (dict?.apiKey?.show || 'Exibir chave')
+                        }
                       >
                         {showKey ? '🙈' : '👁'}
                       </button>
                     </div>
                     <p className="text-xs text-base-content/50 mt-1">
-                      A chave é usada apenas nesta geração e não é armazenada.
+                      {dict?.apiKey?.help || 'A chave é usada apenas nesta geração e não é armazenada.'}
                     </p>
                   </div>
                 )}
@@ -425,7 +430,9 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                 {isOllama && (
                   <div className="form-control">
                     <label className="label">
-                      <span className="label-text text-sm">🦙 Modelo Ollama</span>
+                      <span className="label-text text-sm">
+                        {dict?.ollamaModel?.label || '🦙 Modelo Ollama'}
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -435,7 +442,7 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
                       className="input input-bordered input-sm w-full"
                     />
                     <p className="text-xs text-base-content/50 mt-1">
-                      Requer <code>ollama serve</code> rodando em localhost:11434
+                      {dict?.ollamaModel?.help || 'Requer ollama serve rodando em localhost:11434'}
                     </p>
                   </div>
                 )}
@@ -446,20 +453,10 @@ export default function GeneratorForm({ dict }: GeneratorFormProps = {}) {
           {/* ── Error ── */}
           {error && (
             <div className="alert alert-error">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="stroke-current shrink-0 h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                role="img"
-                aria-label="Erro"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6"
+                fill="none" viewBox="0 0 24 24" role="img" aria-label="Erro">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>{error}</span>
             </div>
