@@ -23,6 +23,9 @@ const MIN_DIGITS = 1;
 const MAX_DIGITS = 5;
 const MIN_DIVISOR = 1;
 const MAX_DIVISOR = 100;
+const MIN_MULTIPLIER = 1;
+const MAX_MULTIPLIER = 100;
+const DEFAULT_MULTIPLIER_MAX = 10;
 
 /**
  * Clamp (limita) um valor entre min e max
@@ -84,6 +87,7 @@ function createSubtractionProblem(num1: number, num2: number): MathProblem {
 
 /**
  * Cria problema de multiplicação
+ * num1 = multiplicando (do range de dígitos), num2 = multiplicador
  */
 function createMultiplicationProblem(num1: number, num2: number): MathProblem {
   return {
@@ -124,15 +128,21 @@ function createProblemByOperation(
   operation: MathOperation,
   num1: number,
   num2: number,
-  config?: Pick<DigitConfig, 'divisorMin' | 'divisorMax' | 'digits'>
+  config?: Pick<DigitConfig, 'divisorMin' | 'divisorMax' | 'digits' | 'multiplierMin' | 'multiplierMax'>
 ): MathProblem {
   switch (operation) {
     case 'addition':
       return createAdditionProblem(num1, num2);
     case 'subtraction':
       return createSubtractionProblem(num1, num2);
-    case 'multiplication':
-      return createMultiplicationProblem(num1, num2);
+    case 'multiplication': {
+      // Se multiplierMin/Max configurados, o multiplicador vem desse range
+      const multiplier =
+        config?.multiplierMin !== undefined || config?.multiplierMax !== undefined
+          ? randomInt(config?.multiplierMin ?? MIN_MULTIPLIER, config?.multiplierMax ?? DEFAULT_MULTIPLIER_MAX)
+          : num2;
+      return createMultiplicationProblem(num1, multiplier);
+    }
     case 'division': {
       const { min, max } = getNumberRange(config?.digits ?? 2);
       return createDivisionProblem(
@@ -270,6 +280,14 @@ export function validateOptions(options: MathGeneratorOptions): MathGeneratorOpt
           : MIN_DIVISOR,
       divisorMax:
         config.divisorMax !== undefined ? clamp(config.divisorMax, MIN_DIVISOR, MAX_DIVISOR) : 10,
+      multiplierMin:
+        config.multiplierMin !== undefined
+          ? clamp(config.multiplierMin, MIN_MULTIPLIER, MAX_MULTIPLIER)
+          : undefined,
+      multiplierMax:
+        config.multiplierMax !== undefined
+          ? clamp(config.multiplierMax, MIN_MULTIPLIER, MAX_MULTIPLIER)
+          : undefined,
     }));
   }
 
