@@ -20,6 +20,8 @@
     },
     "divisorMin": "Divisor Mínimo",
     "divisorMax": "Divisor Máximo",
+    "multiplierMin": "Multiplicador Mínimo",
+    "multiplierMax": "Multiplicador Máximo",
     "addConfig": "➕ Agregar Configuración",
     "format": "📋 Formato",
     "formatOptions": {
@@ -27,19 +29,39 @@
       "contextual": "📖 Contextualizado (historias)",
       "both": "🎁 Ambos (2 archivos)"
     },
-    "useAI": "🤖 Usar IA (Google Gemini)",
-    "useAIDescription": "Genera historias más creativas y variadas",
+    "presets": {
+      "title": "📚 Ejercicios Recomendados",
+      "customConfig": "— Configuración personalizada —",
+      "50varied": "50 ejercicios variados"
+    },
+    "aiProvider": {
+      "title": "🤖 Proveedor de IA",
+      "none": "Sin IA (plantillas)",
+      "gemini": "Gemini (Google)",
+      "openai": "GPT-4o (OpenAI)",
+      "deepseek": "DeepSeek",
+      "ollama": "Ollama (local)"
+    },
+    "apiKey": {
+      "label": "🔑 Clave de API",
+      "help": "La clave solo se usa para esta generación y no se almacena.",
+      "show": "Mostrar clave",
+      "hide": "Ocultar clave"
+    },
+    "ollamaModel": {
+      "label": "🦙 Modelo Ollama",
+      "help": "Requiere ollama serve ejecutándose en localhost:11434"
+    },
     "generate": "✨ Generar Ejercicios",
     "generating": "Generando...",
     "errorGenerate": "Error al generar ejercicios",
     "errorUnknown": "Error desconocido",
     "howItWorksTitle": "ℹ️ Cómo funciona:",
     "howItWorks": [
-      "Configure cuántos dígitos y preguntas desea por operación",
-      "Elija entre formato cuadrícula (lista de problemas) o contextualizado (historias)",
-      "Opcionalmente, use IA para generar historias más creativas",
-      "Haga clic en \"Generar Ejercicios\" para crear el documento HTML",
-      "Los ejercicios se abrirán en una nueva pestaña del navegador listos para imprimir"
+      "Seleccione un preset o configure manualmente los dígitos y operaciones",
+      "Elija el formato: cuadrícula (cálculos), contextualizado (historias) o ambos",
+      "Para historias, elija un proveedor de IA o use las plantillas integradas",
+      "Haga clic en Generar para abrir los ejercicios en una nueva pestaña listos para imprimir"
     ]
   },
   "metadata": {
