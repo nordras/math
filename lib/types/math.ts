@@ -31,6 +31,10 @@ export interface DigitConfig {
   divisorMin?: number;
   /** Divisor máximo (apenas para divisão) */
   divisorMax?: number;
+  /** Multiplicador mínimo (apenas para multiplicação) */
+  multiplierMin?: number;
+  /** Multiplicador máximo (apenas para multiplicação) */
+  multiplierMax?: number;
 }
 
 /** Níveis de dificuldade */
