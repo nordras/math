@@ -21,6 +21,8 @@ const GenerateExercisesSchema = z.object({
         operation: z.enum(['addition', 'subtraction', 'multiplication', 'division', 'mixed']),
         divisorMin: z.number().int().min(1).max(100).optional(),
         divisorMax: z.number().int().min(1).max(100).optional(),
+        multiplierMin: z.number().int().min(1).max(100).optional(),
+        multiplierMax: z.number().int().min(1).max(100).optional(),
       })
     )
     .optional(),
